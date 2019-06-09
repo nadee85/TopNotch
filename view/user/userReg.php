@@ -1,4 +1,5 @@
 <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
             Create New User Form
@@ -10,6 +11,8 @@
             <li class="active">Save User</li>
         </ol>
     </section>
+
+    <!-- Main content -->
     <section class="content">
         <div class="row">
             <!-- left column -->
@@ -25,38 +28,38 @@
 
 
                     <?php
-//                if ($errMsg != null) {
+                    if ($errMsg != null) {
+                        ?>
+                        <div class="box box-solid box-danger">
+                            <div class="box-header">
+                                <h3 class="box-title">Error!</h3>
+                            </div><!-- /.box-header -->
+                            <div class="box-body">
+                                <?php echo $errMsg; ?>
+                            </div><!-- /.box-body -->
+                        </div><!-- /.box -->
+                        <?php
+                    }
                     ?>
-                    <div class="box box-solid box-danger">
-                        <div class="box-header">
-                            <h3 class="box-title">Error!</h3>
-                        </div><!-- /.box-header -->
-                        <div class="box-body">
-                            <?php // echo $errMsg; ?>
-                        </div><!-- /.box-body -->
-                    </div><!-- /.box -->
                     <?php
-//                }
-                    ?>
-                    <?php
-//                if ($successMsg != null) {
-                    ?>
-                    <div class="box box-solid box-success">
-                        <div class="box-header">
-                            <h3 class="box-title">Success!</h3>
-                        </div><!-- /.box-header -->
-                        <div class="box-body">
-                            <?php // echo $successMsg; ?>
-                        </div><!-- /.box-body -->
-                    </div><!-- /.box -->
-                    <?php
-//                }
+                    if ($successMsg != null) {
+                        ?>
+                        <div class="box box-solid box-success">
+                            <div class="box-header">
+                                <h3 class="box-title">Success!</h3>
+                            </div><!-- /.box-header -->
+                            <div class="box-body">
+                                <?php echo $successMsg; ?>
+                            </div><!-- /.box-body -->
+                        </div><!-- /.box -->
+                        <?php
+                    }
                     ?>
 
 
 
                     <!-- form start -->
-                    <form role="form" action="<?php // echo htmlspecialchars($_SERVER["PHP_SELF"]);  ?>" method="post" enctype="multipart/form-data">
+                    <form role="form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="inputNIC">NIC</label>
@@ -114,21 +117,21 @@
                                 <label>City</label>
                                 <select class="form-control" name="city">
                                     <?php
-//                                try {
-//                                    $con = connect_database();
-//                                    $sql = "SELECT * FROM `City` ORDER BY `CityName`";
-//                                    $result = $con->query($sql);
-//                                    if ($result->num_rows > 0) {
-//                                        while ($row = $result->fetch_assoc()) {
-//                                            echo '<option value="' . $row["CityId"] . '">' . $row["CityName"] . '</option>';
-//                                        }
-//                                    } else {
-//                                        
-//                                    }
-//                                    $con->close();
-//                                } catch (Exception $exc) {
-//                                    $errMsg = "<br>Error description: " . $exc;
-//                                }
+                                    try {
+                                        $con = connect_database();
+                                        $sql = "SELECT * FROM `City` ORDER BY `CityName`";
+                                        $result = $con->query($sql);
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo '<option value="' . $row["CityId"] . '">' . $row["CityName"] . '</option>';
+                                            }
+                                        } else {
+                                            
+                                        }
+                                        $con->close();
+                                    } catch (Exception $exc) {
+                                        $errMsg = "<br>Error description: " . $exc;
+                                    }
                                     ?>
                                 </select>
                             </div>
@@ -144,4 +147,4 @@
 
         </div>   <!-- /.row -->
     </section><!-- /.content -->
-</div>
+</div><!-- /.content-wrapper -->
