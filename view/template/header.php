@@ -204,7 +204,7 @@ and open the template in the editor.
                                 <span class="label label-primary pull-right">4</span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="SaveUser.php"><i class="fa fa-circle-o"></i> New User</a></li>
+                                <li><a href="../user/userReg"><i class="fa fa-circle-o"></i> New User</a></li>
                                 <li><a href="UsersList.php"><i class="fa fa-circle-o"></i> All Users</a></li>
                             </ul>
                         </li>
