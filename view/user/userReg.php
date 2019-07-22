@@ -8,7 +8,7 @@
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="#">Users</a></li>
-            <li class="active">Save User</li>
+            <li class="active">Register User</li>
         </ol>
     </section>
 
@@ -81,22 +81,10 @@
                                 <label for="inputContact">Contact No</label>
                                 <input type="tel" class="form-control" id="inputContact" placeholder="Enter Contact No" name="contact">
                             </div>
-                            <!-- Date dd/mm/yyyy -->
-                            <div class="form-group">
-                                <label>Date of Birth:</label>
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </div>
-                                    <input type="text" class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask name="dob"/>
-                                </div><!-- /.input group -->
-                            </div><!-- /.form group -->
+                            
                             <div class="form-group">
                                 <label>User Category</label>
                                 <select class="form-control" name="category">
-                                    <option>Rep</option>
-                                    <option>Driver</option>
-                                    <option>Show Owner</option>
                                     <option>Manager</option>
                                     <option>Admin</option>
                                 </select>
@@ -113,32 +101,10 @@
                                 <input type="file" id="inputPicture" name="picture">
                                 <p class="help-block">Image size should below 4mb. PNG, JPG</p>
                             </div>
-                            <div class="form-group">
-                                <label>City</label>
-                                <select class="form-control" name="city">
-                                    <?php
-//                                    try {
-//                                        $con = connect_database();
-//                                        $sql = "SELECT * FROM `City` ORDER BY `CityName`";
-//                                        $result = $con->query($sql);
-//                                        if ($result->num_rows > 0) {
-//                                            while ($row = $result->fetch_assoc()) {
-//                                                echo '<option value="' . $row["CityId"] . '">' . $row["CityName"] . '</option>';
-//                                            }
-//                                        } else {
-//                                            
-//                                        }
-//                                        $con->close();
-//                                    } catch (Exception $exc) {
-//                                        $errMsg = "<br>Error description: " . $exc;
-//                                    }
-                                    ?>
-                                </select>
-                            </div>
                         </div><!-- /.box-body -->
 
                         <div class="box-footer">
-                            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" name="submit" id="btnRegister" class="btn btn-primary">Submit</button>
                         </div>
                     </form>
                 </div><!-- /.box -->
@@ -148,3 +114,41 @@
         </div>   <!-- /.row -->
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
+<script>
+    $(document).ready(function(){
+        $(document).on("click", "#btnRegister", function(){
+            var password = $("#password").val();
+            var confirmPassword = $("#confirmPassword").val();
+
+            if(password !== confirmPassword){
+                //Passwords mismatching
+                alert("Passwords do not match!");
+            }
+
+            var user = {
+                username: $("#username").val(),
+                firstName: $("#firstName").val(),
+                lastName: $("#lastName").val(),
+                email: $("#email").val(),
+                password: $("#password").val()
+            };
+
+            $.ajax({
+                url: "/TopNotch/user/doRegistration",
+                type: "POST",
+                dataType: "JSON",
+                data: {
+                    userData: user
+                },
+                success: function(data){
+                    alert("Successfully registered!");
+                    console.log(data);
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    alert(textStatus);
+                    console.log(errorThrown);
+                }
+            })
+        });
+    });
+</script>

@@ -28,9 +28,7 @@ if (!isAuthenticated($anonymousAllowed)) {
 $request = new Request();
 Router::parse($request->getUrl(), $request);
 
-spl_autoload_register(function($className){
-    require_once("../controller/$className.php");
-});
+require_once("./autoloaders.php");
 
 $controllerName = $request->getControllerName();
 $methodName = $request->getActionName();

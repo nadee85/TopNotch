@@ -8,22 +8,23 @@
 
 class UserController extends BaseController
 {
-    public function login($postBack = null)
+     public function login($postBack = null)
     {
         if(isset($_SESSION["user"]["name"])){
             $url = APPROOT . "/home/index";
             header("location:$url");
         }
-        $data = array("postBack"=>$postBack);
-        $this->loadView($data);
+        $data = array("postBack"=>$postBack, "pageTitle"=>"Login");
+        
+        $this->loadView($data, true);
     }
 
     public function authenticate()
     {
         $users = array(
-            "esoft" => array(
-                "username" => "esoft",
-                "password" => "Pass123@",
+            "nadee" => array(
+                "username" => "nadee",
+                "password" => "123",
                 "roles" => ["ROLE_ROOT", "ROLE_CREATE_REPORT"]
             ),
             "anuruddha" => array(
@@ -60,8 +61,63 @@ class UserController extends BaseController
         }
         echo json_encode($loggedUser);
     }
-    
-    public function userReg(){
-        $this->loadView();
+
+    public function userreg(){
+        if(isset($_SESSION["user"]["name"])) {
+            $url = APPROOT . "/home/index";
+            header("location:$url");
+        }
+
+        $this->loadView(null,true);
+    }
+
+    public function doRegistration(){
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+            header("HTTP/1.1 405 NOT ALLOWED");
+        }
+
+        $userData = $_POST["userData"];
+
+        $passHash = password_hash($userData["password"], PASSWORD_BCRYPT);
+
+        $user = new User();
+        $user->setUsername($userData["username"]);
+        $user->setPassword($passHash);
+        $user->setFirstName($userData["firstName"]);
+        $user->setLastName($userData["lastName"]);
+        $user->setEmail($userData["email"]);
+
+        $res = $user->save();
+        if($res){
+            try {
+                $mailer = new BITMailer();
+                $mailer->addTo($user->getEmail())
+                    ->addSubject("Welcome to BITProject2019")
+                    ->addBody("Your registration with the BITProject2019 has been successfully completed!")
+                    ->send();
+            } catch (Exception $e) {
+                //TODO: Log the mailer error!
+            }
+            $result = array("success"=>true, "message"=>"Welcome " . $user->getFirstName() . "!");
+            echo json_encode($result);
+        }
+        else{
+            header("HTTP/1.1 500 Internal Server Error");
+        }
+    }
+
+    public function exists(){
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+            header("HTTP/1.1 405 NOT ALLOWED");
+        }
+
+        $username = $_POST["username"];
+
+        if($username === "admin"){
+            echo "false";
+        }
+        else {
+            echo "true";
+        }
     }
 }

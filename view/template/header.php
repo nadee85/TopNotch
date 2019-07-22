@@ -46,7 +46,7 @@ and open the template in the editor.
                     <div class="navbar-custom-menu">
                         <ul class="nav navbar-nav">
                             <!-- Messages: style can be found in dropdown.less-->
-                            <li class="dropdown messages-menu">
+<!--                            <li class="dropdown messages-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-envelope-o"></i>
                                     <span class="label label-success">4</span>
@@ -54,9 +54,9 @@ and open the template in the editor.
                                 <ul class="dropdown-menu">
                                     <li class="header">You have 4 messages</li>
                                     <li>
-                                        <!-- inner menu: contains the actual data -->
+                                         inner menu: contains the actual data 
                                         <ul class="menu">
-                                            <li><!-- start message -->
+                                            <li> start message 
                                                 <a href="#">
                                                     <div class="pull-left">
                                                         <img src="dist/img/<?php // echo $_SESSION["userPicture"]; ?>" class="img-circle" alt="User Image"/>
@@ -67,14 +67,14 @@ and open the template in the editor.
                                                     </h4>
                                                     <p>Why not buy a new awesome theme?</p>
                                                 </a>
-                                            </li><!-- end message -->
+                                            </li> end message 
                                         </ul>
                                     </li>
                                     <li class="footer"><a href="#">See All Messages</a></li>
                                 </ul>
-                            </li>
+                            </li>-->
                             <!-- Notifications: style can be found in dropdown.less -->
-                            <li class="dropdown notifications-menu">
+<!--                            <li class="dropdown notifications-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-bell-o"></i>
                                     <span class="label label-warning">10</span>
@@ -82,7 +82,7 @@ and open the template in the editor.
                                 <ul class="dropdown-menu">
                                     <li class="header">You have 10 notifications</li>
                                     <li>
-                                        <!-- inner menu: contains the actual data -->
+                                         inner menu: contains the actual data 
                                         <ul class="menu">
                                             <li>
                                                 <a href="#">
@@ -93,9 +93,9 @@ and open the template in the editor.
                                     </li>
                                     <li class="footer"><a href="#">View all</a></li>
                                 </ul>
-                            </li>
+                            </li>-->
                             <!-- Tasks: style can be found in dropdown.less -->
-                            <li class="dropdown tasks-menu">
+<!--                            <li class="dropdown tasks-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-flag-o"></i>
                                     <span class="label label-danger">9</span>
@@ -103,9 +103,9 @@ and open the template in the editor.
                                 <ul class="dropdown-menu">
                                     <li class="header">You have 9 tasks</li>
                                     <li>
-                                        <!-- inner menu: contains the actual data -->
+                                         inner menu: contains the actual data 
                                         <ul class="menu">
-                                            <li><!-- Task item -->
+                                            <li> Task item 
                                                 <a href="#">
                                                     <h3>
                                                         Design some buttons
@@ -117,24 +117,24 @@ and open the template in the editor.
                                                         </div>
                                                     </div>
                                                 </a>
-                                            </li><!-- end task item -->
+                                            </li> end task item 
                                         </ul>
                                     </li>
                                     <li class="footer">
                                         <a href="#">View all tasks</a>
                                     </li>
                                 </ul>
-                            </li>
+                            </li>-->
                             <!-- User Account: style can be found in dropdown.less -->
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="dist/img/<?php // echo $_SESSION["userPicture"]; ?>" class="user-image" alt="User Image"/>
+                                    <img src="<?= RESOURCES ?>dist/img/user1-128x128.jpg" class="user-image" alt="User Image"/>
                                     <span class="hidden-xs"><?php // echo $_SESSION["userName"]; ?></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
                                     <li class="user-header">
-                                        <img src="dist/img/<?php // echo $_SESSION["userPicture"]; ?>" class="img-circle" alt="User Image" />
+                                        <img src="<?= RESOURCES ?>dist/img/user1-128x128.jpg<?php // echo $_SESSION["userPicture"]; ?>" class="img-circle" alt="User Image" />
                                         <p>
                                             <?php // echo $_SESSION["userName"] . " - " . $_SESSION["userPrivilege"]; ?>
                                             <small>Member since Nov. 2012</small>
@@ -176,7 +176,7 @@ and open the template in the editor.
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <img src="dist/img/<?php // echo $_SESSION["userPicture"]; ?>" class="img-circle" alt="User Image" />
+                            <img src="<?= RESOURCES ?>dist/img/user1-128x128.jpg<?php // echo $_SESSION["userPicture"]; ?>" class="img-circle" alt="User Image" />
                         </div>
                         <div class="pull-left info">
                             <p><?php // echo $_SESSION["userName"]; ?></p>
@@ -201,7 +201,6 @@ and open the template in the editor.
                             <a href="#">
                                 <i class="fa fa-users"></i>
                                 <span>Users</span>
-                                <span class="label label-primary pull-right">4</span>
                             </a>
                             <ul class="treeview-menu">
                                 <li><a href="../user/userReg"><i class="fa fa-circle-o"></i> New User</a></li>
@@ -211,50 +210,57 @@ and open the template in the editor.
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-book"></i>
-                                <span>Categories</span>
+                                <span>Items</span>
                                 <span class="label label-primary pull-right"></span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="Category.php"><i class="fa fa-circle-o"></i> Manage</a></li>
-                                <li><a href="ItemCategory.php"><i class="fa fa-circle-o"></i> Items</a></li>
+                                <li><a href="Category.php"><i class="fa fa-circle-o"></i> Item List</a></li>
+                                <li><a href="../Item/newItem"><i class="fa fa-circle-o"></i> New Item</a></li>
+                                <li><a href="ItemCategory.php"><i class="fa fa-circle-o"></i> New Raw Material</a></li>
                             </ul>
                         </li>
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-gift"></i>
-                                <span>Items</span>
+                                <span>Procurement</span>
                                 <span class="label label-primary pull-right"></span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="ManageItem.php"><i class="fa fa-circle-o"></i> Manage</a></li>
-                                <li><a href="ManageBrand.php"><i class="fa fa-circle-o"></i> Brands</a></li>
+                                <li><a href="ManageItem.php"><i class="fa fa-circle-o"></i> GRN List</a></li>
+                                <li><a href="ManageBrand.php"><i class="fa fa-circle-o"></i> GRN Payments</a></li>
+                                <li><a href="ManageBrand.php"><i class="fa fa-circle-o"></i> New GRN</a></li>
+                                <li><a href="ManageBrand.php"><i class="fa fa-circle-o"></i> New GRN Payment</a></li>
+                                <li><a href="ManageBrand.php"><i class="fa fa-circle-o"></i> New Supplier</a></li>
+                                <li><a href="ManageBrand.php"><i class="fa fa-circle-o"></i> Supplier List</a></li>
                             </ul>
                         </li>
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-building-o"></i>
-                                <span>Shops</span>
+                                <span>Inventory</span>
                                 <span class="label label-primary pull-right"></span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="SaveShop.php"><i class="fa fa-circle-o"></i> New Shop</a></li>
-                                <li><a href="ShopList.php"><i class="fa fa-circle-o"></i> Shops</a></li>
+                                <li><a href="SaveShop.php"><i class="fa fa-circle-o"></i> Item Stock</a></li>
+                                <li><a href="ShopList.php"><i class="fa fa-circle-o"></i> Raw Material Stock</a></li>
                             </ul>
                         </li>
                         <li><a href="Accounts.php"><i class="fa fa-lock"></i> Accounts</a></li>
                         <li class="treeview">
                             <a href="#">
-                                <i class="fa fa-globe"></i>
-                                <span>Geography</span>
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>Sales</span>
                                 <span class="label label-primary pull-right"></span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="Geography.php"><i class="fa fa-circle-o"></i> Manage</a></li>
-                                <li><a href="SaveCountry.php"><i class="fa fa-circle-o"></i> Add Country</a></li>
-                                <li><a href="SaveDistrict.php"><i class="fa fa-circle-o"></i> Add District</a></li>
-                                <li><a href="SaveCity.php"><i class="fa fa-circle-o"></i> Add City</a></li>
+                                <li><a href="Geography.php"><i class="fa fa-circle-o"></i> Customer List</a></li>
+                                <li><a href="SaveCountry.php"><i class="fa fa-circle-o"></i> New Customer</a></li>
+                                <li><a href="SaveDistrict.php"><i class="fa fa-circle-o"></i> Invoice List</a></li>
+                                <li><a href="SaveCity.php"><i class="fa fa-circle-o"></i> New Invoice</a></li>
+                                <li><a href="SaveCity.php"><i class="fa fa-circle-o"></i> Invoice Payment</a></li>
                             </ul>
                         </li>
+                        <li><a href="Accounts.php"><i class="fa fa-book"></i> Reports</a></li>
                         <li class="header">LABELS</li>
                         <li><a href="#"><i class="fa fa-circle-o text-danger"></i> Important</a></li>
                         <li><a href="#"><i class="fa fa-circle-o text-warning"></i> Warning</a></li>
