@@ -7,17 +7,17 @@
  */
 
 /**
- * Description of ItemController
+ * Description of grnController
  *
  * @author Nadeeshani
  */
-class ItemController extends BaseController{
+class grnController extends BaseController{
     //put your code here
-    public function newItem(){
+    public function newGRN() {
         $this->loadView();
     }
     
-    public function itemList(){
+    public function grnList(){
         $this->loadView();
     }
 }

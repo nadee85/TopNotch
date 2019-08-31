@@ -7,7 +7,8 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title></title>
+        <link rel="icon" href="<?= RESOURCES ?>dist/logo2.png" type="image/x-icon">
+        <title>TopNotch</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <script src="<?= RESOURCES ?>vendor/jquery.min.js"></script>
         <!-- Bootstrap 3.3.2 -->
@@ -18,9 +19,11 @@ and open the template in the editor.
         <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
         <!-- Theme style -->
         <link href="<?= RESOURCES ?>dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?= RESOURCES ?>dist/css/tableprop.css" rel="stylesheet" type="text/css" />
         <!-- AdminLTE Skins. Choose a skin from the css/skins 
              folder instead of downloading all of them to reduce the load. -->
         <link href="<?= RESOURCES ?>dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+        <script src="<?= RESOURCES ?>vendor/jquery.validate.min.js"></script>
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -33,7 +36,8 @@ and open the template in the editor.
         <!-- Site wrapper -->
         <div class="wrapper">
             <header class="main-header">
-                <a href="index.php" class="logo"><b>Admin</b>Panel</a>
+                <!--<a href="index.php" class="logo"><b>Admin</b>Panel</a>-->
+                <a href="../home/index" class="navbar-brand"><img src="<?= RESOURCES ?>dist/logo1.png" width="125" height="60"></a>
                 <!-- Header Navbar: style can be found in header.less -->
                 <nav class="navbar navbar-static-top" role="navigation">
                     <!-- Sidebar toggle button-->
@@ -175,22 +179,22 @@ and open the template in the editor.
                 <section class="sidebar">
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
-                        <div class="pull-left image">
+<!--                        <div class="pull-left image">
                             <img src="<?= RESOURCES ?>dist/img/user1-128x128.jpg<?php // echo $_SESSION["userPicture"]; ?>" class="img-circle" alt="User Image" />
                         </div>
                         <div class="pull-left info">
                             <p><?php // echo $_SESSION["userName"]; ?></p>
 
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                        </div>
+                        </div>-->
                     </div>
                     <!-- search form -->
                     <form action="#" method="get" class="sidebar-form">
                         <div class="input-group">
-                            <input type="text" name="q" class="form-control" placeholder="Search..."/>
+<!--                            <input type="text" name="q" class="form-control" placeholder="Search..."/>
                             <span class="input-group-btn">
                                 <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-                            </span>
+                            </span>-->
                         </div>
                     </form>
                     <!-- /.search form -->
@@ -203,8 +207,8 @@ and open the template in the editor.
                                 <span>Users</span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="../user/userReg"><i class="fa fa-circle-o"></i> New User</a></li>
-                                <li><a href="UsersList.php"><i class="fa fa-circle-o"></i> All Users</a></li>
+                                <li><a href="../user/userReg"><i class="fa fa-circle-o"></i>New User</a></li>
+                                <li><a href="UsersList.php"><i class="fa fa-circle-o"></i>All Users</a></li>
                             </ul>
                         </li>
                         <li class="treeview">
@@ -214,9 +218,10 @@ and open the template in the editor.
                                 <span class="label label-primary pull-right"></span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="Category.php"><i class="fa fa-circle-o"></i> Item List</a></li>
-                                <li><a href="../Item/newItem"><i class="fa fa-circle-o"></i> New Item</a></li>
-                                <li><a href="ItemCategory.php"><i class="fa fa-circle-o"></i> New Raw Material</a></li>
+                                <li><a href="../Item/itemList"><i class="fa fa-circle-o"></i>Item List</a></li>
+                                <li><a href="../Item/newItem"><i class="fa fa-circle-o"></i>New Item</a></li>
+                                <li><a href="../RawMaterial/rawMaterialList"><i class="fa fa-circle-o"></i>Raw Material List</a></li>
+                                <li><a href="../RawMaterial/newRawMaterial"><i class="fa fa-circle-o"></i>New Raw Material</a></li>
                             </ul>
                         </li>
                         <li class="treeview">
@@ -226,12 +231,15 @@ and open the template in the editor.
                                 <span class="label label-primary pull-right"></span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="ManageItem.php"><i class="fa fa-circle-o"></i> GRN List</a></li>
-                                <li><a href="ManageBrand.php"><i class="fa fa-circle-o"></i> GRN Payments</a></li>
-                                <li><a href="ManageBrand.php"><i class="fa fa-circle-o"></i> New GRN</a></li>
-                                <li><a href="ManageBrand.php"><i class="fa fa-circle-o"></i> New GRN Payment</a></li>
-                                <li><a href="ManageBrand.php"><i class="fa fa-circle-o"></i> New Supplier</a></li>
-                                <li><a href="ManageBrand.php"><i class="fa fa-circle-o"></i> Supplier List</a></li>
+                                <li><a href="../Supplier/supplierList"><i class="fa fa-circle-o"></i>Supplier List</a></li>
+                                <li><a href="../Supplier/newSupplier"><i class="fa fa-circle-o"></i>New Supplier</a></li>
+                                <li><a href="../PO/poList"><i class="fa fa-circle-o"></i>Purchase Order List</a></li>
+                                <li><a href="../PO/newPO"><i class="fa fa-circle-o"></i>New Purchase Order</a></li>
+                                <li><a href="../GRN/grnList"><i class="fa fa-circle-o"></i>GRN List</a></li>
+                                <li><a href="../GRN/newGRN"><i class="fa fa-circle-o"></i>New GRN</a></li>
+                                <li><a href="../Supplier/supplierPaymentList"><i class="fa fa-circle-o"></i>Supplier Payments</a></li>
+                                <li><a href="../Supplier/newSupplierPayment"><i class="fa fa-circle-o"></i>New Supplier Payment</a></li>
+                                <li><a href="../Supplier/supplierDuePaymentList"><i class="fa fa-circle-o"></i>Supplier Due Payment List</a></li>
                             </ul>
                         </li>
                         <li class="treeview">
@@ -241,11 +249,11 @@ and open the template in the editor.
                                 <span class="label label-primary pull-right"></span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="SaveShop.php"><i class="fa fa-circle-o"></i> Item Stock</a></li>
-                                <li><a href="ShopList.php"><i class="fa fa-circle-o"></i> Raw Material Stock</a></li>
+                                <li><a href="SaveShop.php"><i class="fa fa-circle-o"></i>Item Stock</a></li>
+                                <li><a href="ShopList.php"><i class="fa fa-circle-o"></i>Raw Material Stock</a></li>
                             </ul>
                         </li>
-                        <li><a href="Accounts.php"><i class="fa fa-lock"></i> Accounts</a></li>
+                        <li><a href="Accounts.php"><i class="fa fa-lock"></i>Accounts</a></li>
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-shopping-cart"></i>
@@ -253,18 +261,20 @@ and open the template in the editor.
                                 <span class="label label-primary pull-right"></span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="Geography.php"><i class="fa fa-circle-o"></i> Customer List</a></li>
-                                <li><a href="SaveCountry.php"><i class="fa fa-circle-o"></i> New Customer</a></li>
-                                <li><a href="SaveDistrict.php"><i class="fa fa-circle-o"></i> Invoice List</a></li>
-                                <li><a href="SaveCity.php"><i class="fa fa-circle-o"></i> New Invoice</a></li>
-                                <li><a href="SaveCity.php"><i class="fa fa-circle-o"></i> Invoice Payment</a></li>
+                                <li><a href="../Customer/customerList"><i class="fa fa-circle-o"></i>Customer List</a></li>
+                                <li><a href="../Customer/newCustomer"><i class="fa fa-circle-o"></i>New Customer</a></li>
+                                <li><a href="../Invoice/invoiceList"><i class="fa fa-circle-o"></i>Invoice List</a></li>
+                                <li><a href="../Invoice/newInvoice"><i class="fa fa-circle-o"></i>New Invoice</a></li>
+                                <li><a href="../Customer/customerPaymentList"><i class="fa fa-circle-o"></i>Customer Payments</a></li>
+                                <li><a href="../Customer/newCustomerPayment"><i class="fa fa-circle-o"></i>New Customer Payment</a></li>
+                                <li><a href="../Customer/customerDuePaymentList"><i class="fa fa-circle-o"></i>Customer Due Payment List</a></li>
                             </ul>
                         </li>
-                        <li><a href="Accounts.php"><i class="fa fa-book"></i> Reports</a></li>
+                        <li><a href="Accounts.php"><i class="fa fa-book"></i>Reports</a></li>
                         <li class="header">LABELS</li>
-                        <li><a href="#"><i class="fa fa-circle-o text-danger"></i> Important</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o text-warning"></i> Warning</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o text-info"></i> Information</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o text-danger"></i>Important</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o text-warning"></i>Warning</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o text-info"></i>Information</a></li>
                     </ul>
                 </section>
                 <!-- /.sidebar -->

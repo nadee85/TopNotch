@@ -7,17 +7,17 @@
  */
 
 /**
- * Description of ItemController
+ * Description of POController
  *
  * @author Nadeeshani
  */
-class ItemController extends BaseController{
+class POController extends BaseController {
     //put your code here
-    public function newItem(){
+    function newPO(){
         $this->loadView();
     }
     
-    public function itemList(){
+    function poList(){
         $this->loadView();
     }
 }

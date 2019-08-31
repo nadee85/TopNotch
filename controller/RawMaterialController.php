@@ -7,17 +7,17 @@
  */
 
 /**
- * Description of ItemController
+ * Description of RawMaterialController
  *
  * @author Nadeeshani
  */
-class ItemController extends BaseController{
+class RawMaterialController extends BaseController{
     //put your code here
-    public function newItem(){
+    public function newRawMaterial() {
         $this->loadView();
     }
     
-    public function itemList(){
+    public function rawMaterialList(){
         $this->loadView();
     }
 }

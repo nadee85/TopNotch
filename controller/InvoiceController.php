@@ -7,17 +7,17 @@
  */
 
 /**
- * Description of ItemController
+ * Description of InvoiceController
  *
  * @author Nadeeshani
  */
-class ItemController extends BaseController{
+class InvoiceController extends BaseController{
     //put your code here
-    public function newItem(){
+    function newInvoice(){
         $this->loadView();
     }
     
-    public function itemList(){
+    function invoiceList(){
         $this->loadView();
     }
 }

@@ -21,6 +21,10 @@ class BaseModel {
     }
 
     public function save($element=NULL) {
+        if (!isset($element)) {
+            $element=  $this;
+        }
+        
         $reflect=new ReflectionClass($element);
         $properties   = $reflect->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PRIVATE);
         $fields=array();
@@ -53,6 +57,7 @@ class BaseModel {
         if (!$res) {
             echo $this->con->error;
         }
+        return $res;
     }
 
 }

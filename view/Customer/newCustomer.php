@@ -2,13 +2,13 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Create New Item Form
-            <small>Creating New Items</small>
+            Create New Customer Form
+            <small>Creating New Customer</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="#">Item</a></li>
-            <li class="active">New Item</li>
+            <li><a href="#">Sales</a></li>
+            <li class="active">New Customer</li>
         </ol>
     </section>
 
@@ -30,28 +30,28 @@
                     <?php
 //                    if ($errMsg != null) {
                     ?>
-                    <div class="box box-solid box-danger">
+<!--                    <div class="box box-solid box-danger">
                         <div class="box-header">
                             <h3 class="box-title">Error!</h3>
-                        </div><!-- /.box-header -->
+                        </div> /.box-header 
                         <div class="box-body">
                             <?php // echo $errMsg; ?>
-                        </div><!-- /.box-body -->
-                    </div><!-- /.box -->
+                        </div> /.box-body 
+                    </div> /.box -->
                     <?php
 //                    }
                     ?>
                     <?php
 //                    if ($successMsg != null) {
                     ?>
-                    <div class="box box-solid box-success">
+<!--                    <div class="box box-solid box-success">
                         <div class="box-header">
                             <h3 class="box-title">Success!</h3>
-                        </div><!-- /.box-header -->
+                        </div> /.box-header 
                         <div class="box-body">
                             <?php // echo $successMsg; ?>
-                        </div><!-- /.box-body -->
-                    </div><!-- /.box -->
+                        </div> /.box-body 
+                    </div> /.box -->
                     <?php
 //                    }
                     ?>
@@ -62,20 +62,36 @@
                     <form role="form" action="<?php // echo htmlspecialchars($_SERVER["PHP_SELF"]);  ?>" method="post" enctype="multipart/form-data">
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="inputID">Item ID</label>
-                                <input type="text" class="form-control" id="itemid" placeholder="Enter Item ID" name="txtItemID">
+                                <label for="inputCusId">Customer ID</label>
+                                <input type="text" class="form-control" id="customerid" placeholder="Enter Customer ID" name="txtCusID">
                             </div>
                             <div class="form-group">
-                                <label for="inputDescription">Description</label>
-                                <input type="text" class="form-control" id="description" placeholder="Enter Description" name="txtDescription">
+                                <label for="inputFname">First Name</label>
+                                <input type="text" class="form-control" id="fname" placeholder="Enter First Name" name="txtFName">
                             </div>
                             <div class="form-group">
-                                <label for="inputPrice">Price</label>
-                                <input type="text" class="form-control" id="price" placeholder="Enter Price" name="txtPrice">
+                                <label for="inputLname">Last Name</label>
+                                <input type="text" class="form-control" id="lname" placeholder="Enter Last Name" name="txtLName">
                             </div>
                             <div class="form-group">
-                                <label for="inputCurStock">Current Stock</label>
-                                <input type="text" class="form-control" id="stock" placeholder="Enter Current Stock" name="txtStock">
+                                <label for="inputNIC">NIC</label>
+                                <input type="text" class="form-control" id="nic" placeholder="Enter NIC" name="txtNIC">
+                            </div>
+                           <div class="form-group">
+                                <label>Address</label>
+                                <textarea class="form-control" rows="3" id="address" placeholder="Enter ..." name="txtAddress"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputTelephone">Telephone</label>
+                                <input type="tel" class="form-control" id="telephone" placeholder="Enter Telephone" name="txtTel">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputMobile">Mobile</label>
+                                <input type="tel" class="form-control" id="mobile" placeholder="Enter Mobile" name="txtMobile">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail">Email</label>
+                                <input type="email" class="form-control" id="email" placeholder="Enter Email" name="txtEmail">
                             </div>
                             <div class="checkbox">
                                 <label>

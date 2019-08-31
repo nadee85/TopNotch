@@ -2,13 +2,13 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Create New Item Form
-            <small>Creating New Items</small>
+            Create New Raw Material Form
+            <small>Creating New Raw Materials</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="#">Item</a></li>
-            <li class="active">New Item</li>
+            <li class="active">New Raw Materials</li>
         </ol>
     </section>
 
@@ -62,24 +62,21 @@
                     <form role="form" action="<?php // echo htmlspecialchars($_SERVER["PHP_SELF"]);  ?>" method="post" enctype="multipart/form-data">
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="inputID">Item ID</label>
-                                <input type="text" class="form-control" id="itemid" placeholder="Enter Item ID" name="txtItemID">
+                                <label for="inputID">Raw Material ID</label>
+                                <input type="text" class="form-control" id="rawmatid" placeholder="Enter Item ID" name="txtRawMatId">
                             </div>
                             <div class="form-group">
                                 <label for="inputDescription">Description</label>
                                 <input type="text" class="form-control" id="description" placeholder="Enter Description" name="txtDescription">
                             </div>
-                            <div class="form-group">
-                                <label for="inputPrice">Price</label>
-                                <input type="text" class="form-control" id="price" placeholder="Enter Price" name="txtPrice">
-                            </div>
+                            
                             <div class="form-group">
                                 <label for="inputCurStock">Current Stock</label>
                                 <input type="text" class="form-control" id="stock" placeholder="Enter Current Stock" name="txtStock">
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="status" checked > Set Enable
+                                    <input type="checkbox" name="mandatory" checked > Mandatory
                                 </label>
                             </div>
                         </div><!-- /.box-body -->

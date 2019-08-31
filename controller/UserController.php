@@ -1,26 +1,26 @@
 <?php
+
 /**
  * Created by IntelliJ IDEA.
  * User: LocalAdmin
  * Date: 3/9/2019
  * Time: 5:29 PM
  */
+class UserController extends BaseController {
 
-class UserController extends BaseController
-{
-     public function login($postBack = null)
-    {
-        if(isset($_SESSION["user"]["name"])){
+    public $errMsg;
+
+    public function login($postBack = null) {
+        if (isset($_SESSION["user"]["name"])) {
             $url = APPROOT . "/home/index";
             header("location:$url");
         }
-        $data = array("postBack"=>$postBack, "pageTitle"=>"Login");
-        
+        $data = array("postBack" => $postBack, "pageTitle" => "Login");
+
         $this->loadView($data, true);
     }
 
-    public function authenticate()
-    {
+    public function authenticate() {
         $users = array(
             "nadee" => array(
                 "username" => "nadee",
@@ -56,68 +56,53 @@ class UserController extends BaseController
         unset($loggedUser["password"]);
 
         $loggedUser["postBack"] = "/home/index";
-        if(isset($postBack)){
+        if (isset($postBack)) {
             $loggedUser["postBack"] = urldecode(urldecode(urldecode($postBack)));
         }
         echo json_encode($loggedUser);
     }
 
-    public function userreg(){
-        if(isset($_SESSION["user"]["name"])) {
-            $url = APPROOT . "/home/index";
-            header("location:$url");
-        }
+    public function userreg() {
+//        if(isset($_SESSION["user"]["name"])) {
+//            $url = APPROOT . "/home/index";
+//            header("location:$url");
+//        }
 
-        $this->loadView(null,true);
+        $this->loadView(null, true);
     }
 
-    public function doRegistration(){
-        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    public function doRegistration() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header("HTTP/1.1 405 NOT ALLOWED");
         }
+        if (isset($_POST['submitsave'])) {
+            $user = new User();
+            $user->setUserId($_POST['txtUName']);
+            $user->setFName($_POST['txtFName']);
+            $user->setLName($_POST['txtLName']);
+            $user->setEmail($_POST['txtEmail']);
+            $user->setPassword($_POST['txtPW']);
 
-        $userData = $_POST["userData"];
-
-        $passHash = password_hash($userData["password"], PASSWORD_BCRYPT);
-
-        $user = new User();
-        $user->setUsername($userData["username"]);
-        $user->setPassword($passHash);
-        $user->setFirstName($userData["firstName"]);
-        $user->setLastName($userData["lastName"]);
-        $user->setEmail($userData["email"]);
-
-        $res = $user->save();
-        if($res){
-            try {
-                $mailer = new BITMailer();
-                $mailer->addTo($user->getEmail())
-                    ->addSubject("Welcome to BITProject2019")
-                    ->addBody("Your registration with the BITProject2019 has been successfully completed!")
-                    ->send();
-            } catch (Exception $e) {
-                //TODO: Log the mailer error!
+            $res = $user->save();
+            if ($res) {
+                $url = APPROOT . "/home/index";
+                header("location:$url");
             }
-            $result = array("success"=>true, "message"=>"Welcome " . $user->getFirstName() . "!");
-            echo json_encode($result);
-        }
-        else{
-            header("HTTP/1.1 500 Internal Server Error");
         }
     }
 
-    public function exists(){
+    public function exists() {
         if ($_SERVER["REQUEST_METHOD"] !== "POST") {
             header("HTTP/1.1 405 NOT ALLOWED");
         }
 
         $username = $_POST["username"];
 
-        if($username === "admin"){
+        if ($username === "admin") {
             echo "false";
-        }
-        else {
+        } else {
             echo "true";
         }
     }
+
 }
