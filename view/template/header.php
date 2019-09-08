@@ -11,16 +11,16 @@ and open the template in the editor.
         <title>TopNotch</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <script src="<?= RESOURCES ?>vendor/jquery.min.js"></script>
-        <!-- Bootstrap 3.3.2 -->
+<!--         Bootstrap 3.3.2 -->
         <link href="<?= RESOURCES ?>bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <!-- Font Awesome Icons -->
+         <!--Font Awesome Icons--> 
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-        <!-- Ionicons -->
+         <!--Ionicons--> 
         <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-        <!-- Theme style -->
+         <!--Theme style--> 
         <link href="<?= RESOURCES ?>dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
         <link href="<?= RESOURCES ?>dist/css/tableprop.css" rel="stylesheet" type="text/css" />
-        <!-- AdminLTE Skins. Choose a skin from the css/skins 
+<!--         AdminLTE Skins. Choose a skin from the css/skins 
              folder instead of downloading all of them to reduce the load. -->
         <link href="<?= RESOURCES ?>dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
         <script src="<?= RESOURCES ?>vendor/jquery.validate.min.js"></script>
@@ -50,95 +50,95 @@ and open the template in the editor.
                     <div class="navbar-custom-menu">
                         <ul class="nav navbar-nav">
                             <!-- Messages: style can be found in dropdown.less-->
-<!--                            <li class="dropdown messages-menu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-envelope-o"></i>
-                                    <span class="label label-success">4</span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="header">You have 4 messages</li>
-                                    <li>
-                                         inner menu: contains the actual data 
-                                        <ul class="menu">
-                                            <li> start message 
-                                                <a href="#">
-                                                    <div class="pull-left">
-                                                        <img src="dist/img/<?php // echo $_SESSION["userPicture"]; ?>" class="img-circle" alt="User Image"/>
-                                                    </div>
-                                                    <h4>
-                                                        Support Team
-                                                        <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                                                    </h4>
-                                                    <p>Why not buy a new awesome theme?</p>
-                                                </a>
-                                            </li> end message 
-                                        </ul>
-                                    </li>
-                                    <li class="footer"><a href="#">See All Messages</a></li>
-                                </ul>
-                            </li>-->
+                            <!--                            <li class="dropdown messages-menu">
+                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                                <i class="fa fa-envelope-o"></i>
+                                                                <span class="label label-success">4</span>
+                                                            </a>
+                                                            <ul class="dropdown-menu">
+                                                                <li class="header">You have 4 messages</li>
+                                                                <li>
+                                                                     inner menu: contains the actual data 
+                                                                    <ul class="menu">
+                                                                        <li> start message 
+                                                                            <a href="#">
+                                                                                <div class="pull-left">
+                                                                                    <img src="dist/img/<?php // echo $_SESSION["userPicture"];  ?>" class="img-circle" alt="User Image"/>
+                                                                                </div>
+                                                                                <h4>
+                                                                                    Support Team
+                                                                                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                                                                </h4>
+                                                                                <p>Why not buy a new awesome theme?</p>
+                                                                            </a>
+                                                                        </li> end message 
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="footer"><a href="#">See All Messages</a></li>
+                                                            </ul>
+                                                        </li>-->
                             <!-- Notifications: style can be found in dropdown.less -->
-<!--                            <li class="dropdown notifications-menu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-bell-o"></i>
-                                    <span class="label label-warning">10</span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="header">You have 10 notifications</li>
-                                    <li>
-                                         inner menu: contains the actual data 
-                                        <ul class="menu">
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="footer"><a href="#">View all</a></li>
-                                </ul>
-                            </li>-->
+                            <!--                            <li class="dropdown notifications-menu">
+                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                                <i class="fa fa-bell-o"></i>
+                                                                <span class="label label-warning">10</span>
+                                                            </a>
+                                                            <ul class="dropdown-menu">
+                                                                <li class="header">You have 10 notifications</li>
+                                                                <li>
+                                                                     inner menu: contains the actual data 
+                                                                    <ul class="menu">
+                                                                        <li>
+                                                                            <a href="#">
+                                                                                <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="footer"><a href="#">View all</a></li>
+                                                            </ul>
+                                                        </li>-->
                             <!-- Tasks: style can be found in dropdown.less -->
-<!--                            <li class="dropdown tasks-menu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-flag-o"></i>
-                                    <span class="label label-danger">9</span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="header">You have 9 tasks</li>
-                                    <li>
-                                         inner menu: contains the actual data 
-                                        <ul class="menu">
-                                            <li> Task item 
-                                                <a href="#">
-                                                    <h3>
-                                                        Design some buttons
-                                                        <small class="pull-right">20%</small>
-                                                    </h3>
-                                                    <div class="progress xs">
-                                                        <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">20% Complete</span>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </li> end task item 
-                                        </ul>
-                                    </li>
-                                    <li class="footer">
-                                        <a href="#">View all tasks</a>
-                                    </li>
-                                </ul>
-                            </li>-->
+                            <!--                            <li class="dropdown tasks-menu">
+                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                                <i class="fa fa-flag-o"></i>
+                                                                <span class="label label-danger">9</span>
+                                                            </a>
+                                                            <ul class="dropdown-menu">
+                                                                <li class="header">You have 9 tasks</li>
+                                                                <li>
+                                                                     inner menu: contains the actual data 
+                                                                    <ul class="menu">
+                                                                        <li> Task item 
+                                                                            <a href="#">
+                                                                                <h3>
+                                                                                    Design some buttons
+                                                                                    <small class="pull-right">20%</small>
+                                                                                </h3>
+                                                                                <div class="progress xs">
+                                                                                    <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                                                        <span class="sr-only">20% Complete</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </a>
+                                                                        </li> end task item 
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="footer">
+                                                                    <a href="#">View all tasks</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>-->
                             <!-- User Account: style can be found in dropdown.less -->
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <img src="<?= RESOURCES ?>dist/img/user1-128x128.jpg" class="user-image" alt="User Image"/>
-                                    <span class="hidden-xs"><?php // echo $_SESSION["userName"]; ?></span>
+                                    <span class="hidden-xs"><?php // echo $_SESSION["userName"];  ?></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
                                     <li class="user-header">
-                                        <img src="<?= RESOURCES ?>dist/img/user1-128x128.jpg<?php // echo $_SESSION["userPicture"]; ?>" class="img-circle" alt="User Image" />
+                                        <img src="<?= RESOURCES ?>dist/img/user1-128x128.jpg<?php // echo $_SESSION["userPicture"];  ?>" class="img-circle" alt="User Image" />
                                         <p>
                                             <?php // echo $_SESSION["userName"] . " - " . $_SESSION["userPrivilege"]; ?>
                                             <small>Member since Nov. 2012</small>
@@ -162,7 +162,7 @@ and open the template in the editor.
                                             <a href="#" class="btn btn-default btn-flat">Profile</a>
                                         </div>
                                         <div class="pull-right">
-                                            <a href="Logout.php" class="btn btn-default btn-flat">Sign out</a>
+                                            <a href="../user/login" class="btn btn-default btn-flat">Sign out</a>
                                         </div>
                                     </li>
                                 </ul>
@@ -171,7 +171,7 @@ and open the template in the editor.
                     </div>
                 </nav>
             </header>
-            
+
             <!-- side bar -->
             <!-- Left side column. contains the sidebar -->
             <aside class="main-sidebar">
@@ -179,14 +179,14 @@ and open the template in the editor.
                 <section class="sidebar">
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
-<!--                        <div class="pull-left image">
-                            <img src="<?= RESOURCES ?>dist/img/user1-128x128.jpg<?php // echo $_SESSION["userPicture"]; ?>" class="img-circle" alt="User Image" />
-                        </div>
-                        <div class="pull-left info">
-                            <p><?php // echo $_SESSION["userName"]; ?></p>
-
-                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                        </div>-->
+                        <!--                        <div class="pull-left image">
+                                                    <img src="<?= RESOURCES ?>dist/img/user1-128x128.jpg<?php // echo $_SESSION["userPicture"];  ?>" class="img-circle" alt="User Image" />
+                                                </div>
+                                                <div class="pull-left info">
+                                                    <p><?php // echo $_SESSION["userName"];  ?></p>
+                        
+                                                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                                                </div>-->
                     </div>
                     <!-- search form -->
                     <form action="#" method="get" class="sidebar-form">
@@ -208,7 +208,7 @@ and open the template in the editor.
                             </a>
                             <ul class="treeview-menu">
                                 <li><a href="../user/userReg"><i class="fa fa-circle-o"></i>New User</a></li>
-                                <li><a href="UsersList.php"><i class="fa fa-circle-o"></i>All Users</a></li>
+                                <li><a href="../user/userDetails"><i class="fa fa-circle-o"></i>User Details</a></li>
                             </ul>
                         </li>
                         <li class="treeview">
@@ -253,7 +253,6 @@ and open the template in the editor.
                                 <li><a href="ShopList.php"><i class="fa fa-circle-o"></i>Raw Material Stock</a></li>
                             </ul>
                         </li>
-                        <li><a href="Accounts.php"><i class="fa fa-lock"></i>Accounts</a></li>
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-shopping-cart"></i>
@@ -279,6 +278,6 @@ and open the template in the editor.
                 </section>
                 <!-- /.sidebar -->
             </aside>
-            
-            
+
+
 
