@@ -56,7 +56,7 @@
                         ?>
 
                         <!-- form start -->
-                        <form role="form" id="frmURegister" action="doRegistration" method="post" enctype="multipart/form-data">
+                        <form role="form" id="frmURegister">
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="inputNIC">User Name</label>
@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="inputContact">Email</label>
-                                    <input type="email" class="form-control" id="email" placeholder="Enter Email" name="email" required="" pattern="/^[a-zA-Z0-9_\.]{3,}@([a-zA-Z0-9_]{3,})(\.[a-zA-Z0-9\_]{2,})+$/">
+                                    <input type="email" class="form-control" id="email" placeholder="Enter Email" name="email" required="" >
                                 </div>
                                 <div class="form-group">
                                     <label for="inputContact">Password</label>
@@ -87,10 +87,11 @@
                             <div class="box-footer">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <button type="submit" name="submitsave" id="btnRegister" class="btn btn-primary">Register</button>
+                                        <!--<button type="submit" name="submitsave" id="btnRegister" class="btn btn-primary">Register</button>-->
+                                        <input type="button" class="btn btn-primary" id="btnRegister" value="Register"/>
                                     </div>
                                     <div class="col-md-6">
-                                        <button type="submit" name="cancel" id="btnCancel" class="btn btn-primary pull-right">Cancel</button>
+                                        <button type="button" name="cancel" id="btnCancel" class="btn btn-primary pull-right">Cancel</button>
                                     </div>
                                 </div>
                             </div>
@@ -103,69 +104,76 @@
         </section><!-- /.content -->
     </div><!-- /.content-wrapper -->
     <script>
-    $(document).ready(function () {
-//        $.validator.addMethod("pattern", function (value, element, regexpr) {
-//            return regexpr.test(value);
-//        }, "Value in the field is invalid");
+        $(document).ready(function () {
+            $.validator.addMethod("pattern", function (value, element, regexpr) {
+                return regexpr.test(value);
+            }, "Value in the field is invalid");
 
-        $("#frmURegister").validate({
-            rules: {
-                username: {
-                    required: true,
-                    remote: {
-                        url: "/TopNotch/user/exists",
-                        type: "POST",
-                        data: {
-                            username: function () {
-                                return $("#username").val();
+            $("#frmURegister").validate({
+                rules: {
+                    username: {
+                        required: true,
+                        remote: {
+                            url: "/TopNotch/user/exists",
+                            type: "POST",
+                            data: {
+                                username: function () {
+                                    return $("#username").val();
+                                }
                             }
                         }
+                    },
+                    email: {
+                        required: true,
+                        pattern: /^[a-zA-Z0-9_\.]{3,}@([a-zA-Z0-9_]{3,})(\.[a-zA-Z0-9\_]{2,})+$/
+                    },
+                    confirm: {
+                        required: true,
+                        equalTo: "#password"
                     }
                 },
-                email: {
-                    required: true,
-                    pattern: /^[a-zA-Z0-9_\.]{3,}@([a-zA-Z0-9_]{3,})(\.[a-zA-Z0-9\_]{2,})+$/
-                },
-                confirm: {
-                    required: true,
-                    equalTo: "#password"
-                }
-            },
-            messages: {
-                username: {
-                    remote: "Username is already taken!"
-                }
-            }
-        });
-
-        $(document).on("click", "#btnRegister", function () {
-            $("#frmURegister").validate();
-            if ($("#frmURegister").valid()) {
-                var user = {
-                    username: $("#username").val(),
-                    fName: $("#fName").val(),
-                    lName: $("#lName").val(),
-                    email: $("#email").val(),
-                    password: $("#password").val()
-                };
-
-                $.ajax({
-                    url: "/TopNotch/user/doRegistration",
-                    type: "POST",
-                    dataType: "JSON",
-                    data: {
-                        userData: user
-                    },
-                    success: function (data) {
-                        alert("Successfully registered!");
-                        console.log(data);
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        alert(textStatus);
-                        console.log(errorThrown);
+                messages: {
+                    username: {
+                        remote: "Username is already taken!"
                     }
-                });
-            }
+                }
+            });
+
+            $(document).on("click", "#btnRegister", function () {
+                $("#frmURegister").validate();
+                if ($("#frmURegister").valid()) {
+                    var user = {
+                        username: $("#username").val(),
+                        fName: $("#fName").val(),
+                        lName: $("#lName").val(),
+                        email: $("#email").val(),
+                        password: $("#password").val()
+                    };
+
+                    $.ajax({
+                        url: "/TopNotch/user/doRegistration",
+                        type: "POST",
+                        dataType: "JSON",
+                        data: {
+                            userData: user
+                        },
+                        success: function (data) {
+                            $("#err").html('<div class="box box-solid box-success">\n\
+                <div class = "box-header"><h3 class = "box-title"> Success! </h3></div>\n\
+<div class = "box-body">User Successfully Registered.</div></div>');
+                            window.location = "TopNotch/user/login";
+//                        alert("Successfully registered!");
+                            console.log(data);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            $("#err").html('<div class="box box-solid box-danger">\n\
+                <div class = "box-header"><h3 class = "box-title"> Error! </h3></div>\n\
+<div class = "box-body">' + textStatus + '</div></div>');
+                            alert(textStatus);
+                            console.log(errorThrown);
+                        }
+                    });
+                }
+            });
         });
-    });
-</script>
+    </script>
