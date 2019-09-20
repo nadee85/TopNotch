@@ -11,25 +11,95 @@
  *
  * @author Nadeeshani
  */
-class SupplierController extends BaseController{
+class SupplierController extends BaseController {
+
     //put your code here
     public function newSupplier() {
         $this->loadView();
     }
-    
-    public function  supplierList(){
+
+    public function supplierList() {
         $this->loadView();
     }
-    
-    public function newSupplierPayment(){
+
+    public function newSupplierPayment() {
         $this->loadView();
     }
-    
-    public function supplierPaymentList(){
+
+    public function supplierPaymentList() {
         $this->loadView();
     }
-    
-    public function supplierDuePaymentList(){
+
+    public function supplierDuePaymentList() {
         $this->loadView();
     }
+
+    public function loadSuppliers() {
+        $supplier = new Supplier();
+        $supplier->findList();
+    }
+
+    public function loadByName() {
+        $supplier = new Supplier();
+        $supplier->findByName();
+    }
+
+    public function addSupplier() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("HTTP/1.1 405 NOT ALLOWED");
+        }
+        $supData = $_POST['supData'];
+
+        if ($supData['status'] === "true") {
+            $status = 1;
+        } else {
+            $status = 0;
+        }
+
+        $supplier = new Supplier();
+
+        $supplier->fname = $supData['fName'];
+        $supplier->lname = $supData['lName'];
+        $supplier->address = $supData['address'];
+        $supplier->tp = $supData['telephone'];
+        $supplier->mobile = $supData['mobile'];
+        $supplier->email = $supData['email'];
+        $supplier->status = $status;
+
+        $res = $supplier->save();
+        echo json_encode($res);
+        if (!$res) {
+            header("HTTP/1.1 500 Internal Server Error");
+        }
+    }
+
+    public function updateSupplier() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("HTTP/1.1 405 NOT ALLOWED");
+        }
+        $supData = $_POST['supData'];
+        if ($supData['status'] === "true") {
+            $status = 1;
+        } else {
+            $status = 0;
+        }
+
+        $supplier = new Supplier();
+
+        $supplier->id = $supData['supId'];
+        $supplier->fname = $supData['fName'];
+        $supplier->lname = $supData['lName'];
+        $supplier->address = $supData['address'];
+        $supplier->tp = $supData['telephone'];
+        $supplier->mobile = $supData['mobile'];
+        $supplier->email = $supData['email'];
+        $supplier->status = $status;
+
+        $res = $supplier->update();
+        echo json_encode($res);
+        if (!$res) {
+            header("HTTP/1.1 500 Internal Server Error");
+        }
+    }
+
 }

@@ -11,17 +11,18 @@ and open the template in the editor.
         <title>TopNotch</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <script src="<?= RESOURCES ?>vendor/jquery.min.js"></script>
-<!--         Bootstrap 3.3.2 -->
+        <script src="<?= RESOURCES ?>vendor/pagination.min.js"></script>
+        <!--         Bootstrap 3.3.2 -->
         <link href="<?= RESOURCES ?>bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-         <!--Font Awesome Icons--> 
+        <!--Font Awesome Icons--> 
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-         <!--Ionicons--> 
+        <!--Ionicons--> 
         <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-         <!--Theme style--> 
+        <!--Theme style--> 
         <link href="<?= RESOURCES ?>dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
         <link href="<?= RESOURCES ?>dist/css/tableprop.css" rel="stylesheet" type="text/css" />
-<!--         AdminLTE Skins. Choose a skin from the css/skins 
-             folder instead of downloading all of them to reduce the load. -->
+        <!--         AdminLTE Skins. Choose a skin from the css/skins 
+                     folder instead of downloading all of them to reduce the load. -->
         <link href="<?= RESOURCES ?>dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
         <script src="<?= RESOURCES ?>vendor/jquery.validate.min.js"></script>
 
@@ -37,7 +38,9 @@ and open the template in the editor.
         <div class="wrapper">
             <header class="main-header">
                 <!--<a href="index.php" class="logo"><b>Admin</b>Panel</a>-->
-                <a href="../home/index" class="navbar-brand"><img src="<?= RESOURCES ?>dist/logo1.png" width="125" height="60"></a>
+                <a href="../home/index" class="navbar-brand">
+                    <img src="<?= RESOURCES ?>dist/logo1.png" width="125" height="60">
+                </a>
                 <!-- Header Navbar: style can be found in header.less -->
                 <nav class="navbar navbar-static-top" role="navigation">
                     <!-- Sidebar toggle button-->
@@ -63,7 +66,7 @@ and open the template in the editor.
                                                                         <li> start message 
                                                                             <a href="#">
                                                                                 <div class="pull-left">
-                                                                                    <img src="dist/img/<?php // echo $_SESSION["userPicture"];  ?>" class="img-circle" alt="User Image"/>
+                                                                                    <img src="dist/img/<?php // echo $_SESSION["userPicture"];   ?>" class="img-circle" alt="User Image"/>
                                                                                 </div>
                                                                                 <h4>
                                                                                     Support Team
@@ -133,12 +136,12 @@ and open the template in the editor.
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <img src="<?= RESOURCES ?>dist/img/user1-128x128.jpg" class="user-image" alt="User Image"/>
-                                    <span class="hidden-xs"><?php // echo $_SESSION["userName"];  ?></span>
+                                    <span class="hidden-xs"><?php // echo $_SESSION["userName"];   ?></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
                                     <li class="user-header">
-                                        <img src="<?= RESOURCES ?>dist/img/user1-128x128.jpg<?php // echo $_SESSION["userPicture"];  ?>" class="img-circle" alt="User Image" />
+                                        <img src="<?= RESOURCES ?>dist/img/user1-128x128.jpg<?php // echo $_SESSION["userPicture"];   ?>" class="img-circle" alt="User Image" />
                                         <p>
                                             <?php // echo $_SESSION["userName"] . " - " . $_SESSION["userPrivilege"]; ?>
                                             <small>Member since Nov. 2012</small>
@@ -179,14 +182,14 @@ and open the template in the editor.
                 <section class="sidebar">
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
-                        <!--                        <div class="pull-left image">
-                                                    <img src="<?= RESOURCES ?>dist/img/user1-128x128.jpg<?php // echo $_SESSION["userPicture"];  ?>" class="img-circle" alt="User Image" />
-                                                </div>
-                                                <div class="pull-left info">
-                                                    <p><?php // echo $_SESSION["userName"];  ?></p>
-                        
-                                                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                                                </div>-->
+<!--                        <div class="pull-left image">
+                            <img src="<?= RESOURCES ?>dist/img/user1-128x128.jpg<?php // echo $_SESSION["userPicture"];   ?>" class="img-circle" alt="User Image" />
+                        </div>
+                        <div class="pull-left info">
+                            <p><?php // echo $_SESSION["userName"];   ?></p>
+
+                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                        </div>-->
                     </div>
                     <!-- search form -->
                     <form action="#" method="get" class="sidebar-form">

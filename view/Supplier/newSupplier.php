@@ -24,7 +24,7 @@
                     <div class="box-header">
                         <h3 class="box-title">Fill all Fields</h3>
                     </div><!-- /.box-header -->
-
+                    <div id="err"></div>
 
 
                     <?php
@@ -59,12 +59,12 @@
 
 
                     <!-- form start -->
-                    <form role="form" action="<?php // echo htmlspecialchars($_SERVER["PHP_SELF"]);   ?>" method="post" enctype="multipart/form-data">
+                    <form id="frmSupplier">
                         <div class="box-body">
-                            <div class="form-group">
+<!--                            <div class="form-group">
                                 <label for="inputCusId">Supplier ID</label>
                                 <input type="text" class="form-control" id="supplierid" placeholder="Enter Supplier ID" name="txtSupId">
-                            </div>
+                            </div>-->
                             <div class="form-group">
                                 <label for="inputFname">First Name</label>
                                 <input type="text" class="form-control" id="fname" placeholder="Enter First Name" name="txtFName">
@@ -91,13 +91,14 @@
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="status" checked > Set Enable
+                                    <input type="checkbox" name="status" id="status" checked >Active
                                 </label>
                             </div>
                         </div><!-- /.box-body -->
 
                         <div class="box-footer">
-                            <button type="submit" name="submit" id="btnSave" class="btn btn-primary">Submit</button>
+                            <input type="button" name="submit" id="btnSave" class="btn btn-primary" value="Submit">
+                            <!--<button type="submit" name="submit" id="btnSave" class="btn btn-primary">Submit</button>-->
                         </div>
                     </form>
                 </div><!-- /.box -->
@@ -109,39 +110,53 @@
 </div><!-- /.content-wrapper -->
 <script>
     $(document).ready(function () {
-        $(document).on("click", "#btnRegister", function () {
-            var password = $("#password").val();
-            var confirmPassword = $("#confirmPassword").val();
-
-            if (password !== confirmPassword) {
-                //Passwords mismatching
-                alert("Passwords do not match!");
-            }
-
-            var user = {
-                username: $("#username").val(),
-                firstName: $("#firstName").val(),
-                lastName: $("#lastName").val(),
-                email: $("#email").val(),
-                password: $("#password").val()
-            };
-
-            $.ajax({
-                url: "/BITProject2019/user/doRegistration",
-                type: "POST",
-                dataType: "JSON",
-                data: {
-                    userData: user
-                },
-                success: function (data) {
-                    alert("Successfully registered!");
-                    console.log(data);
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    alert(textStatus);
-                    console.log(errorThrown);
+        $("#frmSupplier").validate({
+            rules: {
+                email: {
+                    required: true,
+                    pattern: /^[a-zA-Z0-9_\.]{3,}@([a-zA-Z0-9_]{3,})(\.[a-zA-Z0-9\_]{2,})+$/
                 }
-            })
+            }
+        });
+
+        $(document).on("click", "#btnSave", function () {
+            $("#frmSupplier").validate();
+            if ($("#frmSupplier").valid()) {
+                var supplier = {
+//                    cusId: $("#customerid").val(),
+                    fName: $("#fname").val(),
+                    lName: $("#lname").val(),
+                    address: $("#address").val(),
+                    telephone: $("#telephone").val(),
+                    mobile: $("#mobile").val(),
+                    email: $("#email").val(),
+                    status: $("#status").is(":checked")
+                };
+
+                $.ajax({
+                    url: "/TopNotch/supplier/addSupplier",
+                    type: "POST",
+                    dataType: "JSON",
+                    data: {
+                        supData: supplier
+                    },
+                    success: function (data) {
+                        $("#err").html('<div class="box box-solid box-success">\n\
+                <div class = "box-header"><h3 class = "box-title"> Success! </h3></div>\n\
+<div class = "box-body">Supplier Successfully Registered.</div></div>');
+//                        alert("Successfully registered!");
+                        console.log(data);
+                        $(frmSupplier).closest('form').find("input[type=text],input[type=tel],input[type=email],textarea").val("");
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        $("#err").html('<div class="box box-solid box-danger">\n\
+                <div class = "box-header"><h3 class = "box-title"> Error! </h3></div>\n\
+<div class = "box-body">' + textStatus + '</div></div>');
+                        alert(textStatus);
+                        console.log(errorThrown);
+                    }
+                });
+            }
         });
     });
 </script>

@@ -7,16 +7,15 @@
  */
 
 /**
- * Description of User
+ * Description of UserDetail
  *
  * @author Nadeeshani
  */
-class User extends BaseModel{
+class UserDetails extends BaseModel{
     //put your code here
-    public $id;
-    public $fname;
-    public $lname;
-    public $mobile;
-    public $email;
-    public $password;
+    public $userid;
+    public $nic;
+    public $address;
+    public $picture;
+    public $status;
 }

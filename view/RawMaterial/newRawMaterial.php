@@ -24,42 +24,9 @@
                     <div class="box-header">
                         <h3 class="box-title">Fill all Fields</h3>
                     </div><!-- /.box-header -->
-
-
-
-                    <?php
-//                    if ($errMsg != null) {
-                    ?>
-                    <div class="box box-solid box-danger">
-                        <div class="box-header">
-                            <h3 class="box-title">Error!</h3>
-                        </div><!-- /.box-header -->
-                        <div class="box-body">
-                            <?php // echo $errMsg; ?>
-                        </div><!-- /.box-body -->
-                    </div><!-- /.box -->
-                    <?php
-//                    }
-                    ?>
-                    <?php
-//                    if ($successMsg != null) {
-                    ?>
-                    <div class="box box-solid box-success">
-                        <div class="box-header">
-                            <h3 class="box-title">Success!</h3>
-                        </div><!-- /.box-header -->
-                        <div class="box-body">
-                            <?php // echo $successMsg; ?>
-                        </div><!-- /.box-body -->
-                    </div><!-- /.box -->
-                    <?php
-//                    }
-                    ?>
-
-
-
+                    <div id="err"></div>
                     <!-- form start -->
-                    <form role="form" action="<?php // echo htmlspecialchars($_SERVER["PHP_SELF"]);  ?>" method="post" enctype="multipart/form-data">
+                    <form id="frmRawMaterial">
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="inputID">Raw Material ID</label>
@@ -76,13 +43,13 @@
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="mandatory" checked > Mandatory
+                                    <input type="checkbox" name="mandatory" checked id="mandatory"> Mandatory
                                 </label>
                             </div>
                         </div><!-- /.box-body -->
 
                         <div class="box-footer">
-                            <button type="submit" name="submit" id="btnSave" class="btn btn-primary">Submit</button>
+                            <input type="button" name="submit" id="btnSave" class="btn btn-primary" value="Submit">
                         </div>
                     </form>
                 </div><!-- /.box -->
@@ -94,39 +61,40 @@
 </div><!-- /.content-wrapper -->
 <script>
     $(document).ready(function () {
-        $(document).on("click", "#btnRegister", function () {
-            var password = $("#password").val();
-            var confirmPassword = $("#confirmPassword").val();
+        $(document).on("click", "#btnSave", function () {
+            $("#frmRawMaterial").validate();
+            if ($("#frmRawMaterial").valid()) {
+                var rawMaterial = {
+                    id: $("#rawmatid").val(),
+                    description: $("#description").val(),
+                    stock: $("#stock").val(),
+                    mandatory: $("#mandatory").is(":checked")
+                };
 
-            if (password !== confirmPassword) {
-                //Passwords mismatching
-                alert("Passwords do not match!");
+                $.ajax({
+                    url: "/TopNotch/rawmaterial/addRawMaterial",
+                    type: "POST",
+                    dataType: "JSON",
+                    data: {
+                        rawData: rawMaterial
+                    },
+                    success: function (data) {
+                        $("#err").html('<div class="box box-solid box-success">\n\
+                <div class = "box-header"><h3 class = "box-title"> Success! </h3></div>\n\
+<div class = "box-body">Raw Material Successfully Added.</div></div>');
+//                        alert("Successfully registered!");
+                        console.log(data);
+                        $(frmRawMaterial).closest('form').find("input[type=text],input[type=tel],input[type=email],textarea").val("");
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        $("#err").html('<div class="box box-solid box-danger">\n\
+                <div class = "box-header"><h3 class = "box-title"> Error! </h3></div>\n\
+<div class = "box-body">' + textStatus + '</div></div>');
+                        alert(textStatus);
+                        console.log(errorThrown);
+                    }
+                });
             }
-
-            var user = {
-                username: $("#username").val(),
-                firstName: $("#firstName").val(),
-                lastName: $("#lastName").val(),
-                email: $("#email").val(),
-                password: $("#password").val()
-            };
-
-            $.ajax({
-                url: "/BITProject2019/user/doRegistration",
-                type: "POST",
-                dataType: "JSON",
-                data: {
-                    userData: user
-                },
-                success: function (data) {
-                    alert("Successfully registered!");
-                    console.log(data);
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    alert(textStatus);
-                    console.log(errorThrown);
-                }
-            })
         });
     });
 </script>

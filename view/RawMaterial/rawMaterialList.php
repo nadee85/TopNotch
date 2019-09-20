@@ -21,41 +21,40 @@
                     <div class="box-header">
                         <h3 class="box-title">Search Raw Materials</h3>
                     </div><!-- /.box-header -->
+                    <div id="err"></div>
                     <!-- form start -->
-                    <form role="form" action="<?php // echo htmlspecialchars($_SERVER["PHP_SELF"]);  ?>?page=<?php // echo $pageNo;  ?>" method="get" id="advform" >
+                    <form id="frmRawMaterialList">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="box-body">
-                                    <input type="hidden" name="page" value="<?php // echo $pageNo;  ?>">
+                                    <input type="hidden" name="page" value="<?php // echo $pageNo;   ?>">
 
                                     <div class="form-group">
                                         <label for="inputCusid">Raw Material Id </label>
-                                        <input type="text" class="form-control" id="rMaterialId" placeholder="Enter Raw Material Id " name="txtRMaterialId" value="<?php // echo $cusid;  ?>" >
+                                        <input type="text" class="form-control" id="rMaterialId" placeholder="Enter Raw Material Id " name="txtRMaterialId">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="inputCusfname">Description</label>
-                                        <input type="text" class="form-control" id="description" placeholder="Enter Description" name="txtDescription" value="<?php // echo $cusfname;  ?>" >
+                                        <input type="text" class="form-control" id="description" placeholder="Enter Description" name="txtDescription">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="box-body">
+                                    <input type="hidden" id="stock" name="txtStock">
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" name="status" <?php
-//                                            if ($status == '1') {
-//                                                echo ' checked ';
-//                                            }
-                                            ?> > Active Only
+                                            <input type="checkbox" name="mandatory" id="mandatory"> Mandatory
                                         </label>
                                     </div>
                                 </div><!--box-body-->
                             </div><!--md-->
                         </div><!--row-->
                         <div class="box-footer">
-                            <button type="submit" name="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
-                            <button type="submit" name="submit" onclick="submitForm('CollectionScheduleReport.php')" class="btn btn-primary"><i class="fa fa-print"> </i> Print</button>
+                            <!--<button type="submit" name="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>-->
+                            <input type="button" class="btn btn-primary" id="btnUpdate" value="Update"/>
+                            <!--<button type="submit" name="submit" onclick="submitForm('CollectionScheduleReport.php')" class="btn btn-primary"><i class="fa fa-print"> </i> Print</button>-->
                             <script>
                                 function submitForm(action) {
                                     $("#advform").attr("action", action);
@@ -102,7 +101,7 @@
                             ?>
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <div class="dataTables_info" id="example2_info">Showing <?php // echo ($startNo - 1) * $resultsPerPage;  ?> to <?php // echo $endNo * $resultsPerPage;  ?> of <?php // echo $resultsFound;  ?> entries</div>
+                                    <div class="dataTables_info" id="example2_info">Showing <?php // echo ($startNo - 1) * $resultsPerPage;   ?> to <?php // echo $endNo * $resultsPerPage;   ?> of <?php // echo $resultsFound;   ?> entries</div>
                                 </div>
                                 <div class="col-xs-6">
                                     <div class="dataTables_paginate paging_bootstrap">
@@ -118,7 +117,7 @@
 //                                                    echo "";
 //                                                }
                                             ?>>
-                                                <a href="<?php // echo $url . "page=" . $i  ?>" ><?php // echo $i;  ?></a>
+                                                <a href="<?php // echo $url . "page=" . $i   ?>" ><?php // echo $i;   ?></a>
                                             </li>
                                             <?php
 //                                            }
@@ -134,83 +133,17 @@
                                 <tr>
                                     <th>Raw Material Id</th>
                                     <th>Description </th>
-                                    <th>Price </th>
+                                    <th>Current Stock </th>
                                     <th>Status </th>
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php
-//                                try {
-//                                    $con = connect_database();
-//                                    $sql = "SELECT `customer`.*, `shop`.`ShopName`  FROM `customer` INNER JOIN `shop` ON `customer`.`ShopId`=`shop`.`ShopId` WHERE " . $query;
-//                                    $result = $con->query($sql);
-//                                    if ($result->num_rows > 0) {
-//                                        $currentNo = 0;
-//                                        while ($row = $result->fetch_assoc()) {
-//                                            if ($currentNo >= ($pageNo - 1) * $resultsPerPage && $currentNo < $pageNo * $resultsPerPage) {
-//                                                $statusIndc = "<span class=\"label label-danger\">Disabled</span>";
-//                                                if ($row["Status"] == 1) {
-//                                                    $statusIndc = "<span class=\"label label-success\">Enabled</span>";
-//                                                }
-//
-//                                                echo '<tr>';
-//                                                if ($row["Picture"] != NULL && !empty($row["Picture"])) {
-//                                                    echo '<td><img class="direct-chat-img" src="dist/img/' . $row["Picture"] . '" alt=""></td>';
-//                                                } else {
-//                                                    echo '<td><img class="direct-chat-img" src="dist/default-profile.png" alt=""></td>';
-//                                                }
-//                                                if ($_SESSION["userPrivilege"] == "admin") {
-//                                                    echo '<td>' . $row["CusId"] . '</td>';
-//                                                }
-//                                                echo '<td>' . $row["CusFname"] . " " . $row["CusLname"] . '</td>';
-//                                                echo '<td>' . $row["Address"] . '</td>';
-//                                                echo '<td>' . $row["TelephoneNo"] . '</td>';
-//                                                echo '<td>' . $row["NIC"] . '</td>';
-//                                                echo '<td>' . $row["ShopName"] . '</td>';
-//                                                echo '<td>' . $statusIndc . '</td>';
-                                ?>
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-info btn-xs">Action</button>
-                                    <button type="button" class="btn btn-info dropdown-toggle btn-xs" data-toggle="dropdown">
-                                        <span class="caret"></span>
-                                        <span class="sr-only">Toggle Dropdown</span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="ViewCustomer.php?cusid=<?php // echo $row["CusId"];  ?>">View</a></li>
-                                        <li><a href="UpdateCustomer.php?cusid=<?php // echo $row["CusId"];  ?>">Update</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <?php
-//                                            echo '</tr>';
-//                                        }
-//                                        $currentNo++;
-//                                    }
-//                                } else {
-//                                    $errMsg = "No Items to Display.";
-//                                }
-//                                $con->close();
-//                            } catch (Exception $exc) {
-//                                $errMsg = "<br>Error description: " . $exc;
-//                            }
-                            ?>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Raw Material Id</th>
-                                    <th>Description </th>
-                                    <th>Price </th>
-                                    <th>Status </th>
-                                    <th></th>
-                                </tr>
-                            </tfoot>
+                            <tbody id="data"></tbody>
                         </table>
                         <div class="pane">
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <div class="dataTables_info" id="example2_info">Showing <?php // echo ($startNo - 1) * $resultsPerPage;  ?> to <?php // echo $endNo * $resultsPerPage;  ?> of <?php // echo $resultsFound;  ?> entries</div>
+                                    <div class="dataTables_info" id="example2_info">Showing <?php // echo ($startNo - 1) * $resultsPerPage;   ?> to <?php // echo $endNo * $resultsPerPage;   ?> of <?php // echo $resultsFound;   ?> entries</div>
                                 </div>
                                 <div class="col-xs-6">
                                     <div class="dataTables_paginate paging_bootstrap">
@@ -226,7 +159,7 @@
 //                                                    echo "";
 //                                                }
                                             ?>>
-                                                <a href="<?php // echo $url . "page=" . $i  ?>" ><?php // echo $i;  ?></a>
+                                                <a href="<?php // echo $url . "page=" . $i   ?>" ><?php // echo $i;   ?></a>
                                             </li>
                                             <?php
 //                                            }
@@ -244,3 +177,107 @@
         </div><!-- /.row -->
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
+
+<script>
+    var ajax = new XMLHttpRequest();
+    ajax.open("GET", "/TopNotch/rawmaterial/loadRawMaterials", true);
+    ajax.send();
+
+    ajax.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var data = JSON.parse(this.responseText);
+            console.log(data);
+            var html = "";
+            for (var a = 0; a < data.length; a++) {
+                html += "<tr>";
+                html += "<td>" + data[a].id + "</td>";
+                html += "<td>" + data[a].description + "</td>";
+                html += "<td>" + data[a].curStock + "</td>";
+                if (data[a].mandatory == 1) {
+                    html += "<td><span class='label label-success'>Mandatory</span></td>";
+                } else {
+                    html += "<td><span class='label label-danger'>Optional</span></td>";
+                }
+                html += "<td><buttin type='button' id='btnView' class='btn btn-info btn-xs'>View</button></td>";
+                html += "</tr>";
+            }
+            document.getElementById("data").innerHTML += html;
+        }
+    };
+
+    $('#description').keypress(function () {
+        var description = $('#description').val();
+        $.ajax({
+            url: "/TopNotch/rawmaterial/loadByName",
+            method: "POST",
+            data: {description: description},
+            dataType: "JSON",
+            success: function (data) {
+                console.log(data);
+                $('#data').empty();
+                var html = "";
+                for (var a = 0; a < data.length; a++) {
+                    html += "<tr>";
+                    html += "<td>" + data[a].id + "</td>";
+                    html += "<td>" + data[a].description + "</td>";
+                    html += "<td>" + data[a].curStock + "</td>";
+                    if (data[a].mandatory == 1) {
+                        html += "<td><span class='label label-success'>Mandatory</span></td>";
+                    } else {
+                        html += "<td><span class='label label-danger'>Optional</span></td>";
+                    }
+                    html += "<td><buttin type='button' id='btnView' class='btn btn-info btn-xs'>View</button></td>";
+                    html += "</tr>";
+                }
+                document.getElementById("data").innerHTML += html;
+            }
+        });
+    });
+
+    $('table tbody').on('click', '.btn', function () {
+        var currow = $(this).closest('tr');
+        $("#rMaterialId").val(currow.find('td:eq(0)').text());
+        $("#description").val(currow.find('td:eq(1)').text());
+        $("#stock").val(currow.find('td:eq(2)').text());
+        if (currow.find('td:eq(4)').text() === "Mandatory") {
+            $("#mandatory").prop("checked", true);
+        } else {
+            $("#mandatory").prop("checked", false);
+        }
+    })
+
+    $(document).ready(function () {
+        $(document).on("click", "#btnUpdate", function () {
+            var rawMaterial = {
+                id: $("#rMaterialId").val(),
+                description: $("#description").val(),
+                stock: $("#stock").val(),
+                mandatory: $("#mandatory").is(":checked")
+            };
+
+            $.ajax({
+                url: "/TopNotch/rawmaterial/updateRawMaterial",
+                type: "POST",
+                dataType: "JSON",
+                data: {
+                    rawData: rawMaterial
+                },
+                success: function (data) {
+                    $("#err").html('<div class="box box-solid box-success">\n\
+                <div class = "box-header"><h3 class = "box-title"> Success! </h3></div>\n\
+<div class = "box-body">Raw Material Successfully Updated.</div></div>');
+//                        alert("Successfully registered!");
+                    console.log(data);
+                    $(frmRawMaterialList).closest('form').find("input[type=text],input[type=tel],input[type=email],textarea").val("");
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $("#err").html('<div class="box box-solid box-danger">\n\
+                <div class = "box-header"><h3 class = "box-title"> Error! </h3></div>\n\
+<div class = "box-body">' + textStatus + '</div></div>');
+                    alert(textStatus);
+                    console.log(errorThrown);
+                }
+            });
+        });
+    });
+</script>

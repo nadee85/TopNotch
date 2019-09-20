@@ -24,7 +24,7 @@ class Router
             $className = sprintf("%sController", ucfirst($urlSegments[0]));
             $methodName = $urlSegments[1];
             $pathParams = array_slice($urlSegments, 2);
-
+            
             $request->setControllerName($className);
             $request->setActionName($methodName);
             $request->setPathParams($pathParams);

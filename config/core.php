@@ -13,5 +13,6 @@ $config["anonymousAllowed"] = array(
     "/user/authenticate",
     "/user/userreg",
     "/user/doRegistration[.]*",
-    "/user/exists"
+    "/user/exists",
+    "/customer/addCustomer"
 );

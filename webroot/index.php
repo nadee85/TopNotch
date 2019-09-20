@@ -34,12 +34,14 @@ $controllerName = $request->getControllerName();
 $methodName = $request->getActionName();
 $params = $request->getPathParams();
 
+
 $controller = new $controllerName();
 
 call_user_func_array(array($controller, $methodName), $params);
 
 function isAuthenticated($anonymousAllowed){
     $url = str_replace(APPROOT, "", $_SERVER["REQUEST_URI"]);
+    
     foreach ($anonymousAllowed as $re){
         $regEx = sprintf("/^%s/", str_replace("/", "\/", $re));
         if(preg_match($regEx, $url)){

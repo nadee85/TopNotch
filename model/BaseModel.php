@@ -15,10 +15,10 @@ class BaseModel {
 
     //put your code here
     protected $con;
-    protected $id;
+//    protected $id;
 
     public function __construct() {
-        $this->con = new mysqli("localhost", "root", "adm!nsb123", "topnotch", "3306");
+        $this->con = new mysqli("localhost", "root", "", "topnotch", "3306");
     }
 
     public function save($element = NULL) {
@@ -63,12 +63,13 @@ class BaseModel {
         }
         
         $query = "UPDATE $tableName SET $valueString WHERE id=$id";
-
+        
+        
         $res = $this->con->query($query);
-
         if (!$res) {
-            $err = $this->con->error_list;
+            echo $this->con->error_list;
         }
+        return $res;
     }
 
     public function find($id) {
@@ -97,6 +98,19 @@ class BaseModel {
         return $this;
     }
 
+    public function findList() {
+        $tableName = get_class($this);
+        
+        $result = mysqli_query($this->con, "SELECT * FROM $tableName");
+
+        $data = array();
+        while ($row = mysqli_fetch_object($result)) {
+            array_push($data, $row);
+        }
+
+        echo json_encode($data);
+    }
+    
     private function getFields() {
         $reflect = new ReflectionClass($this);
         $properties = $reflect->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PRIVATE);

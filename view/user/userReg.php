@@ -24,39 +24,12 @@
                             <h3 class="box-title">Fill all Fields</h3>
                         </div><!-- /.box-header -->
 
+                        <div id="err">
 
-
-                        <?php
-//                    if ($errMsg != null) {
-                        ?>
-                        <!--                        <div class="box box-solid box-danger">
-                                                    <div class="box-header">
-                                                        <h3 class="box-title">Error!</h3>
-                                                    </div> /.box-header 
-                                                    <div class="box-body">
-                        <?php // echo $errMsg; ?>
-                                                    </div> /.box-body 
-                                                </div> /.box -->
-                        <?php
-//                    }
-                        ?>
-                        <?php
-//                    if ($successMsg != null) {
-                        ?>
-                        <!--                        <div class="box box-solid box-success">
-                                                    <div class="box-header">
-                                                        <h3 class="box-title">Success!</h3>
-                                                    </div> /.box-header 
-                                                    <div class="box-body">
-                        <?php // echo $successMsg; ?>
-                                                    </div> /.box-body 
-                                                </div> /.box -->
-                        <?php
-//                    }
-                        ?>
+                        </div>
 
                         <!-- form start -->
-                        <form role="form" id="frmURegister">
+                        <form role="form" id="frmURegister" action="login">
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="inputNIC">User Name</label>
@@ -69,6 +42,10 @@
                                 <div class="form-group">
                                     <label for="inputLname">Last Name</label>
                                     <input type="text" class="form-control" id="lName" placeholder="Enter Last Name" name="lName" required="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputContact">Mobile</label>
+                                    <input type="tel" class="form-control" id="mobile" placeholder="Enter Email" name="mobile" required="" >
                                 </div>
                                 <div class="form-group">
                                     <label for="inputContact">Email</label>
@@ -146,6 +123,7 @@
                         username: $("#username").val(),
                         fName: $("#fName").val(),
                         lName: $("#lName").val(),
+                        mobile: $("#mobile").val(),
                         email: $("#email").val(),
                         password: $("#password").val()
                     };
@@ -161,7 +139,7 @@
                             $("#err").html('<div class="box box-solid box-success">\n\
                 <div class = "box-header"><h3 class = "box-title"> Success! </h3></div>\n\
 <div class = "box-body">User Successfully Registered.</div></div>');
-                            window.location = "TopNotch/user/login";
+                            window.location = "userDetails";
 //                        alert("Successfully registered!");
                             console.log(data);
                         },
