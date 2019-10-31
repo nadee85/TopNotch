@@ -15,7 +15,6 @@ class BaseModel {
 
     //put your code here
     protected $con;
-//    protected $id;
 
     public function __construct() {
         $this->con = new mysqli("localhost", "root", "", "topnotch", "3306");
@@ -26,9 +25,16 @@ class BaseModel {
             $element = $this;
         }
 
-        $fields = $this->getFields();
-        $values = $this->getFieldValues($element);
+        $properties = $this->getFieldValueMap($this);
+        
 
+        $nonEmptyProperties = array_filter($properties, function($v, $k) {
+            return $v != NULL;
+        }, ARRAY_FILTER_USE_BOTH);
+        
+
+        $fields = array_keys($nonEmptyProperties);
+        $values = array_map(array($this, 'flatten'), array_values($nonEmptyProperties));
 
         $fieldList = implode(",", $fields);
         $valueList = implode(",", $values);
@@ -36,115 +42,113 @@ class BaseModel {
         $tableName = get_class($element);
 
         $query = "INSERT INTO $tableName($fieldList)VALUES ($valueList)";
+//        echo $query;
+
         $res = $this->con->query($query);
         if (!$res) {
-            echo $this->con->error;
+            $err = $this->con->error_list;
         }
         return $res;
     }
 
-    public function update($updatedElement = NULL) {
+    public function update($updatedElement = NULL, $idField = 'id') {
         $tableName = get_class($this);
 
         if (!isset($updatedElement)) {
             $updatedElement = $this;
         }
-
-        $fieldValueMap = $this->getFieldValueMap($updatedElement);
-
+        
+        $fieldValueMap = array_map(array($this,'flatten'), $this->getFieldValueMap($updatedElement));
+        
         $generateSqlKeyValuePairs = function ($k, $v) {
             return "$k=$v";
         };
 
         $valueString = implode(',', $this->array_map_asoc($generateSqlKeyValuePairs, $fieldValueMap));
 
-        if (gettype($this->id) !== "Integer") {
-            $id = "'$this->id'";
-        }
+        $query = "UPDATE $tableName SET $valueString WHERE $idField='".$this->$idField."'";
         
-        $query = "UPDATE $tableName SET $valueString WHERE id=$id";
-        
-        
+//        echo json_encode($query);
         $res = $this->con->query($query);
         if (!$res) {
-            echo $this->con->error_list;
+            $err= $this->con->error_list;
         }
         return $res;
     }
-
-    public function find($id) {
-        $tableName = get_class($this);
+    
+    public function getRelationalFields($res){
+        $relationalFields=array();
         
-        if (gettype($this->id) !== "Integer") {
-            $id = "'$this->id'";
+        while ($field=$res->fetch_field()){
+            $relationalFields[$field->name]=$field->type;
         }
         
-        $query = "SELECT * FROM $tableName WHERE id=$id";
-        
-        $res = $this->con->query($query);
+        return $relationalFields;
+    }
 
-        if ($res->num_rows < 0) {
+    protected function select($query){
+        $res=  $this->con->query($query);
+        
+        if ($res->num_rows<0) {
             return NULL;
         }
         
-        $record = $res->fetch_assoc();
-
-        $fields = $this->getFields();
-
-        foreach ($fields as $field) {
-            $this->$field = $record[$field];
-        }
+        $record=$res->fetch_assoc();
         
+        $fields=  $this->getRelationalFields($res);
+        
+        foreach ($fields as $name => $type) {
+            switch ($type){
+                case MYSQL_TYPES['DATETIME']:
+                    try{
+                        $this->$name=new DateTime($record[$name]);
+                    } catch (Exception $ex) {
+
+                    }
+                    break;
+                default :
+                    $this->$name=$record[$name];
+                    break;
+            }
+        }
         return $this;
     }
 
-    public function findList() {
-        $tableName = get_class($this);
-        
-        $result = mysqli_query($this->con, "SELECT * FROM $tableName");
 
-        $data = array();
-        while ($row = mysqli_fetch_object($result)) {
-            array_push($data, $row);
-        }
+//    private function getFields() {
+//        $reflect = new ReflectionClass($this);
+//        $properties = $reflect->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PRIVATE);
+//        $fields = array();
+//
+//        foreach ($properties as $k) {
+//            if ($k->getName() === "con") {
+//                continue;
+//            }
+//            $fields[] = $k->getName();
+//        }
+//        return $fields;
+//    }
 
-        echo json_encode($data);
-    }
-    
-    private function getFields() {
-        $reflect = new ReflectionClass($this);
-        $properties = $reflect->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PRIVATE);
-        $fields = array();
-
-        foreach ($properties as $k) {
-            if ($k->getName() === "con") {
-                continue;
-            }
-            $fields[] = $k->getName();
-        }
-        return $fields;
-    }
-
-    private function getFieldValues($element) {
-        $reflect = new ReflectionClass($element);
-        $properties = $reflect->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PRIVATE);
-        $values = array();
-
-        foreach ($properties as $k) {
-            if ($k->getName() === "con") {
-                continue;
-            }
-            $k->setAccessible(true);
-
-            $val = $k->getValue($element);
-            if (gettype($val) !== "Integer") {
-                $val = "'$val'";
-            }
-            $values[] = $val;
-            $k->setAccessible(FALSE);
-        }
-        return $values;
-    }
+//    private function getFieldValues($element) {
+//        $reflect = new ReflectionClass($element);
+//        $properties = $reflect->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PRIVATE);
+//        $values = array();
+//
+//        foreach ($properties as $k) {
+//            if ($k->getName() === "con") {
+//                continue;
+//            }
+//            $k->setAccessible(true);
+//
+//            $val = $k->getValue($element);
+//            if (gettype($val) !== "Integer") {
+//                $val = "'$val'";
+//            }
+//            $values[] = $val;
+//            $k->setAccessible(FALSE);
+//        }
+//        return $values;
+//    }
 
     private function getFieldValueMap($element) {
         $reflect = new ReflectionClass($element);
@@ -159,14 +163,11 @@ class BaseModel {
 
             $name = $k->getName();
             $val = $k->getValue($element);
-            if (gettype($val) !== "Integer") {
-                $val = "'$val'";
-            }
-
             $values[$name] = $val;
             $k->setAccessible(FALSE);
         }
         return $values;
+        
     }
 
     private function array_map_asoc($callback, $array) {
@@ -175,6 +176,24 @@ class BaseModel {
             $r[$key] = $callback($key, $value);
         }
         return $r;
+    }
+
+    private function flatten($value) {
+        switch (gettype($value)) {
+            case 'object':
+                switch (get_class($value)) {
+                    case 'DateTime':
+                        return "'" . $value->format(MYSQL_DATETIME_FORMAT) . "'";
+                    default :
+                }
+            case 'string':
+            case 'boolean':
+                return "'$value'";
+                break;
+            case 'integer':
+                return $value;
+            default :
+        }
     }
 
 }

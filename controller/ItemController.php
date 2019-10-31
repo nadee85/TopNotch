@@ -29,7 +29,8 @@ class ItemController extends BaseController {
 
     public function loadByName(){
         $item=new Item();
-        $item->findByName();
+        $description=$_POST['description'];
+        $item->findByField('description',$description);
     }
 
     public function addItem() {

@@ -8,11 +8,27 @@
 
 $config = array();
 
-$config["anonymousAllowed"] = array(
+$config["ANONYMOUS_ALLOWED"] = array(
     "/user/login(/[a-zA-Z\d\%]+)?",
     "/user/authenticate",
     "/user/userreg",
     "/user/doRegistration[.]*",
-    "/user/exists",
-    "/customer/addCustomer"
+    "/user/exists"
 );
+
+$config["SMS_CONFIG"] = array(
+    "host" => "localhost",
+    "port" => "9710",
+    "username"=>"admin",
+    "password"=>"123"
+);
+
+$config["OTP_CONFIG"] = array(
+    "ttl" => 30 //Currently, OTP is valid for only 30 seconds. Could be changed with this configuration
+);
+
+require_once 'mysql.php';
+
+foreach ($config as $k=>$v) {
+    define($k, $v);
+}

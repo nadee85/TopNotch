@@ -14,12 +14,12 @@ define('APPROOT', "/TopNotch");
 
 require(ROOT . "config/core.php");
 
-extract($config); //Decomposing $Config to variables
+//extract($config); //Decomposing $Config to variables
 
 require(ROOT . "Router.php");
 require(ROOT . "Request.php");
 
-if (!isAuthenticated($anonymousAllowed)) {
+if (!isAuthenticated(ANONYMOUS_ALLOWED)) {
     $postBack = $_SERVER["REQUEST_URI"];
     $postBack = urlencode(urlencode(urlencode($postBack)));
     header("location:/TopNotch/user/login/$postBack");
@@ -41,7 +41,6 @@ call_user_func_array(array($controller, $methodName), $params);
 
 function isAuthenticated($anonymousAllowed){
     $url = str_replace(APPROOT, "", $_SERVER["REQUEST_URI"]);
-    
     foreach ($anonymousAllowed as $re){
         $regEx = sprintf("/^%s/", str_replace("/", "\/", $re));
         if(preg_match($regEx, $url)){

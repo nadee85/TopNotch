@@ -155,7 +155,7 @@
                         <table id="table1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Customer Id </th>
+                                    <th>Supplier Id </th>
                                     <th>Name</th>
                                     <th>Address </th>
                                     <th>Telephone No </th>
@@ -228,7 +228,7 @@
                 } else {
                     html += "<td><span class='label label-danger'>Inactive</span></td>";
                 }
-                html += "<td><buttin type='button' id='btnView' class='btn btn-info btn-xs'>View</button></td>";
+                html += "<td><button type='button' id='btnView' class='btn btn-info btn-xs'>View</button></td>";
                 html += "</tr>";
             }
             document.getElementById("data").innerHTML += html;

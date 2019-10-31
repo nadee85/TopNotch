@@ -29,7 +29,8 @@ class CustomerController extends BaseController {
 
     public function loadByName() {
         $customer = new Customer();
-        $customer->findByName();
+        $name=$_POST['fname'];
+        $customer->findByField('fname',$name);
     }
 
     public function newCustomerPayment() {
@@ -65,7 +66,6 @@ class CustomerController extends BaseController {
         $customer->mobile = $cusData['mobile'];
         $customer->email = $cusData['email'];
         $customer->status = $status;
-
 
         $res = $customer->save();
         echo json_encode($res);

@@ -11,20 +11,11 @@
  *
  * @author Nadeeshani
  */
-class Item extends BaseModel {
+class Item extends IdentifiedBaseModel {
     //put your code here
     public $id;
     public $description;
     public $price;
     public $curStock;
     public $status;
-    
-    public function findByName(){
-        $result = mysqli_query($this->con, "SELECT * FROM item where description '" . $_POST['description'] . "%'");
-        $data = array();
-        while ($row = mysqli_fetch_object($result)) {
-            array_push($data, $row);
-        }
-        echo json_encode($data);
-    }
 }

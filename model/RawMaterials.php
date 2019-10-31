@@ -11,15 +11,15 @@
  *
  * @author Nadeeshani
  */
-class RawMaterials extends BaseModel{
+class RawMaterials extends IdentifiedBaseModel{
     //put your code here
     public $id;
     public $description;
     public $curStock;
     public $mandatory;
     
-    public function findByName(){
-        $result = mysqli_query($this->con, "SELECT * FROM rawmaterials where description '" . $_POST['description'] . "%'");
+    public function loadDescription(){
+        $result = mysqli_query($this->con, "SELECT id,description FROM rawmaterials");
         $data = array();
         while ($row = mysqli_fetch_object($result)) {
             array_push($data, $row);

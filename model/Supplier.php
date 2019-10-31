@@ -11,7 +11,7 @@
  *
  * @author Nadeeshani
  */
-class Supplier extends BaseModel{
+class Supplier extends IdentifiedBaseModel{
     //put your code here
     public $id;
     public $fname;
@@ -22,8 +22,17 @@ class Supplier extends BaseModel{
     public $email;
     public $status;
     
-    public function findByName(){
-        $result = mysqli_query($this->con, "SELECT * FROM supplier where fname LIKE '" . $_POST['fname'] . "%'");
+//    public function findByName(){
+//        $result = mysqli_query($this->con, "SELECT * FROM supplier where fname LIKE '" . $_POST['fname'] . "%'");
+//        $data = array();
+//        while ($row = mysqli_fetch_object($result)) {
+//            array_push($data, $row);
+//        }
+//        echo json_encode($data);
+//    }
+    
+    public function loadName(){
+        $result = mysqli_query($this->con, "SELECT id,fname,lname FROM supplier");
         $data = array();
         while ($row = mysqli_fetch_object($result)) {
             array_push($data, $row);

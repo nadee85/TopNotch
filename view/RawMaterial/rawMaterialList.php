@@ -239,7 +239,7 @@
         $("#rMaterialId").val(currow.find('td:eq(0)').text());
         $("#description").val(currow.find('td:eq(1)').text());
         $("#stock").val(currow.find('td:eq(2)').text());
-        if (currow.find('td:eq(4)').text() === "Mandatory") {
+        if (currow.find('td:eq(3)').text() === "Mandatory") {
             $("#mandatory").prop("checked", true);
         } else {
             $("#mandatory").prop("checked", false);

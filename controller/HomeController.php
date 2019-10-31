@@ -11,4 +11,9 @@ class HomeController extends BaseController
     public function index(){
         $this->loadView();
     }
+    
+    public function loadImage(){
+        $user=new User();
+        $user->loadImage();
+    }
 }

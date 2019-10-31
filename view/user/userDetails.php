@@ -30,27 +30,29 @@
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="inputNIC">User Name</label>
-                                <input type="text" class="form-control" id="username" placeholder="Enter User Name" name="txtUserName">
+                                <input type="text" class="form-control" id="username" placeholder="Enter User Name" name="username" required="">
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="inputNIC">NIC</label>
-                                <input type="text" class="form-control" id="nic" placeholder="Enter NIC" name="txtNic">
+                                <input type="text" class="form-control" id="nic" placeholder="Enter NIC" name="txtNic" required="">
                             </div>
-                            
+
                             <div class="form-group">
                                 <label>Address</label>
                                 <textarea class="form-control" id="address" rows="3" placeholder="Enter ..." name="txtAddress"></textarea>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="inputPicture">Profile Picture</label>
-                                <input type="file" id="picture" name="txtPicture">
+                                <input type="file" id="picture" name="txtPicture" required="">
                                 <p class="help-block">Image size should below 4mb. PNG, JPG</p>
                             </div>
-                            
-                            <div class="form-group">
-                                <input type="checkbox" id="status" name="status">Active
+
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="status" name="status" checked>Active
+                                </label>
                             </div>
                         </div><!-- /.box-body -->
 
@@ -67,62 +69,65 @@
 </div><!-- /.content-wrapper -->
 
 <script>
-        $(document).ready(function () {
-            $.validator.addMethod("pattern", function (value, element, regexpr) {
-                return regexpr.test(value);
-            }, "Value in the field is invalid");
-
-            $("#frmUDetails").validate({
-                rules: {
-                    username: {
-                        required: true
-                    },
-                    nic: {
-                        required: true
+    $(document).ready(function () {
+        $("#frmUDetails").validate({
+            rules: {
+                username: {
+                    required: true,
+                    remote: {
+                        url: "/TopNotch/user/uExists",
+                        type: "POST",
+                        data: {
+                            username: function () {
+                                return $("#username").val();
+                            }
+                        }
                     }
                 },
-                messages: {
-                    username: {
-                        remote: "Username is already taken!"
-                    }
+                nic: {required: true}
+            },
+            messages: {
+                username: {
+                    remote: "Username is already taken!"
                 }
-            });
+            }
+        });
 
-            $(document).on("click", "#btnSave", function () {
-                $("#frmUDetails").validate();
-                if ($("#frmUDetails").valid()) {
-                    var user = {
-                        username: $("#username").val(),
-                        nic: $("#nic").val(),
-                        address: $("#address").val(),
-                        picture: $("#picture").val(),
-                        status: $("#status").is(":checked")
-                    };
-
-                    $.ajax({
-                        url: "/TopNotch/user/addUserDetails",
-                        type: "POST",
-                        dataType: "JSON",
-                        data: {
-                            userDData: user
-                        },
-                        success: function (data) {
-                            $("#err").html('<div class="box box-solid box-success">\n\
+        $(document).on("click", "#btnSave", function () {
+            $("#frmUDetails").validate();
+            if ($("#frmUDetails").valid()) {
+                var filename = $('input[type=file]').val().replace(/C:\\fakepath\\/i, '');
+                var user = {
+                    username: $("#username").val(),
+                    nic: $("#nic").val(),
+                    address: $("#address").val(),
+                    picture: filename,
+                    status: $("#status").is(":checked")
+                };
+                $.ajax({
+                    url: "/TopNotch/user/addUserDetails",
+                    type: "POST",
+                    dataType: "JSON",
+                    data: {
+                        userDData: user
+                    },
+                    success: function (data) {
+                        $("#err").html('<div class="box box-solid box-success">\n\
                 <div class = "box-header"><h3 class = "box-title"> Success! </h3></div>\n\
 <div class = "box-body">User Details Successfully Added.</div></div>');
 //                            window.location = "login";
 //                        alert("Successfully registered!");
-                            console.log(data);
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            $("#err").html('<div class="box box-solid box-danger">\n\
+                        console.log(data);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        $("#err").html('<div class="box box-solid box-danger">\n\
                 <div class = "box-header"><h3 class = "box-title"> Error! </h3></div>\n\
 <div class = "box-body">' + textStatus + '</div></div>');
-                            alert(textStatus);
-                            console.log(errorThrown);
-                        }
-                    });
-                }
-            });
+                        alert(textStatus);
+                        console.log(errorThrown);
+                    }
+                });
+            }
         });
-    </script>
+    });
+</script>

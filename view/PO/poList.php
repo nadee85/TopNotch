@@ -21,138 +21,79 @@
                     <div class="box-header">
                         <h3 class="box-title">Search PO</h3>
                     </div><!-- /.box-header -->
+                    <div id="err"></div>
                     <!-- form start -->
-                    <form role="form" action="<?php // echo htmlspecialchars($_SERVER["PHP_SELF"]);      ?>?page=<?php // echo $pageNo;      ?>" method="get" id="advform" >
+                    <form>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="box-body">
-                                    <input type="hidden" name="page" value="<?php // echo $pageNo;  ?>">
-
                                     <div class="form-group">
                                         <label for="inputGrnid">PO No </label>
-                                        <input type="text" class="form-control" id="poNo" placeholder="Enter PO No " name="txtPONo" value="<?php // echo $grnid;  ?>" >
+                                        <input type="text" class="form-control" id="poNo" placeholder="Enter PO No " name="txtPONo">
                                     </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Supplier</label>
-                                    <select class="form-control" name="cmbSupId">
-                                        <option value="">Any</option>
-                                        <?php
-//                                            try {
-//                                                $con = connect_database();
-//                                                $sql = "SELECT * FROM `supplier`;";
-//                                                if ($_SESSION["userPrivilege"] == "shop owner") {
-//                                                    $sql = "SELECT * FROM `supplier` WHERE `ShopId` = '" . $shopId . "';";
-//                                                }
-//                                                $result = $con->query($sql);
-//                                                if ($result->num_rows > 0) {
-//                                                    while ($row = $result->fetch_assoc()) {
-//                                                        $supIndc = "";
-//                                                        if ($supid == $row["SupId"]) {
-//                                                            $supIndc = ' selected ';
-//                                                        }
-//                                                        echo '<option value="' . $row["SupId"] . '" ' . $supIndc . '>' . $row["SupName"] . '</option>';
-//                                                    }
-//                                                } else {
-//                                                    $errMsg = "No Items to Display.";
-//                                                }
-//                                                $con->close();
-//                                            } catch (Exception $exc) {
-//                                                $errMsg = "<br>Error description: " . $exc;
-//                                            }
-                                        ?>
-                                    </select>
+                                    <div class="form-group">
+                                        <label>Supplier</label>
+                                        <select class="form-control" id="cmbSup" name="cmbSupId">
+                                            <option></option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="box-body">
-                                    <div class="form-group">
-                                        <label>Date Added  Range:</label>
-                                        <div class="input-group">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-calendar"></i>
-                                            </div>
-                                            <input class="form-control pull-right datepicker" type="text" name="dateadded" value="<?php // echo $dateadded;  ?>" >                                            </div><!-- /.input group -->
-                                    </div><!-- /.form group -->
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="status" <?php
-//                                            if ($status == '1') {
-//                                                echo ' checked ';
-//                                            }
-                                            ?> > Active Only
-                                        </label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="box-body">
+                                            <div class="form-group">
+                                                <label>From</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </div>
+                                                    <input type="text" class="form-control pull-right" id="dateFrom"/>
+                                                </div><!-- /.input group -->
+                                            </div><!-- /.form group -->
+                                        </div>
                                     </div>
-                                </div><!--box-body-->
-                            </div><!--md-->
+                                    <div class="col-md-6">
+                                        <div class="box-body">
+                                            <div class="form-group">
+                                                <label>To</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </div>
+                                                    <input type="text" class="form-control pull-right" id="dateTo"/>
+                                                </div><!-- /.input group -->
+                                            </div><!-- /.form group -->
+                                        </div>
+                                    </div>
+                                </div><!--md-->
+                            </div>
                         </div><!--row-->
-                        <div class="box-footer">
-                            <button type="submit" name="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
-                            <button type="submit" name="submit" onclick="submitForm('CollectionScheduleReport.php')" class="btn btn-primary"><i class="fa fa-print"> </i> Print</button>
-                            <script>
-                                function submitForm(action) {
-                                    $("#advform").attr("action", action);
-                                    $("#advform").submit();
-                                }
-                            </script>
-                        </div>
+                        <input type="submit" onsubmit="sub()" value="submit">
+                        <!--<input type="submit" class="btn btn-success" value="View" id="btnView">-->
                     </form>
+                    <div id="results"></div>
                 </div><!-- /.box -->
 
             </div><!--/.col (left) -->                        
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">GRN List</h3>
+                        <h3 class="box-title">Purchase Order List</h3>
                     </div><!-- /.box-header -->
                     <div class="box-body">
                         <div class="pane">
-                            <?php
-//                            try {
-//                                $con = connect_database();
-//                                $sql = "SELECT COUNT(0) AS cnt FROM `customer` INNER JOIN `shop` ON `customer`.`ShopId`=`shop`.`ShopId` WHERE " . $query;
-//                                $result = $con->query($sql);
-//                                if ($result->num_rows > 0) {
-//                                    while ($row = $result->fetch_assoc()) {
-//                                        $resultsFound = $row['cnt'];
-//                                    }
-//                                } else {
-//                                    
-//                                }
-//                                $con->close();
-//                            } catch (Exception $exc) {
-//                                echo "<br>Error description: " . $exc;
-//                            }
-//                            $startNo = 1;
-//                            $endNo = 1;
-//                            if ($resultsFound > $resultsPerPage) {
-//                                if ($resultsFound % $resultsPerPage > 0) {
-//                                    $endNo = ($resultsFound / $resultsPerPage) + 1;
-//                                } else {
-//                                    $endNo = $resultsFound / $resultsPerPage;
-//                                }
-//                            }
-                            ?>
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <div class="dataTables_info" id="example2_info">Showing <?php // echo ($startNo - 1) * $resultsPerPage;      ?> to <?php // echo $endNo * $resultsPerPage;      ?> of <?php // echo $resultsFound;      ?> entries</div>
+                                    <div class="dataTables_info" id="example2_info">Showing <?php // echo ($startNo - 1) * $resultsPerPage;                                                 ?> to <?php // echo $endNo * $resultsPerPage;                                                 ?> of <?php // echo $resultsFound;                                                 ?> entries</div>
                                 </div>
                                 <div class="col-xs-6">
                                     <div class="dataTables_paginate paging_bootstrap">
                                         <ul class="pagination">
                                             <li class="prev"><a href="#">← Previous</a></li>
-                                            <?php
-//                                            for ($i = $startNo; $i <= $endNo; $i++) {
-                                            ?>
-                                            <li <?php
-//                                                if ($i == $pageNo) {
-//                                                    echo"class=\"active\"";
-//                                                } else {
-//                                                    echo "";
-//                                                }
-                                            ?>>
-                                                <a href="<?php // echo $url . "page=" . $i      ?>" ><?php // echo $i;      ?></a>
+                                            <li>
+                                                <a href="" ></a>
                                             </li>
                                             <?php
 //                                            }
@@ -162,110 +103,35 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>                                    
-                        <table id="table1" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>PONo</th>
-                                    <th>Date Added</th>
-                                    <th>Status </th>
-                                    <th>Supplier</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-//                                try {
-//                                    $con = connect_database();
-//                                    $sql = "SELECT `customer`.*, `shop`.`ShopName`  FROM `customer` INNER JOIN `shop` ON `customer`.`ShopId`=`shop`.`ShopId` WHERE " . $query;
-//                                    $result = $con->query($sql);
-//                                    if ($result->num_rows > 0) {
-//                                        $currentNo = 0;
-//                                        while ($row = $result->fetch_assoc()) {
-//                                            if ($currentNo >= ($pageNo - 1) * $resultsPerPage && $currentNo < $pageNo * $resultsPerPage) {
-//                                                $statusIndc = "<span class=\"label label-danger\">Disabled</span>";
-//                                                if ($row["Status"] == 1) {
-//                                                    $statusIndc = "<span class=\"label label-success\">Enabled</span>";
-//                                                }
-//
-//                                                echo '<tr>';
-//                                                if ($row["Picture"] != NULL && !empty($row["Picture"])) {
-//                                                    echo '<td><img class="direct-chat-img" src="dist/img/' . $row["Picture"] . '" alt=""></td>';
-//                                                } else {
-//                                                    echo '<td><img class="direct-chat-img" src="dist/default-profile.png" alt=""></td>';
-//                                                }
-//                                                if ($_SESSION["userPrivilege"] == "admin") {
-//                                                    echo '<td>' . $row["CusId"] . '</td>';
-//                                                }
-//                                                echo '<td>' . $row["CusFname"] . " " . $row["CusLname"] . '</td>';
-//                                                echo '<td>' . $row["Address"] . '</td>';
-//                                                echo '<td>' . $row["TelephoneNo"] . '</td>';
-//                                                echo '<td>' . $row["NIC"] . '</td>';
-//                                                echo '<td>' . $row["ShopName"] . '</td>';
-//                                                echo '<td>' . $statusIndc . '</td>';
-                                ?>
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-info btn-xs">Action</button>
-                                    <button type="button" class="btn btn-info dropdown-toggle btn-xs" data-toggle="dropdown">
-                                        <span class="caret"></span>
-                                        <span class="sr-only">Toggle Dropdown</span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="ViewCustomer.php?cusid=<?php // echo $row["CusId"];      ?>">View</a></li>
-                                        <li><a href="UpdateCustomer.php?cusid=<?php // echo $row["CusId"];      ?>">Update</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <?php
-//                                            echo '</tr>';
-//                                        }
-//                                        $currentNo++;
-//                                    }
-//                                } else {
-//                                    $errMsg = "No Items to Display.";
-//                                }
-//                                $con->close();
-//                            } catch (Exception $exc) {
-//                                $errMsg = "<br>Error description: " . $exc;
-//                            }
-                            ?>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>PONo</th>
-                                    <th>Date Added</th>
-                                    <th>Status </th>
-                                    <th>Supplier</th>
-                                </tr>
-                            </tfoot>
-                        </table>
+                        </div>
+                        <form id="frmPOList" action="updatePO" method="POST">
+                            <input type="hidden" name="txtPO" id="poid"> 
+                            <table id="table1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>PONo</th>
+                                        <th>Date Added</th>
+                                        <th>Supplier</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="data">
+                                </tbody>
+                            </table>
+                        </form>
                         <div class="pane">
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <div class="dataTables_info" id="example2_info">Showing <?php // echo ($startNo - 1) * $resultsPerPage;      ?> to <?php // echo $endNo * $resultsPerPage;      ?> of <?php // echo $resultsFound;      ?> entries</div>
+                                    <div class="dataTables_info" id="example2_info">Showing <?php // echo ($startNo - 1) * $resultsPerPage;                                                 ?> to <?php // echo $endNo * $resultsPerPage;                                                 ?> of <?php // echo $resultsFound;                                                 ?> entries</div>
                                 </div>
                                 <div class="col-xs-6">
                                     <div class="dataTables_paginate paging_bootstrap">
                                         <ul class="pagination">
                                             <li class="prev"><a href="#">← Previous</a></li>
-                                            <?php
-//                                            for ($i = $startNo; $i <= $endNo; $i++) {
-                                            ?>
-                                            <li <?php
-//                                                if ($i == $pageNo) {
-//                                                    echo"class=\"active\"";
-//                                                } else {
-//                                                    echo "";
-//                                                }
-                                            ?>>
-                                                <a href="<?php // echo $url . "page=" . $i      ?>" ><?php // echo $i;      ?></a>
+                                            <li>
+                                                <a href="" ></a>
                                             </li>
-                                            <?php
-//                                            }
-                                            ?>
                                             <li class="next"><a href="#">Next → </a></li>
-
                                         </ul>
                                     </div>
                                 </div>
@@ -277,3 +143,159 @@
         </div><!-- /.row -->
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
+
+<script>
+    //Load Supplier
+    var ajax = new XMLHttpRequest();
+    ajax.open("GET", "/TopNotch/supplier/loadName", true);
+    ajax.send();
+    ajax.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var data = JSON.parse(this.responseText);
+            console.log(data);
+            var html = "";
+            for (var a = 0; a < data.length; a++) {
+                html += "<option value=" + data[a].id + ">";
+                html += data[a].fname + " " + data[a].lname;
+                html += "</option>";
+            }
+            document.getElementById("cmbSup").innerHTML += html;
+        }
+    };
+    //date range
+    $(function () {
+        $('#dateFrom').datepicker({dateFormat: 'yy-mm-dd'}).datepicker('setDate', 'today');
+        $('#dateTo').datepicker({dateFormat: 'yy-mm-dd'}).datepicker('setDate', 'today');
+    });
+    //load list
+    $(document).ready(function () {
+        loadList();
+    });
+    function loadList() {
+        var ajax = new XMLHttpRequest();
+        ajax.open("GET", "/TopNotch/po/loadPO", true);
+        ajax.send();
+        ajax.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var data = JSON.parse(this.responseText);
+                console.log(data);
+                var upPage = "";
+                dataList(data);
+            }
+        };
+    }
+
+    //load by pono
+    $('#poNo').keypress(function () {
+        var pono = $('#poNo').val();
+        $.ajax({
+            url: "/TopNotch/po/loadByPo",
+            method: "POST",
+            data: {pono: pono},
+            dataType: "JSON",
+            success: function (data) {
+                $('#data').empty();
+                console.log(data);
+                dataList(data);
+            }
+        });
+    });
+    //load by supplier
+    $('#cmbSup').change(function () {
+        var id = $('#cmbSup option:selected').val();
+        $.ajax({
+            url: "/TopNotch/po/findBySupId",
+            method: "POST",
+            data: {id: id},
+            dataType: "JSON",
+            success: function (data) {
+                $('#data').empty();
+                console.log(data);
+                dataList(data);
+            }
+        });
+    });
+    //load by date
+    $('#dateTo').change(function () {
+        dateRangeData();
+    });
+    $('#dateFrom').change(function () {
+        dateRangeData();
+    });
+    
+    //delete po
+    $('table tbody').on("click", "#btnDel", function () {
+        if (confirm("Are you sure you want to delete this record?")) {
+            var currow = $(this).closest('tr');
+            var id = currow.find('td:eq(0)').text();
+            $.ajax({
+                url: "/TopNotch/po/deletePO",
+                type: "POST",
+                dataType: "JSON",
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    $("#err").html('<div class="box box-solid box-success">\n\
+                <div class = "box-header"><h3 class = "box-title"> Success! </h3></div>\n\
+<div class = "box-body">Purchase Order Successfully Deleted.</div></div>');
+//                        alert("Successfully registered!");
+                    $('#table1').find("tr:gt(0)").remove();
+                    loadList();
+                    console.log(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $("#err").html('<div class="box box-solid box-danger">\n\
+                <div class = "box-header"><h3 class = "box-title"> Error! </h3></div>\n\
+<div class = "box-body">' + textStatus + '</div></div>');
+                    alert(textStatus);
+                    console.log(errorThrown);
+                }
+            });
+        }
+    });
+    
+    //view po
+    $(document).ready(function () {
+        $('table tbody').on("click", "#btnView", function () {
+            var currow = $(this).closest('tr');
+            $("#poid").val(currow.find('td:eq(0)').text());
+        });
+    });
+
+
+    function dateRangeData() {
+        var startDate = $('#dateFrom').val();
+        var endDate = $('#dateTo').val();
+        $.ajax({
+            url: "/TopNotch/po/findByDate",
+            method: "POST",
+            data: {
+                startDate: startDate,
+                endDate: endDate
+            },
+            dataType: "JSON",
+            success: function (data) {
+                alert(data[0].id);
+                $('#data').empty();
+                console.log(data);
+                dataList(data);
+            }
+        });
+    }
+
+    function dataList(data) {
+        var html = "";
+        for (var a = 0; a < data.length; a++) {
+            html += "<tr>";
+            html += "<td>" + data[a].id + "</td>";
+            html += "<td>" + data[a].fname + " " + data[a].lname + "</td>";
+            html += "<td>" + data[a].podate + "</td>";
+//            html += "<td><input type='submit' class='btn btn-info btn-xs' id='btnView' value='View'>\n\
+            html += "<td><input type='submit' id='btnView' class='btn btn-success btn-xs'value='View'>\n\
+            <button type='button' class='btn btn-danger btn-xs' id='btnDel'>Delete</button></td>";
+            html += "</tr>";
+        }
+        document.getElementById("data").innerHTML += html;
+    }
+</script>

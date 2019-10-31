@@ -3,13 +3,13 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Add New Purchase Order
-            <small>Adding New Purchase Order</small>
+            Update Purchase Order
+            <small>Updating Purchase Order</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
             <li><a href="#">Procurement</a></li>
-            <li class="active">Add Purchase Order</li>
+            <li class="active">Update Purchase Order</li>
         </ol>
     </section>
 
@@ -25,17 +25,17 @@
                     </div><!-- /.box-header -->
                     <div id="err"></div>
                     <!-- form start -->
-                    <form id="frmPO">
+                    <form id="frmPOUpdate" action="poList" method="POST">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="box-body">
                                     <div class="form-group">
                                         <label>PO No</label>
-                                        <input type="text" class="form-control" id="poNo" name="txtPONo" required="" disabled="">
+                                        <input type="text" class="form-control" id="poNo" name="txtPONo" required="">
                                     </div>
                                     <div class="form-group">
                                         <label>Supplier</label>
-                                        <select class="form-control" name="cmbSup" id="cmbSup">
+                                        <select class="form-control" name="cmbSup" id="cmbSup" disabled>
                                             <option></option>
                                         </select>
                                     </div>
@@ -90,14 +90,15 @@
                                                     <th>Quantity</th>
                                                 </tr>
                                             </thead>
+                                            <tbody id="data"></tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="box-footer">
-                            <!--<button type="submit" name="submit" class="btn btn-primary">Submit</button>-->
-                            <input type="button" name="submit" id="btnSave" class="btn btn-primary" value="Submit">
+                            <button type="submit" name="btnUpdate" class="btn btn-primary" id="btnUpdate">Update</button>
+                            <!--<input type="button" name="submit" id="btnUpdate" class="btn btn-primary" value="Update">-->
                         </div>
                     </form>
                 </div><!-- /.box -->
@@ -135,7 +136,7 @@
             }
             var html = "";
             html += "<tr>";
-            html += "<td id='rid" + l + "'>" + $('#cmbRItem option:selected').val() + "</td>";
+            html += "<td id='rid" + l + "' hidden>" + $('#cmbRItem option:selected').val() + "</td>";
             html += "<td>" + $('#cmbRItem option:selected').text() + "</td>";
             html += "<td id='qty" + l + "'>" + $('#qty').val() + "</td>";
             html += "</tr>";
@@ -148,34 +149,46 @@
         }
     });
 
-    //Load PO Numbers
-    function poNo(){
-        var ajax = new XMLHttpRequest();
-        ajax.open("GET", "/TopNotch/po/loadPONo", true);
-        ajax.send();
-
-        ajax.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                var data = JSON.parse(this.responseText);
+    //load by pono
+    function loadPO() {
+        var pono = "<?php echo $_POST['txtPO']; ?>";
+        $.ajax({
+            url: "/TopNotch/po/retrievePO",
+            method: "POST",
+            data: {pono: pono},
+            dataType: "JSON",
+            success: function (data) {
+                $('#data').empty();
                 console.log(data);
-                $('#poNo').val("PO" + new Intl.NumberFormat('en-IN', {minimumIntegerDigits: 3}).format(parseInt(data[0].id) + 1));
+                var l = 1;
+                $('#poNo').val(data[0].id);
+                $('#cmbSup option:selected').val(data[0].supid);
+                $('#cmbSup option:selected').text(data[0].fname + " " + data[0].lname);
+                $('#dateadded').val(data[0].podate);
+                var html = "";
+                for (var a = 0; a < data.length; a++) {
+                    html += "<tr>";
+                    html += "<td id='rid" + l + "' hidden>" + data[a].ritemid + "</td>";
+                    html += "<td>" + data[a].description + "</td>";
+                    html += "<td id='qty" + l + "'>" + data[a].qty + "</td>";
+                    html += "</tr>";
+                    l++;
+                }
+                document.getElementById("data").innerHTML += html;
             }
-        };
-    }
-    
-    $(document).ready(function(){
-        poNo();
-        $('#dateadded').datepicker({dateFormat:'yy-mm-dd'}).datepicker('setDate','today');
-    });
-
-    $(function () {
-        $('#dateadded').datepicker({
-            dateFormat: 'yy-mm-dd',
-            changeMonth: true,
-            changeYear: true
-//            yearRange: '-100y:c+nn'
-//            maxDate: '-1d'
         });
+    }
+
+    $(document).ready(function () {
+        loadPO();
+        
+        $("#table1 tr").dblclick(function(){
+            alert('OK');
+        });
+    });
+    
+    $('#poNo').keypress(function () {
+        loadPO();
     });
     
     //Load Supplier
@@ -241,9 +254,9 @@
             return TableData;
         }
 
-        $(document).on("click", "#btnSave", function () {
-            $("#frmPO").validate();
-            if ($("#frmPO").valid()) {
+        $(document).on("click", "#btnUpdate", function () {
+            $("#frmPOUpdate").validate();
+            if ($("#frmPOUpdate").valid()) {
                 var l = $('#table1 tr').length;
                 if (l <= 1) {
                     $("#err").html('<div class="box box-solid box-danger">\n\
@@ -262,7 +275,7 @@
                 };
 
                 $.ajax({
-                    url: "/TopNotch/po/addPO",
+                    url: "/TopNotch/po/poUpdate",
                     type: "POST",
                     dataType: "JSON",
                     data: {
@@ -271,12 +284,9 @@
                     success: function (data) {
                         $("#err").html('<div class="box box-solid box-success">\n\
                 <div class = "box-header"><h3 class = "box-title"> Success! </h3></div>\n\
-<div class = "box-body">Purchase Order Successfully Added.</div></div>');
+<div class = "box-body">Purchase Order Successfully Updated.</div></div>');
 //                        alert("Successfully registered!");
                         console.log(data);
-                        $('#table1').find("tr:gt(0)").remove();
-                        poNo();
-//                        $(frmPO).closest('form').find("input[type=text],input[type=tel],input[type=email],textarea").val("");
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         $("#err").html('<div class="box box-solid box-danger">\n\

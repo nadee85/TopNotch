@@ -24,7 +24,10 @@ and open the template in the editor.
         <!--         AdminLTE Skins. Choose a skin from the css/skins 
                      folder instead of downloading all of them to reduce the load. -->
         <link href="<?= RESOURCES ?>dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="<?= RESOURCES ?>dist/css/jquery-ui.css">
+        <link href="<?= RESOURCES ?>plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
         <script src="<?= RESOURCES ?>vendor/jquery.validate.min.js"></script>
+        <script src="<?= RESOURCES ?>plugins/daterangepicker/daterangepicker.js"></script>
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -66,7 +69,7 @@ and open the template in the editor.
                                                                         <li> start message 
                                                                             <a href="#">
                                                                                 <div class="pull-left">
-                                                                                    <img src="dist/img/<?php // echo $_SESSION["userPicture"];   ?>" class="img-circle" alt="User Image"/>
+                                                                                    <img src="dist/img/<?php // echo $_SESSION["userPicture"];    ?>" class="img-circle" alt="User Image"/>
                                                                                 </div>
                                                                                 <h4>
                                                                                     Support Team
@@ -134,21 +137,15 @@ and open the template in the editor.
                                                         </li>-->
                             <!-- User Account: style can be found in dropdown.less -->
                             <li class="dropdown user user-menu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="<?= RESOURCES ?>dist/img/user1-128x128.jpg" class="user-image" alt="User Image"/>
-                                    <span class="hidden-xs"><?php // echo $_SESSION["userName"];   ?></span>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="loadpro">
+                                    
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
-                                    <li class="user-header">
-                                        <img src="<?= RESOURCES ?>dist/img/user1-128x128.jpg<?php // echo $_SESSION["userPicture"];   ?>" class="img-circle" alt="User Image" />
-                                        <p>
-                                            <?php // echo $_SESSION["userName"] . " - " . $_SESSION["userPrivilege"]; ?>
-                                            <small>Member since Nov. 2012</small>
-                                        </p>
+                                    <li class="user-header" id="profile">
                                     </li>
                                     <!-- Menu Body -->
-                                    <li class="user-body">
+<!--                                    <li class="user-body">
                                         <div class="col-xs-4 text-center">
                                             <a href="#">Followers</a>
                                         </div>
@@ -158,14 +155,15 @@ and open the template in the editor.
                                         <div class="col-xs-4 text-center">
                                             <a href="#">Friends</a>
                                         </div>
-                                    </li>
+                                    </li>-->
                                     <!-- Menu Footer-->
                                     <li class="user-footer">
                                         <div class="pull-left">
                                             <a href="#" class="btn btn-default btn-flat">Profile</a>
                                         </div>
                                         <div class="pull-right">
-                                            <a href="../user/login" class="btn btn-default btn-flat">Sign out</a>
+                                            <!--<input type="button" id="logoff" class="btn btn-default btn-flat" value="Sign out">-->
+                                            <a href="" id="logoff" class="btn btn-default btn-flat">Sign out</a>
                                         </div>
                                     </li>
                                 </ul>
@@ -182,14 +180,14 @@ and open the template in the editor.
                 <section class="sidebar">
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
-<!--                        <div class="pull-left image">
-                            <img src="<?= RESOURCES ?>dist/img/user1-128x128.jpg<?php // echo $_SESSION["userPicture"];   ?>" class="img-circle" alt="User Image" />
-                        </div>
-                        <div class="pull-left info">
-                            <p><?php // echo $_SESSION["userName"];   ?></p>
-
-                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                        </div>-->
+<!--                                                <div class="pull-left image">
+                                                    <img src="<?= RESOURCES ?>dist/img/user1-128x128.jpg<?php // echo $_SESSION["userPicture"];    ?>" class="img-circle" alt="User Image" />
+                                                </div>
+                                                <div class="pull-left info">
+                                                    <p><?php // echo $_SESSION["userName"];    ?></p>
+                        
+                                                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                                                </div>-->
                     </div>
                     <!-- search form -->
                     <form action="#" method="get" class="sidebar-form">

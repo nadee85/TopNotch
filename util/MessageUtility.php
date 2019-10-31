@@ -10,7 +10,13 @@
 //echo SendMessage('127.0.0.1', '9710', 'admin', '123', '+94718124812', 'My text message');
 class MessageUtility {
 
-    function SendMessage($host, $port, $userName, $password, $number, $message) {
+    static function SendMessage($number, $message) {
+        
+        $host = SMS_CONFIG["host"];
+        $port = SMS_CONFIG["port"];
+        $username = SMS_CONFIG["username"];
+        $password = SMS_CONFIG["password"];
+        
         /* Create a TCP/IP socket. */
         $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
         if ($socket === false) {

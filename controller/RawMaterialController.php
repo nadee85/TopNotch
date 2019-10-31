@@ -27,9 +27,16 @@ class RawMaterialController extends BaseController {
         $rawMaterial->findList();
     }
     
+    public function loadDescription(){
+        $rawMaterial=new RawMaterials();
+        $rawMaterial->loadDescription();
+    }
+
+
     public function loadByName(){
         $rawMaterial=new RawMaterials();
-        $rawMaterial->findByName();
+        $description=$_POST['description'];
+        $rawMaterial->findByField('description',$description);
     }
 
     public function addRawMaterial() {

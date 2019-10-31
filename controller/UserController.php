@@ -22,15 +22,15 @@ class UserController extends BaseController {
 //        if (isset($_POST['loginuser'])) {
         $user = new User();
         $user->id = $_POST['username'];
-        $user->find($user->id);
-        
+        $user->findById($user->id);
+
         $users = array(
             $user->id => array(
                 "username" => $user->id,
                 "password" => $user->password
             )
         );
-        
+
         if ($_SERVER["REQUEST_METHOD"] !== "POST") {
             header("HTTP/1.1 405 NOT ALLOWED");
         }
@@ -48,7 +48,7 @@ class UserController extends BaseController {
             header("HTTP/1.1 403 FORBIDDEN");
             return;
         }
-        
+
 //        if (!password_verify($password, $users[$username]['password'])) {
 //            header("HTTP/1.1 403 FORBIDDEN");
 //            return;
@@ -74,6 +74,13 @@ class UserController extends BaseController {
         $this->loadView(null, true);
     }
 
+    public function logoff() {
+        unset($_SESSION["user"]["name"]);
+        session_destroy();
+        $url = APPROOT . "/user/login";
+        header("location:$url");
+    }
+
     public function doRegistration() {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header("HTTP/1.1 405 NOT ALLOWED");
@@ -83,14 +90,21 @@ class UserController extends BaseController {
 
         $user = new User();
         $user->id = $userData['username'];
-        $user->fname = $userData['fName'];
-        $user->lname = $userData['lName'];
-        $user->mobile = $userData['mobile'];
-        $user->email = $userData['email'];
         $user->password = $passHash;
 
-        $res = $user->save();
-        if ($res) {
+        $userDetails = new UserDetails();
+        $userDetails->userid = $userData['username'];
+        $userDetails->fname = $userData['fName'];
+        $userDetails->lname = $userData['lName'];
+        $userDetails->mobile = $userData['mobile'];
+        $userDetails->email = $userData['email'];
+        $userDetails->picture = $userData['picture'];
+        $userDetails->status = 1;
+
+        $resUser = $user->save();
+        $resUserDet = $userDetails->save();
+
+        if ($resUser && $resUserDet) {
 //                try {
 //                    $mailer = new EMailer();
 //                    $mailer->addTo($user->email)
@@ -100,10 +114,10 @@ class UserController extends BaseController {
 //                } catch (Exception $e) {
 //                    //TODO: Log the mailer error!
 //                }
-//                $otp = OTPUtility::generate();
-//            MessageUtility::sendMessage('127.0.0.1', '9710', 'admin', '123', $user->mobile, "Your OTP for phone number verification is 1");
+//            $otp = OTPUtility::generate($user->mobile);
+//            MessageUtility::sendMessage($otp->mobileNumber, "Your OTP for phone number verification is 1");
 
-            $result = array("success" => true, "message" => "Welcome " . $user->fname . "!");
+            $result = array("success" => true, "message" => "Welcome " . $userDetails->fname . "!");
             echo json_encode($result);
         } else {
             header("HTTP/1.1 500 Internal Server Error");
@@ -117,39 +131,26 @@ class UserController extends BaseController {
 
         $username = $_POST["username"];
 
-        if ($username === "admin") {
-            echo "false";
-        } else {
-            echo "true";
-        }
+//        if ($username === "admin") {
+//            echo "false";
+//        } else {
+//            echo "true";
+//        }
+        $user = new User();
+        $user->checkId($username);
     }
 
     public function userDetails() {
         $this->loadView();
     }
 
-    public function addUserDetails(){
+    public function uExists() {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header("HTTP/1.1 405 NOT ALLOWED");
         }
-        $userDData = $_POST["userDData"];
 
-        if ($userDData['status']==="true") {
-            $status = 1;
-        } else {
-            $status = 0;
-        }
         $userDetails = new UserDetails();
-
-        $userDetails->userid = $userDData['username'];
-        $userDetails->nic= $userDData['nic'];
-        $userDetails->picture= $userDData['picture'];
-        $userDetails->status= $status;
-
-        $res = $userDetails->save();
-        echo json_encode($res);
-        if (!$res) {
-            header("HTTP/1.1 500 Internal Server Error");
-        }
+        $userDetails->checkUsername();
     }
+
 }

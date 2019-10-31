@@ -41,7 +41,13 @@ class SupplierController extends BaseController {
 
     public function loadByName() {
         $supplier = new Supplier();
-        $supplier->findByName();
+        $name=$_POST['fname'];
+        $supplier->findByField('fname',$name);
+    }
+    
+    function loadName(){
+        $supplier=new Supplier();
+        $supplier->loadName();
     }
 
     public function addSupplier() {

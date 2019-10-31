@@ -11,7 +11,7 @@
  *
  * @author Nadeeshani
  */
-class Customer extends BaseModel {
+class Customer extends IdentifiedBaseModel {
 
     //put your code here
     public $id;
@@ -23,13 +23,13 @@ class Customer extends BaseModel {
     public $email;
     public $status;
     
-    public function findByName(){
-        $result = mysqli_query($this->con, "SELECT * FROM customer where fname LIKE '" . $_POST['fname'] . "%'");
-        $data = array();
-        while ($row = mysqli_fetch_object($result)) {
-            array_push($data, $row);
-        }
-        echo json_encode($data);
-    }
+//    public function findByName(){
+//        $result = mysqli_query($this->con, "SELECT * FROM customer where fname LIKE '" . $_POST['fname'] . "%'");
+//        $data = array();
+//        while ($row = mysqli_fetch_object($result)) {
+//            array_push($data, $row);
+//        }
+//        echo json_encode($data);
+//    }
 
 }
