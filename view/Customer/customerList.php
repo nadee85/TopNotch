@@ -27,7 +27,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="box-body">
-                                    <input type="hidden" name="page" value="<?php // echo $pageNo;                                    ?>">
+                                    <input type="hidden" name="page" value="<?php // echo $pageNo;                                     ?>">
 
                                     <div class="form-group">
                                         <label for="inputCusid">Customer Id </label>
@@ -43,7 +43,7 @@
                                         <label for="inputCuslname">Last Name</label>
                                         <input type="text" class="form-control" id="cusLName" placeholder="Enter Last Name" name="txtCusLName" >
                                     </div>
-                                    
+
                                     <div class="form-group">
                                         <label for="inputAddress">Address </label>
                                         <textarea class="form-control" rows="3" id="address" placeholder="Enter ..." name="txtAddress"></textarea>
@@ -93,63 +93,7 @@
                     <div class="box-header">
                         <h3 class="box-title">Customer List</h3>
                     </div><!-- /.box-header -->
-                    <div class="box-body">
-                        <div class="pane">
-                            <?php
-//                            try {
-//                                $con = connect_database();
-//                                $sql = "SELECT COUNT(0) AS cnt FROM `customer` INNER JOIN `shop` ON `customer`.`ShopId`=`shop`.`ShopId` WHERE " . $query;
-//                                $result = $con->query($sql);
-//                                if ($result->num_rows > 0) {
-//                                    while ($row = $result->fetch_assoc()) {
-//                                        $resultsFound = $row['cnt'];
-//                                    }
-//                                } else {
-//                                    
-//                                }
-//                                $con->close();
-//                            } catch (Exception $exc) {
-//                                echo "<br>Error description: " . $exc;
-//                            }
-//                            $startNo = 1;
-//                            $endNo = 1;
-//                            if ($resultsFound > $resultsPerPage) {
-//                                if ($resultsFound % $resultsPerPage > 0) {
-//                                    $endNo = ($resultsFound / $resultsPerPage) + 1;
-//                                } else {
-//                                    $endNo = $resultsFound / $resultsPerPage;
-//                                }
-//                            }
-                            ?>
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <div class="dataTables_info" id="example2_info">Showing <?php // echo ($startNo - 1) * $resultsPerPage;                                    ?> to <?php // echo $endNo * $resultsPerPage;                                    ?> of <?php // echo $resultsFound;                                    ?> entries</div>
-                                </div>
-                                <div class="col-xs-6">
-                                    <div class="dataTables_paginate paging_bootstrap">
-                                        <ul class="pagination">
-                                            <li class="prev"><a href="#">← Previous</a></li>
-                                            <?php
-//                                            for ($i = $startNo; $i <= $endNo; $i++) {
-                                            ?>
-                                            <li <?php
-//                                                if ($i == $pageNo) {
-//                                                    echo"class=\"active\"";
-//                                                } else {
-//                                                    echo "";
-//                                                }
-                                            ?>>
-                                                <a href="<?php // echo $url . "page=" . $i                                    ?>" ><?php // echo $i;                                    ?></a>
-                                            </li>
-                                            <?php
-//                                            }
-                                            ?>
-                                            <li class="next"><a href="#">Next → </a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>                                    
+                    <div class="box-body">          
                         <table id="table1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
@@ -165,38 +109,7 @@
                                 </tr>
                             </thead>
                             <tbody id="data"></tbody>
-                        </table>
-                        <div class="pane">
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <div class="dataTables_info" id="example2_info">Showing <?php // echo ($startNo - 1) * $resultsPerPage;                                    ?> to <?php // echo $endNo * $resultsPerPage;                                    ?> of <?php // echo $resultsFound;                                    ?> entries</div>
-                                </div>
-                                <div class="col-xs-6">
-                                    <div class="dataTables_paginate paging_bootstrap">
-                                        <ul class="pagination">
-                                            <li class="prev"><a href="#">← Previous</a></li>
-                                            <?php
-//                                            for ($i = $startNo; $i <= $endNo; $i++) {
-                                            ?>
-                                            <li <?php
-//                                                if ($i == $pageNo) {
-//                                                    echo"class=\"active\"";
-//                                                } else {
-//                                                    echo "";
-//                                                }
-                                            ?>>
-                                                <a href="<?php // echo $url . "page=" . $i                                    ?>" ><?php // echo $i;                                    ?></a>
-                                            </li>
-                                            <?php
-//                                            }
-                                            ?>
-                                            <li class="next"><a href="#">Next → </a></li>
-
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>                                
+                        </table>                   
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div><!-- /.col -->
@@ -205,17 +118,6 @@
 </div><!-- /.content-wrapper -->
 
 <script>
-//    $(function () {
-//        $('#table1').dataTable({
-//            "bPaginate": false,
-//            "bLengthChange": false,
-//            "bFilter": false,
-//            "bSort": true,
-//            "bInfo": false,
-//            "bAutoWidth": false
-//        });
-//    });
-
     var ajax = new XMLHttpRequest();
     ajax.open("GET", "/TopNotch/customer/loadCustomers", true);
     ajax.send();
@@ -242,40 +144,16 @@
                 html += "</tr>";
             }
             document.getElementById("data").innerHTML += html;
+            $('#table1').dataTable({
+                "bPaginate": true,
+                "bLengthChange": true,
+                "bFilter": true,
+                "bSort": true,
+                "bInfo": true,
+                "bAutoWidth": false
+            });
         }
     };
-
-    $('#cusFName').keypress(function () {
-        var fname = $('#cusFName').val();
-        $.ajax({
-            url: "/TopNotch/customer/loadByName",
-            method: "POST",
-            data: {fname: fname},
-            dataType: "JSON",
-            success: function (data) {
-                console.log(data);
-                $('#data').empty();
-                var html = "";
-                for (var a = 0; a < data.length; a++) {
-                    html += "<tr>";
-                    html += "<td>" + data[a].id + "</td>";
-                    html += "<td>" + data[a].fname + " " + data[a].lname + "</td>";
-                    html += "<td>" + data[a].address + "</td>";
-                    html += "<td>" + data[a].tp + "</td>";
-                    html += "<td>" + data[a].mobile + "</td>";
-                    html += "<td>" + data[a].email + "</td>";
-                    if (data[a].status == 1) {
-                        html += "<td><span class='label label-success'>Active</span></td>";
-                    } else {
-                        html += "<td><span class='label label-danger'>Inactive</span></td>";
-                    }
-                    html += "<td><buttin type='button' id='btnView' class='btn btn-info btn-xs'>View</button></td>";
-                    html += "</tr>";
-                }
-                document.getElementById("data").innerHTML += html;
-            }
-        });
-    });
 
     $('table tbody').on('click', '.btn', function () {
         var currow = $(this).closest('tr');
@@ -288,9 +166,9 @@
         $("#mobile").val(currow.find('td:eq(4)').text());
         $("#email").val(currow.find('td:eq(5)').text());
         if (currow.find('td:eq(6)').text() === "Active") {
-            $("#status").prop("checked",true);
+            $("#status").prop("checked", true);
         } else {
-            $("#status").prop("checked",false);
+            $("#status").prop("checked", false);
         }
     })
 

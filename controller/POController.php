@@ -13,7 +13,6 @@
  */
 class POController extends BaseController {
     
-    public $pono;
 
     function newPO() {
         $this->loadView();
@@ -29,22 +28,12 @@ class POController extends BaseController {
 
     function loadPONo() {
         $poHeader = new POHeader();
-        $poHeader->loadId();
+        $poHeader->loadID();
     }
 
     function loadPO() {
         $poHeader = new POHeader();
         $poHeader->loadPO();
-    }
-
-    function loadByPo() {
-        $poHeader = new POHeader();
-        $poHeader->findByPO();
-    }
-
-    function findBySupId() {
-        $poHeader = new POHeader();
-        $poHeader->findBySupId();
     }
 
     function findByDate() {

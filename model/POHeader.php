@@ -30,26 +30,6 @@ class POHeader extends IdentifiedBaseModel{
         echo json_encode($data);
     }
     
-    public function findByPO(){
-        $result = mysqli_query($this->con, "SELECT poheader.id, supplier.fname,supplier.lname,poheader.podate FROM `poheader` "
-                . "INNER JOIN supplier on poheader.supId=supplier.id WHERE poheader.id LIKE '".$_POST['pono']."%'");
-        $data = array();
-        while ($row = mysqli_fetch_object($result)) {
-            array_push($data, $row);
-        }
-        echo json_encode($data);
-    }
-    
-    public function findBySupId(){
-        $result = mysqli_query($this->con, "SELECT poheader.id, supplier.fname,supplier.lname,poheader.podate FROM `poheader` "
-                . "INNER JOIN supplier on poheader.supId=supplier.id WHERE supplier.id ='".$_POST['id']."'");
-        $data = array();
-        while ($row = mysqli_fetch_object($result)) {
-            array_push($data, $row);
-        }
-        echo json_encode($data);
-    }
-    
     public function findByDate(){
         $result = mysqli_query($this->con, "SELECT poheader.id, supplier.fname,supplier.lname,poheader.podate FROM `poheader` "
                 . "INNER JOIN supplier on poheader.supId=supplier.id WHERE poheader.podate BETWEEN '".$_POST['startDate']."' AND '" . $_POST['endDate']."'");

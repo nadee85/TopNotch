@@ -88,6 +88,7 @@
                                                 <tr>
                                                     <th class="forceWidth">Raw Material</th>
                                                     <th>Quantity</th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                         </table>
@@ -118,26 +119,27 @@
                     event.preventDefault();
                     return;
                 }
-                if ($('#cmbRItem').val() == "") {
-                    $("#err").html('<div class="box box-solid box-danger">\n\
+            }
+            if ($('#cmbRItem').val() == "") {
+                $("#err").html('<div class="box box-solid box-danger">\n\
                 <div class = "box-header"><h3 class = "box-title"> Error! </h3></div>\n\
 <div class = "box-body">Select a Raw Material to continue.</div></div>');
-                    event.preventDefault();
-                    return;
-                }
-                if ($('#qty').val() == "") {
-                    $("#err").html('<div class="box box-solid box-danger">\n\
+                event.preventDefault();
+                return;
+            }
+            if ($('#qty').val() == "") {
+                $("#err").html('<div class="box box-solid box-danger">\n\
                 <div class = "box-header"><h3 class = "box-title"> Error! </h3></div>\n\
 <div class = "box-body">Enter Quantity.</div></div>');
-                    event.preventDefault();
-                    return;
-                }
+                event.preventDefault();
+                return;
             }
             var html = "";
             html += "<tr>";
-            html += "<td id='rid" + l + "'>" + $('#cmbRItem option:selected').val() + "</td>";
+            html += "<td id='rid" + l + "' hidden>" + $('#cmbRItem option:selected').val() + "</td>";
             html += "<td>" + $('#cmbRItem option:selected').text() + "</td>";
             html += "<td id='qty" + l + "'>" + $('#qty').val() + "</td>";
+            html += "<td style='text-align:right'><button type='button' class='btn btn-danger btn-xs' id='btnDel'>Remove</button></td>";
             html += "</tr>";
 
             document.getElementById("table1").innerHTML += html;
@@ -148,8 +150,15 @@
         }
     });
 
+    // delete row
+    $(document).on("click", "#btnDel", function () {
+        var currow = $(this).closest('tr');
+        $('#table1').find(currow).remove();
+        $('#cmbRItem').focus();
+    });
+
     //Load PO Numbers
-    function poNo(){
+    function poNo() {
         var ajax = new XMLHttpRequest();
         ajax.open("GET", "/TopNotch/po/loadPONo", true);
         ajax.send();
@@ -158,14 +167,15 @@
             if (this.readyState == 4 && this.status == 200) {
                 var data = JSON.parse(this.responseText);
                 console.log(data);
-                $('#poNo').val("PO" + new Intl.NumberFormat('en-IN', {minimumIntegerDigits: 3}).format(parseInt(data[0].id) + 1));
+//                $('#poNo').val("PO" + new Intl.NumberFormat('en-IN', {minimumIntegerDigits: 3}).format(parseInt(data[0].id) + 1));
+                $('#poNo').val("PO" + (parseInt(data[0].id) + 1).toString().padStart(4, "0"));
             }
         };
     }
-    
-    $(document).ready(function(){
+
+    $(document).ready(function () {
         poNo();
-        $('#dateadded').datepicker({dateFormat:'yy-mm-dd'}).datepicker('setDate','today');
+        $('#dateadded').datepicker({dateFormat: 'yy-mm-dd'}).datepicker('setDate', 'today');
     });
 
     $(function () {
@@ -177,7 +187,7 @@
 //            maxDate: '-1d'
         });
     });
-    
+
     //Load Supplier
     var ajax = new XMLHttpRequest();
     ajax.open("GET", "/TopNotch/supplier/loadName", true);
@@ -287,5 +297,11 @@
                 });
             }
         });
+    });
+
+    $('tr').dblclick(function () {
+        var id = $(this).attr('id');
+        alert(id);
+        //do something with id
     });
 </script>

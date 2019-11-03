@@ -95,63 +95,7 @@
                     <div class="box-header">
                         <h3 class="box-title">Supplier List</h3>
                     </div><!-- /.box-header -->
-                    <div class="box-body">
-                        <div class="pane">
-                            <?php
-//                            try {
-//                                $con = connect_database();
-//                                $sql = "SELECT COUNT(0) AS cnt FROM `customer` INNER JOIN `shop` ON `customer`.`ShopId`=`shop`.`ShopId` WHERE " . $query;
-//                                $result = $con->query($sql);
-//                                if ($result->num_rows > 0) {
-//                                    while ($row = $result->fetch_assoc()) {
-//                                        $resultsFound = $row['cnt'];
-//                                    }
-//                                } else {
-//                                    
-//                                }
-//                                $con->close();
-//                            } catch (Exception $exc) {
-//                                echo "<br>Error description: " . $exc;
-//                            }
-//                            $startNo = 1;
-//                            $endNo = 1;
-//                            if ($resultsFound > $resultsPerPage) {
-//                                if ($resultsFound % $resultsPerPage > 0) {
-//                                    $endNo = ($resultsFound / $resultsPerPage) + 1;
-//                                } else {
-//                                    $endNo = $resultsFound / $resultsPerPage;
-//                                }
-//                            }
-                            ?>
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <div class="dataTables_info" id="example2_info">Showing <?php // echo ($startNo - 1) * $resultsPerPage;  ?> to <?php // echo $endNo * $resultsPerPage;  ?> of <?php // echo $resultsFound;  ?> entries</div>
-                                </div>
-                                <div class="col-xs-6">
-                                    <div class="dataTables_paginate paging_bootstrap">
-                                        <ul class="pagination">
-                                            <li class="prev"><a href="#">← Previous</a></li>
-                                            <?php
-//                                            for ($i = $startNo; $i <= $endNo; $i++) {
-                                            ?>
-                                            <li <?php
-//                                                if ($i == $pageNo) {
-//                                                    echo"class=\"active\"";
-//                                                } else {
-//                                                    echo "";
-//                                                }
-                                            ?>>
-                                                <a href="<?php // echo $url . "page=" . $i  ?>" ><?php // echo $i;  ?></a>
-                                            </li>
-                                            <?php
-//                                            }
-                                            ?>
-                                            <li class="next"><a href="#">Next → </a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>                                    
+                    <div class="box-body">        
                         <table id="table1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
@@ -166,38 +110,7 @@
                                 </tr>
                             </thead>
                             <tbody id="data"></tbody>
-                        </table>
-                        <div class="pane">
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <div class="dataTables_info" id="example2_info">Showing <?php // echo ($startNo - 1) * $resultsPerPage;  ?> to <?php // echo $endNo * $resultsPerPage;  ?> of <?php // echo $resultsFound;  ?> entries</div>
-                                </div>
-                                <div class="col-xs-6">
-                                    <div class="dataTables_paginate paging_bootstrap">
-                                        <ul class="pagination">
-                                            <li class="prev"><a href="#">← Previous</a></li>
-                                            <?php
-//                                            for ($i = $startNo; $i <= $endNo; $i++) {
-                                            ?>
-                                            <li <?php
-//                                                if ($i == $pageNo) {
-//                                                    echo"class=\"active\"";
-//                                                } else {
-//                                                    echo "";
-//                                                }
-                                            ?>>
-                                                <a href="<?php // echo $url . "page=" . $i  ?>" ><?php // echo $i;  ?></a>
-                                            </li>
-                                            <?php
-//                                            }
-                                            ?>
-                                            <li class="next"><a href="#">Next → </a></li>
-
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>                                
+                        </table>                   
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div><!-- /.col -->
@@ -232,40 +145,16 @@
                 html += "</tr>";
             }
             document.getElementById("data").innerHTML += html;
+            $('#table1').dataTable({
+                "bPaginate": true,
+                "bLengthChange": true,
+                "bFilter": true,
+                "bSort": true,
+                "bInfo": true,
+                "bAutoWidth": false
+            });
         }
     };
-
-    $('#supFName').keypress(function () {
-        var fname = $('#supFName').val();
-        $.ajax({
-            url: "/TopNotch/supplier/loadByName",
-            method: "POST",
-            data: {fname: fname},
-            dataType: "JSON",
-            success: function (data) {
-                console.log(data);
-                $('#data').empty();
-                var html = "";
-                for (var a = 0; a < data.length; a++) {
-                    html += "<tr>";
-                    html += "<td>" + data[a].id + "</td>";
-                    html += "<td>" + data[a].fname + " " + data[a].lname + "</td>";
-                    html += "<td>" + data[a].address + "</td>";
-                    html += "<td>" + data[a].tp + "</td>";
-                    html += "<td>" + data[a].mobile + "</td>";
-                    html += "<td>" + data[a].email + "</td>";
-                    if (data[a].status == 1) {
-                        html += "<td><span class='label label-success'>Active</span></td>";
-                    } else {
-                        html += "<td><span class='label label-danger'>Inactive</span></td>";
-                    }
-                    html += "<td><buttin type='button' id='btnView' class='btn btn-info btn-xs'>View</button></td>";
-                    html += "</tr>";
-                }
-                document.getElementById("data").innerHTML += html;
-            }
-        });
-    });
 
     $('table tbody').on('click', '.btn', function () {
         var currow = $(this).closest('tr');

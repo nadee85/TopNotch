@@ -32,13 +32,6 @@ class RawMaterialController extends BaseController {
         $rawMaterial->loadDescription();
     }
 
-
-    public function loadByName(){
-        $rawMaterial=new RawMaterials();
-        $description=$_POST['description'];
-        $rawMaterial->findByField('description',$description);
-    }
-
     public function addRawMaterial() {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header("HTTP/1.1 405 NOT ALLOWED");

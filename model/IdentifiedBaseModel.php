@@ -18,8 +18,8 @@ class IdentifiedBaseModel extends BaseModel{
     public function findById($id){
         $tableName=  get_class($this);
         $query="SELECT * FROM $tableName WHERE id='$id'";
-        echo json_encode($query);
-        echo json_encode($this->select($query));
+//        echo json_encode($query);
+//        echo json_encode($this->select($query));
         return $this->select($query);
         
     }
@@ -46,6 +46,18 @@ class IdentifiedBaseModel extends BaseModel{
         echo json_encode($data);
     }
     
+    public function getDataById($parKey,$parVal){
+        $tableName=  get_class($this);
+        $result = mysqli_query($this->con, "SELECT * FROM $tableName WHERE $parKey = '$parVal'");
+        $data=array();
+        while ($row = mysqli_fetch_array($result)) {
+            array_push($data, $row);
+        }
+//        echo json_encode($data);
+        return $data;
+        
+    }
+    
     public function checkId($idField){
         $tableName=  get_class($this);
         $result=  mysqli_query($this->con, "SELECT id FROM $tableName WHERE id='" . $idField."'");
@@ -56,13 +68,15 @@ class IdentifiedBaseModel extends BaseModel{
         }
     }
     
-    public function loadId(){
-        $tableName=  get_class($this);
-        $result = mysqli_query($this->con, "SELECT COUNT(id) as id FROM $tableName");
+    public function loadID(){
+        $tableName = get_class($this);
+        $result = mysqli_query($this->con, "SELECT COUNT(id) id FROM $tableName");
+
         $data = array();
         while ($row = mysqli_fetch_object($result)) {
             array_push($data, $row);
         }
+
         echo json_encode($data);
     }
     

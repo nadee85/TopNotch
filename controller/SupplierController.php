@@ -38,12 +38,6 @@ class SupplierController extends BaseController {
         $supplier = new Supplier();
         $supplier->findList();
     }
-
-    public function loadByName() {
-        $supplier = new Supplier();
-        $name=$_POST['fname'];
-        $supplier->findByField('fname',$name);
-    }
     
     function loadName(){
         $supplier=new Supplier();

@@ -8,6 +8,9 @@
 <!--<script src="<?= RESOURCES ?>plugins/jQuery/jquery-3.4.1.min.js"></script>-->
 <!-- Bootstrap 3.3.2 JS -->
 <script src="<?= RESOURCES ?>bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<!-- DATA TABES SCRIPT -->
+<script src="<?= RESOURCES ?>plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
+<script src="<?= RESOURCES ?>plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
 <!-- SlimScroll -->
 <script src="<?= RESOURCES ?>plugins/slimScroll/jquery.slimScroll.min.js" type="text/javascript"></script>
 <!-- FastClick -->
@@ -46,8 +49,8 @@
             data: {
                 userid: userid
             },
-            dataType:"JSON",
-            success:function(data){
+            dataType: "JSON",
+            success: function (data) {
                 consol.log(data);
             }
         });

@@ -27,12 +27,6 @@ class ItemController extends BaseController {
         $item->findList();
     }
 
-    public function loadByName(){
-        $item=new Item();
-        $description=$_POST['description'];
-        $item->findByField('description',$description);
-    }
-
     public function addItem() {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header("HTTP/1.1 405 NOT ALLOWED");
