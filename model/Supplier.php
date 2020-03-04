@@ -32,7 +32,16 @@ class Supplier extends IdentifiedBaseModel{
 //    }
     
     public function loadName(){
-        $result = mysqli_query($this->con, "SELECT id,fname,lname FROM supplier");
+        $result = mysqli_query($this->con, "SELECT id,fname,lname FROM supplier WHERE status=1");
+        $data = array();
+        while ($row = mysqli_fetch_object($result)) {
+            array_push($data, $row);
+        }
+        echo json_encode($data);
+    }
+    
+    public function totalSup(){
+        $result = mysqli_query($this->con, "SELECT count(id) AS totSup FROM supplier");
         $data = array();
         while ($row = mysqli_fetch_object($result)) {
             array_push($data, $row);

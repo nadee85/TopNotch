@@ -19,7 +19,7 @@ spl_autoload_register(function ($className) {
     if (in_array($className, $PHPMailerClassNames)) {
         require_once("../util/PHPMailer/$className.php");
     }
-    $utilClassNames = array("EMailer","MessageUtility");
+    $utilClassNames = array("EMailer","MessageUtility","OTPUtility");
     if (in_array($className, $utilClassNames)) {
         require_once("../util/$className.php");
     }

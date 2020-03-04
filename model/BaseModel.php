@@ -27,14 +27,14 @@ class BaseModel {
 
         $properties = $this->getFieldValueMap($this);
         
-
         $nonEmptyProperties = array_filter($properties, function($v, $k) {
             return $v != NULL;
         }, ARRAY_FILTER_USE_BOTH);
         
 
         $fields = array_keys($nonEmptyProperties);
-        $values = array_map(array($this, 'flatten'), array_values($nonEmptyProperties));
+        $values = array_map(array($this, 'flatten'), 
+                array_values($nonEmptyProperties));
 
         $fieldList = implode(",", $fields);
         $valueList = implode(",", $values);
@@ -42,8 +42,6 @@ class BaseModel {
         $tableName = get_class($element);
 
         $query = "INSERT INTO $tableName($fieldList)VALUES ($valueList)";
-//        echo $query;
-
         $res = $this->con->query($query);
         if (!$res) {
             $err = $this->con->error_list;
@@ -58,17 +56,18 @@ class BaseModel {
             $updatedElement = $this;
         }
         
-        $fieldValueMap = array_map(array($this,'flatten'), $this->getFieldValueMap($updatedElement));
+        $fieldValueMap = array_map(array($this,'flatten'), 
+                $this->getFieldValueMap($updatedElement));
         
         $generateSqlKeyValuePairs = function ($k, $v) {
             return "$k=$v";
         };
 
-        $valueString = implode(',', $this->array_map_asoc($generateSqlKeyValuePairs, $fieldValueMap));
+        $valueString = implode(',', $this->array_map_asoc
+                ($generateSqlKeyValuePairs, $fieldValueMap));
 
-        $query = "UPDATE $tableName SET $valueString WHERE $idField='".$this->$idField."'";
-        
-//        echo json_encode($query);
+        $query = "UPDATE $tableName SET $valueString WHERE "
+                . "$idField='".$this->$idField."'";
         $res = $this->con->query($query);
         if (!$res) {
             $err= $this->con->error_list;
@@ -113,7 +112,7 @@ class BaseModel {
         }
         return $this;
     }
-
+    //PTO
 
 //    private function getFields() {
 //        $reflect = new ReflectionClass($this);
@@ -152,7 +151,10 @@ class BaseModel {
 
     private function getFieldValueMap($element) {
         $reflect = new ReflectionClass($element);
-        $properties = $reflect->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PRIVATE);
+        $properties = $reflect->
+                getProperties(ReflectionProperty::IS_PUBLIC | 
+                ReflectionProperty::IS_PROTECTED | 
+                        ReflectionProperty::IS_PRIVATE);
         $values = array();
 
         foreach ($properties as $k) {
@@ -168,6 +170,11 @@ class BaseModel {
         }
         return $values;
         
+    }
+    
+    protected function exists($query) {
+        $res = $this->con->query($query);
+        return $res->num_rows > 0;
     }
 
     private function array_map_asoc($callback, $array) {

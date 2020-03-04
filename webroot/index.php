@@ -36,7 +36,6 @@ $params = $request->getPathParams();
 
 
 $controller = new $controllerName();
-
 call_user_func_array(array($controller, $methodName), $params);
 
 function isAuthenticated($anonymousAllowed){

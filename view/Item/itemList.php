@@ -27,7 +27,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="box-body">
-                                    <input type="hidden" name="page" value="<?php // echo $pageNo;  ?>">
+                                    <input type="hidden" name="page" value="<?php // echo $pageNo;    ?>">
 
                                     <div class="form-group">
                                         <label for="inputCusid">Item Id </label>
@@ -42,6 +42,10 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="box-body">
+                                    <div class="form-group">
+                                        <label for="inputCusfname">Re-Order Level</label>
+                                        <input type="text" class="form-control" id="reorder" placeholder="Enter Price" name="reorder">
+                                    </div>
                                     <div class="form-group">
                                         <label for="inputCusfname">Price</label>
                                         <input type="text" class="form-control" id="price" placeholder="Enter Price" name="txtPrice">
@@ -78,12 +82,14 @@
                     <div class="box-body">           
                         <table id="table1" class="table table-bordered table-striped">
                             <thead>
-                                <tr>
+                                <tr >
                                     <th>Item Id</th>
                                     <th>Description </th>
                                     <th>Price </th>
                                     <th>Stock </th>
+                                    <th>Re-Order Level </th>
                                     <th>Status </th>
+                                    <th></th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -97,7 +103,7 @@
 </div><!-- /.content-wrapper -->
 
 <script>
-    
+
     var ajax = new XMLHttpRequest();
     ajax.open("GET", "/TopNotch/item/loadItems", true);
     ajax.send();
@@ -113,10 +119,16 @@
                 html += "<td>" + data[a].description + "</td>";
                 html += "<td>" + data[a].price + "</td>";
                 html += "<td>" + data[a].curStock + "</td>";
+                html += "<td>" + data[a].reOrderLevel + "</td>";
                 if (data[a].status == 1) {
                     html += "<td><span class='label label-success'>Active</span></td>";
                 } else {
                     html += "<td><span class='label label-danger'>Inactive</span></td>";
+                }
+                if (parseFloat(data[a].curStock) > parseFloat(data[a].reOrderLevel)) {
+                    html += "<td><span class='label label-success'>Enough</span></td>";
+                } else {
+                    html += "<td><span class='label label-danger'>Order</span></td>";
                 }
                 html += "<td><buttin type='button' id='btnView' class='btn btn-info btn-xs'>View</button></td>";
                 html += "</tr>";
@@ -132,17 +144,18 @@
             });
         }
     };
-    
+
     $('table tbody').on('click', '.btn', function () {
         var currow = $(this).closest('tr');
         $("#itemId").val(currow.find('td:eq(0)').text());
         $("#description").val(currow.find('td:eq(1)').text());
         $("#price").val(currow.find('td:eq(2)').text());
         $("#stock").val(currow.find('td:eq(3)').text());
-        if (currow.find('td:eq(4)').text() === "Active") {
-            $("#status").prop("checked",true);
+        $("#reorder").val(currow.find('td:eq(4)').text());
+        if (currow.find('td:eq(5)').text() === "Active") {
+            $("#status").prop("checked", true);
         } else {
-            $("#status").prop("checked",false);
+            $("#status").prop("checked", false);
         }
     })
 
@@ -155,6 +168,7 @@
                     description: $("#description").val(),
                     price: $("#price").val(),
                     stock: $("#stock").val(),
+                    reOrder: $('#reorder').val(),
                     status: $("#status").is(":checked")
                 };
 

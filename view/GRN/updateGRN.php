@@ -257,7 +257,7 @@
         $('#cmbRItem').focus();
     });
 
-//load by pono
+//load by grnno
     function loadGRN() {
         var grnNo = "<?php echo $_POST['txtGRN']; ?>";
         $.ajax({
@@ -293,19 +293,12 @@
 
     $(document).ready(function () {
         loadGRN();
-
-        $("#table1 tr").dblclick(function () {
-            alert('OK');
-        });
     });
 
-    $('#poNo').keypress(function () {
-        loadGRN();
-    });
 
-    //Save
+    //Update
     $(document).ready(function () {
-        $("#frmGRNList").validate({
+        $("#frmGRNUpdate").validate({
             rules: {
                 dateadded: {
                     required: true
@@ -340,7 +333,7 @@
                 if (l <= 1) {
                     $("#err").html('<div class="box box-solid box-danger">\n\
                 <div class = "box-header"><h3 class = "box-title"> Error! </h3></div>\n\
-<div class = "box-body">Must Enter Raw Material Details.</div></div>');
+<div class = "box-body">Must Enter Item Details.</div></div>');
                     return;
                 }
 

@@ -19,10 +19,13 @@ class UserController extends BaseController {
     }
 
     public function authenticate() {
-//        if (isset($_POST['loginuser'])) {
         $user = new User();
         $user->id = $_POST['username'];
         $user->findById($user->id);
+
+        $userDetails = new UserDetails();
+        $userDetails->userid = $_POST['username'];
+        $userDetails->findByUId($userDetails->userid);
 
         $users = array(
             $user->id => array(
@@ -30,11 +33,9 @@ class UserController extends BaseController {
                 "password" => $user->password
             )
         );
-
         if ($_SERVER["REQUEST_METHOD"] !== "POST") {
             header("HTTP/1.1 405 NOT ALLOWED");
         }
-
         $username = $_POST["username"];
         $password = $_POST["password"];
         $postBack = $_POST["postBack"];
@@ -43,21 +44,21 @@ class UserController extends BaseController {
             header("HTTP/1.1 403 FORBIDDEN");
             return;
         }
-
-        if ($password !== $users[$username]["password"]) {
+        
+        $errMsg;
+        $encrypt=  md5($password);
+        if ($encrypt!= $users[$username]['password']) {
+            header("HTTP/1.1 403 FORBIDDEN");
+            return;
+        }
+        if ($userDetails->status!=1) {
             header("HTTP/1.1 403 FORBIDDEN");
             return;
         }
 
-//        if (!password_verify($password, $users[$username]['password'])) {
-//            header("HTTP/1.1 403 FORBIDDEN");
-//            return;
-//        }
-
         $_SESSION["user"]["name"] = $users[$username];
         $loggedUser = $users[$username];
         unset($loggedUser["password"]);
-
         $loggedUser["postBack"] = "/home/index";
         if (isset($postBack)) {
             $loggedUser["postBack"] = urldecode(urldecode(urldecode($postBack)));
@@ -86,12 +87,10 @@ class UserController extends BaseController {
             header("HTTP/1.1 405 NOT ALLOWED");
         }
         $userData = $_POST["userData"];
-        $passHash = password_hash($userData['password'], PASSWORD_BCRYPT);
-
+        $passHash = md5($userData['password']);
         $user = new User();
         $user->id = $userData['username'];
-        $user->password = $passHash;
-
+        $user->password = trim($passHash);
         $userDetails = new UserDetails();
         $userDetails->userid = $userData['username'];
         $userDetails->fname = $userData['fName'];
@@ -99,27 +98,40 @@ class UserController extends BaseController {
         $userDetails->mobile = $userData['mobile'];
         $userDetails->email = $userData['email'];
         $userDetails->picture = $userData['picture'];
-        $userDetails->status = 1;
-
+        $userDetails->status = "0";
         $resUser = $user->save();
         $resUserDet = $userDetails->save();
-
         if ($resUser && $resUserDet) {
-//                try {
-//                    $mailer = new EMailer();
-//                    $mailer->addTo($user->email)
-//                            ->addSubject("Welcome to TopNotch")
-//                            ->addBody("Your registration with the TopNotch has been successfully completed!")
-//                            ->send();
-//                } catch (Exception $e) {
-//                    //TODO: Log the mailer error!
-//                }
-//            $otp = OTPUtility::generate($user->mobile);
-//            MessageUtility::sendMessage($otp->mobileNumber, "Your OTP for phone number verification is 1");
+            $otp = OTPUtility::generate($userDetails->mobile);
+            try {
+                $mailer = new EMailer();
+                $mailer->addTo($userDetails->email)
+                        ->addSubject("Welcome to TopNotch")
+                        ->addBody("Your activation code is " . $otp->value . ".")
+                        ->send();
+            } catch (Exception $e) {
+            }
 
-            $result = array("success" => true, "message" => "Welcome " . $userDetails->fname . "!");
+            MessageUtility::sendMessage($otp->mobileNumber, "Your OTP for phone number verification is " . $otp->value . ".");
+
+            $result = array("success" => true, "message" => "Welcome " .
+                $userDetails->fname . "!");
             echo json_encode($result);
         } else {
+            header("HTTP/1.1 500 Internal Server Error");
+        }
+    }
+
+    public function updateUser(){
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("HTTP/1.1 405 NOT ALLOWED");
+        }
+        $userData = $_POST["userData"];
+        $userDetails = new UserDetails();
+        $resUserDet = $userDetails->updateUser($userData['username']);
+//        echo 'ok';
+        echo json_encode($resUserDet);
+        if (!$resUserDet) {
             header("HTTP/1.1 500 Internal Server Error");
         }
     }
@@ -130,18 +142,72 @@ class UserController extends BaseController {
         }
 
         $username = $_POST["username"];
-
-//        if ($username === "admin") {
-//            echo "false";
-//        } else {
-//            echo "true";
-//        }
         $user = new User();
         $user->checkId($username);
     }
 
     public function userDetails() {
         $this->loadView();
+    }
+
+    public function UserList(){
+        $this->loadView();
+    }
+
+    public function loadUsers() {
+        $userDetails = new UserDetails();
+        $res = $userDetails->findList();
+    }
+    
+    public function Roles() {
+        $this->loadView();
+    }
+
+    public function addRole() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("HTTP/1.1 405 NOT ALLOWED");
+        }
+        $roleData = $_POST["roleData"];
+
+        $role = new Roles();
+        $role->description = $roleData['description'];
+        $resRole = $role->save();
+        if ($resRole) {
+            echo json_encode($resRole);
+        } else {
+            header("HTTP/1.1 500 Internal Server Error");
+        }
+    }
+
+    public function UserRoles() {
+        $this->loadView();
+    }
+
+    public function loadName() {
+        $userDetails = new UserDetails();
+        $userDetails->loadName();
+    }
+
+    public function loadRoleDes() {
+        $role = new Roles();
+        $role->loadRoleDes();
+    }
+
+    public function addURole() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("HTTP/1.1 405 NOT ALLOWED");
+        }
+        $uRoleData = $_POST["uRoleData"];
+
+        $userRole = new UserRoles();
+        $userRole->UserId = $uRoleData['user'];
+        $userRole->roleId = $uRoleData['role'];
+        $resRole = $userRole->save();
+        if ($resRole) {
+            echo json_encode($resRole);
+        } else {
+            header("HTTP/1.1 500 Internal Server Error");
+        }
     }
 
     public function uExists() {
@@ -153,4 +219,65 @@ class UserController extends BaseController {
         $userDetails->checkUsername();
     }
 
+    public function uRExists() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("HTTP/1.1 405 NOT ALLOWED");
+        }
+
+        $userDetails = new UserDetails();
+        $userDetails->checkUserRole();
+    }
+
+    public function permission() {
+        $userRoles = new UserRoles();
+        $roles = $userRoles->getUserRoles();
+        $description = $roles['description'];
+        echo $roles;
+    }
+
+    public function UserActivate() {
+        $this->loadView(null, true);
+    }
+
+    public function activate() {
+        $actData = $_POST["actData"];
+        echo json_encode($actData);
+        $userDetails = new UserDetails();
+        $userDetails->activateUser($actData['username']);
+    }
+
+    public function checkCode(){
+        $userDetails=new UserDetails();
+        $userDetails->checkCode();
+    }
+    
+    public function ChangePassword(){
+        $this->loadView();
+    }
+    
+     public function passexists() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("HTTP/1.1 405 NOT ALLOWED");
+        }
+
+        $user = new User();
+        $user->checkPassword();
+    }
+    
+    public function changePass(){
+        $uData = $_POST["actData"];
+        echo json_encode($uData);
+        $pass=  md5($uData['password']);
+        $user = new User();
+        $user->changePass($pass);
+    }
+    
+    public function pattern(){
+        $number = $_POST["mobile"];
+        if (is_string($number)) {
+            echo 'false';
+        }else{
+            echo 'true';
+        }
+    }
 }

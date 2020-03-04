@@ -21,6 +21,10 @@ class RawMaterialController extends BaseController {
     public function rawMaterialList() {
         $this->loadView();
     }
+    
+    public function rawMaterialStock(){
+        $this->loadView();
+    }
 
     public function loadRawMaterials() {
         $rawMaterial = new RawMaterials();
@@ -39,10 +43,10 @@ class RawMaterialController extends BaseController {
 
         $rawData = $_POST['rawData'];
 
-        if ($rawData['mandatory'] === "true") {
-            $mandatory = 1;
+        if ($rawData['status'] === "true") {
+            $status = 1;
         } else {
-            $mandatory = 0;
+            $status = 0;
         }
 
         $rawMaterial = new RawMaterials();
@@ -50,7 +54,7 @@ class RawMaterialController extends BaseController {
         $rawMaterial->id = $rawData['id'];
         $rawMaterial->description = $rawData['description'];
         $rawMaterial->curStock = $rawData['stock'];
-        $rawMaterial->mandatory = $mandatory;
+        $rawMaterial->status = $status;
 
         $res = $rawMaterial->save();
         echo json_encode($res);
@@ -86,4 +90,13 @@ class RawMaterialController extends BaseController {
         }
     }
 
+    public function exists() {
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+            header("HTTP/1.1 405 NOT ALLOWED");
+        }
+
+        $rId = $_POST["ritemid"];
+        $rawMaterial = new RawMaterials();
+        $rawMaterial->checkId($rId);
+    }
 }

@@ -17,10 +17,10 @@ class RawMaterials extends IdentifiedBaseModel {
     public $id;
     public $description;
     public $curStock;
-    public $mandatory;
+    public $status;
 
     public function loadDescription() {
-        $result = mysqli_query($this->con, "SELECT id,description FROM rawmaterials");
+        $result = mysqli_query($this->con, "SELECT id,description FROM rawmaterials WHERE status=1");
         $data = array();
         while ($row = mysqli_fetch_object($result)) {
             array_push($data, $row);
@@ -31,7 +31,6 @@ class RawMaterials extends IdentifiedBaseModel {
     public function updateRawMaterials($id, $stock) {
         $query = "UPDATE rawmaterials SET curStock=curstock + $stock WHERE id='$id'";
         $res = $this->con->query($query);
-//        echo json_encode($res);
         if (!$res) {
             $err = $this->con->error_list;
         }

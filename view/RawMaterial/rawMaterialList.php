@@ -106,10 +106,10 @@
                 html += "<td>" + data[a].id + "</td>";
                 html += "<td>" + data[a].description + "</td>";
                 html += "<td>" + data[a].curStock + "</td>";
-                if (data[a].mandatory == 1) {
-                    html += "<td><span class='label label-success'>Mandatory</span></td>";
+                if (data[a].status == 1) {
+                    html += "<td><span class='label label-success'>Active</span></td>";
                 } else {
-                    html += "<td><span class='label label-danger'>Optional</span></td>";
+                    html += "<td><span class='label label-danger'>Inactive</span></td>";
                 }
                 html += "<td><buttin type='button' id='btnView' class='btn btn-info btn-xs'>View</button></td>";
                 html += "</tr>";

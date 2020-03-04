@@ -25,13 +25,13 @@
                     </div><!-- /.box-header -->
                     <div id="err"></div>
                     <!-- form start -->
-                    <form id="frmPO">
+                    <form id="frmPO" action="/TopNotch/report/purchaseorder" method="POST">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="box-body">
                                     <div class="form-group">
                                         <label>PO No</label>
-                                        <input type="text" class="form-control" id="poNo" name="txtPONo" required="" disabled="">
+                                        <input type="text" class="form-control" id="poNo" name="txtPONo" required="">
                                     </div>
                                     <div class="form-group">
                                         <label>Supplier</label>
@@ -98,7 +98,7 @@
                         </div>
                         <div class="box-footer">
                             <!--<button type="submit" name="submit" class="btn btn-primary">Submit</button>-->
-                            <input type="button" name="submit" id="btnSave" class="btn btn-primary" value="Submit">
+                            <input type="submit" name="submit" id="btnSave" class="btn btn-primary" value="Submit">
                         </div>
                     </form>
                 </div><!-- /.box -->

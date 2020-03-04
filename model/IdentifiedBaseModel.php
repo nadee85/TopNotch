@@ -18,8 +18,6 @@ class IdentifiedBaseModel extends BaseModel{
     public function findById($id){
         $tableName=  get_class($this);
         $query="SELECT * FROM $tableName WHERE id='$id'";
-//        echo json_encode($query);
-//        echo json_encode($this->select($query));
         return $this->select($query);
         
     }

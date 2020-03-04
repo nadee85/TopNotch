@@ -19,23 +19,26 @@ class EMailer
         $this->mailer = new PHPMailer(true);
 
         //Server settings
-        $this->mailer->SMTPDebug = 2;                                       // Enable verbose debug output
-        $this->mailer->isSMTP();                                            // Set mailer to use SMTP
-        $this->mailer->Host       = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-        $this->mailer->SMTPAuth   = true;                                   // Enable SMTP authentication
-        $this->mailer->Username   = 'topnotchbitpro@gmail.com';                     // SMTP username
-        $this->mailer->Password   = 'topnotch@bit';                               // SMTP password
-        $this->mailer->SMTPSecure = 'tls';                                  // Enable TLS encryption, `ssl` also accepted
-        $this->mailer->Port       = 587;                                    // TCP port to connect to
-        $this->mailer->setFrom('topnotchbitpro@gmail.com', 'Mailer');
-        $this->mailer->addReplyTo('info@bitproject2019.com', 'Information');
+        // Enable verbose debug output
+//        $this->mailer->SMTPDebug = 2; 
+        // Set mailer to use SMTP
+        $this->mailer->isSMTP();
+        // Specify main and backup SMTP servers
+        $this->mailer->Host       = 'smtp.gmail.com';  
+        // Enable SMTP authentication
+        $this->mailer->SMTPAuth   = true;  
+        // SMTP username
+        $this->mailer->Username   = 'topnotchbitpro@gmail.com'; 
+        // SMTP password
+        $this->mailer->Password   = 'topnotch@bit'; 
+        // Enable TLS encryption, `ssl` also accepted
+        $this->mailer->SMTPSecure = 'tls';          
+        // TCP port to connect to
+        $this->mailer->Port       = 587;                                    
+        $this->mailer->setFrom('topnotchbitpro@gmail.com', 'TopNotch');
+        $this->mailer->addReplyTo('topnotchbitpro@gmail.com', 'Information');
     }
-
-    /**
-     * @param mixed ...$recipients
-     * @return BITMailer
-     * @throws Exception
-     */
+    
     public function addTo(...$recipients){
         foreach($recipients as $recipient){
             $this->mailer->addAddress($recipient);
@@ -48,7 +51,7 @@ class EMailer
         return $this;
     }
 
-    public function addBody($bodyText, $alternativeBody = null, $isHtml = false){
+    public function addBody($bodyText, $alternativeBody = null, $isHtml = true){
         $this->mailer->isHTML($isHtml);
         $this->mailer->Body = $bodyText;
         $this->mailer->AltBody = $alternativeBody;
@@ -58,7 +61,6 @@ class EMailer
     public function send(){
         try {
             $this->mailer->send();
-            echo 'Message has been sent';
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$this->mailer->ErrorInfo}";
         }

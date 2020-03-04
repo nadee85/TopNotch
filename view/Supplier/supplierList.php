@@ -19,7 +19,7 @@
                 <!-- general form elements -->
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Search Supplier</h3>
+                        <h3 class="box-title">Update Supplier</h3>
                     </div><!-- /.box-header -->
                     <div id="err"></div>
                     <!-- form start -->
@@ -93,7 +93,7 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Supplier List</h3>
+                        <h3 class="box-title">Supplier Details</h3>
                     </div><!-- /.box-header -->
                     <div class="box-body">        
                         <table id="table1" class="table table-bordered table-striped">

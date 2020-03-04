@@ -12,7 +12,6 @@
  * @author Nadeeshani
  */
 class POController extends BaseController {
-    
 
     function newPO() {
         $this->loadView();
@@ -46,6 +45,11 @@ class POController extends BaseController {
         $poHeader->retrievePO();
     }
 
+    public function loadPoData() {
+        $poheader = new POHeader();
+        $poheader->loadPoData($_POST['sData']);
+    }
+
     public function addPO() {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header("HTTP/1.1 405 NOT ALLOWED");
@@ -59,7 +63,7 @@ class POController extends BaseController {
         $poHeader->supid = $poData['supId'];
         $poHeader->poDate = $poData['poDate'];
         $poHeader->UserId = $_SESSION['user']['name']['username'];
-        $poHeader->delStatus = 0;
+        $poHeader->delStatus = "0";
 
         $resHeader = $poHeader->save();
 

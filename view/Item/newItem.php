@@ -26,11 +26,11 @@
                     </div><!-- /.box-header -->
                     <div id="err"></div>
                     <!-- form start -->
-                    <form id="frmItem">
+                    <form id="frmItemDet">
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="inputID">Item ID</label>
-                                <input type="text" class="form-control" id="itemid" placeholder="Enter Item ID" name="txtItemID">
+                                <input type="text" class="form-control" id="itemid" placeholder="Enter Item ID" name="itemid" required="">
                             </div>
                             <div class="form-group">
                                 <label for="inputDescription">Description</label>
@@ -44,6 +44,10 @@
                                 <label for="inputCurStock">Current Stock</label>
                                 <input type="text" class="form-control" id="stock" placeholder="Enter Current Stock" name="txtStock">
                             </div>
+                            <div class="form-group">
+                                <label for="inputCurStock">Re-Order Level</label>
+                                <input type="text" class="form-control" id="reOrder" placeholder="Enter Re-Order Level" name="reOrder">
+                            </div>
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" name="status" id="status" checked > Active
@@ -52,7 +56,7 @@
                         </div><!-- /.box-body -->
 
                         <div class="box-footer">
-                            <input type="button" name="submit" id="btnSave" class="btn btn-primary" value="Sumbit">
+                            <input type="button" name="submit" id="btnSave" class="btn btn-primary" value="Submit">
                         </div>
                     </form>
                 </div><!-- /.box -->
@@ -64,14 +68,36 @@
 </div><!-- /.content-wrapper -->
 <script>
     $(document).ready(function () {
+        $("#frmItemDet").validate({
+            rules: {
+                itemid: {
+                    required: true,
+                    remote: {
+                        url: "/TopNotch/item/exists",
+                        type: "POST",
+                        data: {
+                            itemid: function () {
+                                return $("#itemid").val();
+                            }
+                        }
+                    }
+                }
+            },
+            messages: {
+                itemid: {
+                    remote: "ID is already taken!"
+                }
+            }
+        });
         $(document).on("click", "#btnSave", function () {
-            $("#frmItem").validate();
-            if ($("#frmItem").valid()) {
+            $("#frmItemDet").validate();
+            if ($("#frmItemDet").valid()) {
                 var item = {
                     itemId: $("#itemid").val(),
                     description: $("#description").val(),
                     price: $("#price").val(),
                     stock: $("#stock").val(),
+                    reOrder:$('#reOrder').val(),
                     status: $("#status").is(":checked")
                 };
 
@@ -88,7 +114,7 @@
 <div class = "box-body">Item Successfully Added.</div></div>');
 //                        alert("Successfully registered!");
                         console.log(data);
-                        $(frmItem).closest('form').find("input[type=text],input[type=tel],input[type=email],textarea").val("");
+                        $(frmItemDet).closest('form').find("input[type=text],input[type=tel],input[type=email],textarea").val("");
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         $("#err").html('<div class="box box-solid box-danger">\n\

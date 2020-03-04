@@ -16,4 +16,20 @@ class HomeController extends BaseController
         $user=new User();
         $user->loadImage();
     }
+    
+    public function sendMail() {
+        $mailData=$_POST['mailData'];
+        echo json_encode($mailData);
+        try {
+            $mailer = new EMailer();
+            $mailer->addTo($mailData['emailto'])
+                    ->addSubject($mailData['subject'])
+                    ->addBody($mailData['message'])
+                    ->send();
+            //TODO: Verify email address using a link sent via the above email.
+        } catch (Exception $e) {
+            $e->getMessage();
+            //TODO: Log error (Mailer error)
+        }
+    }
 }

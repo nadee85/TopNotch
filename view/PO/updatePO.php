@@ -25,7 +25,7 @@
                     </div><!-- /.box-header -->
                     <div id="err"></div>
                     <!-- form start -->
-                    <form id="frmPOUpdate">
+                    <form id="frmPOUpdate" action="/TopNotch/report/purchaseorder" method="POST">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="box-body">
@@ -99,7 +99,7 @@
                         </div>
                         <div class="box-footer">
                             <!--<button type="submit" name="btnUpdate" class="btn btn-primary" id="btnUpdate">Update</button>-->
-                            <input type="button" name="submit" id="btnUpdate" class="btn btn-primary" value="Update">
+                            <input type="submit" name="submit" id="btnUpdate" class="btn btn-primary" value="Update">
                         </div>
                     </form>
                 </div><!-- /.box -->
@@ -241,7 +241,7 @@
 
     //Save
     $(document).ready(function () {
-        $("#frmPO").validate({
+        $("#frmPOUpdate").validate({
             rules: {
                 dateadded: {
                     required: true
@@ -296,7 +296,7 @@
                 <div class = "box-header"><h3 class = "box-title"> Success! </h3></div>\n\
 <div class = "box-body">Purchase Order Successfully Updated.</div></div>');
 //                        alert("Successfully registered!");
-                        window.location="poList";
+//                        window.location="poList";
                         console.log(data);
                     },
                     error: function (jqXHR, textStatus, errorThrown) {

@@ -19,7 +19,7 @@ and open the template in the editor.
         <!--Ionicons--> 
         <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
         <!--Theme style--> 
-        <link href="<?= RESOURCES ?>dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?= RESOURCES ?>dist/css/AdminLTE.css" rel="stylesheet" type="text/css" />
         <link href="<?= RESOURCES ?>dist/css/tableprop.css" rel="stylesheet" type="text/css" />
         <!--         AdminLTE Skins. Choose a skin from the css/skins 
                      folder instead of downloading all of them to reduce the load. -->
@@ -28,6 +28,8 @@ and open the template in the editor.
         <link href="<?= RESOURCES ?>plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
         <script src="<?= RESOURCES ?>vendor/jquery.validate.min.js"></script>
         <script src="<?= RESOURCES ?>plugins/daterangepicker/daterangepicker.js"></script>
+        <script src="<?= RESOURCES ?>plugins/pdf/jspdf.min.js"></script>
+        <!--<link href="<?= RESOURCES ?>plugins/morris/morris.css" rel="stylesheet" type="text/css" />-->
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -40,7 +42,7 @@ and open the template in the editor.
         <!-- Site wrapper -->
         <div class="wrapper">
             <header class="main-header">
-                <!--<a href="index.php" class="logo"><b>Admin</b>Panel</a>-->
+                <!--<a href="index.php" class="navbar-brand "><b>Admin</b>Panel</a>-->
                 <a href="../home/index" class="navbar-brand">
                     <img src="<?= RESOURCES ?>dist/logo1.png" width="125" height="60">
                 </a>
@@ -55,111 +57,21 @@ and open the template in the editor.
                     </a>
                     <div class="navbar-custom-menu">
                         <ul class="nav navbar-nav">
-                            <!-- Messages: style can be found in dropdown.less-->
-                            <!--                            <li class="dropdown messages-menu">
-                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                                                <i class="fa fa-envelope-o"></i>
-                                                                <span class="label label-success">4</span>
-                                                            </a>
-                                                            <ul class="dropdown-menu">
-                                                                <li class="header">You have 4 messages</li>
-                                                                <li>
-                                                                     inner menu: contains the actual data 
-                                                                    <ul class="menu">
-                                                                        <li> start message 
-                                                                            <a href="#">
-                                                                                <div class="pull-left">
-                                                                                    <img src="dist/img/<?php // echo $_SESSION["userPicture"];    ?>" class="img-circle" alt="User Image"/>
-                                                                                </div>
-                                                                                <h4>
-                                                                                    Support Team
-                                                                                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                                                                                </h4>
-                                                                                <p>Why not buy a new awesome theme?</p>
-                                                                            </a>
-                                                                        </li> end message 
-                                                                    </ul>
-                                                                </li>
-                                                                <li class="footer"><a href="#">See All Messages</a></li>
-                                                            </ul>
-                                                        </li>-->
-                            <!-- Notifications: style can be found in dropdown.less -->
-                            <!--                            <li class="dropdown notifications-menu">
-                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                                                <i class="fa fa-bell-o"></i>
-                                                                <span class="label label-warning">10</span>
-                                                            </a>
-                                                            <ul class="dropdown-menu">
-                                                                <li class="header">You have 10 notifications</li>
-                                                                <li>
-                                                                     inner menu: contains the actual data 
-                                                                    <ul class="menu">
-                                                                        <li>
-                                                                            <a href="#">
-                                                                                <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </li>
-                                                                <li class="footer"><a href="#">View all</a></li>
-                                                            </ul>
-                                                        </li>-->
-                            <!-- Tasks: style can be found in dropdown.less -->
-                            <!--                            <li class="dropdown tasks-menu">
-                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                                                <i class="fa fa-flag-o"></i>
-                                                                <span class="label label-danger">9</span>
-                                                            </a>
-                                                            <ul class="dropdown-menu">
-                                                                <li class="header">You have 9 tasks</li>
-                                                                <li>
-                                                                     inner menu: contains the actual data 
-                                                                    <ul class="menu">
-                                                                        <li> Task item 
-                                                                            <a href="#">
-                                                                                <h3>
-                                                                                    Design some buttons
-                                                                                    <small class="pull-right">20%</small>
-                                                                                </h3>
-                                                                                <div class="progress xs">
-                                                                                    <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                                                        <span class="sr-only">20% Complete</span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </li> end task item 
-                                                                    </ul>
-                                                                </li>
-                                                                <li class="footer">
-                                                                    <a href="#">View all tasks</a>
-                                                                </li>
-                                                            </ul>
-                                                        </li>-->
+
                             <!-- User Account: style can be found in dropdown.less -->
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="loadpro">
-                                    
+
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
                                     <li class="user-header" id="profile">
                                     </li>
-                                    <!-- Menu Body -->
-<!--                                    <li class="user-body">
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#">Followers</a>
-                                        </div>
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#">Sales</a>
-                                        </div>
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#">Friends</a>
-                                        </div>
-                                    </li>-->
+                                    
                                     <!-- Menu Footer-->
                                     <li class="user-footer">
                                         <div class="pull-left">
-                                            <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                            <!--<a href="TopNotch/User/" class="btn btn-default btn-flat">Profile</a>-->
                                         </div>
                                         <div class="pull-right">
                                             <!--<input type="button" id="logoff" class="btn btn-default btn-flat" value="Sign out">-->
@@ -177,19 +89,9 @@ and open the template in the editor.
             <!-- Left side column. contains the sidebar -->
             <aside class="main-sidebar">
                 <!-- sidebar: style can be found in sidebar.less -->
+                
                 <section class="sidebar">
-                    <!-- Sidebar user panel -->
-                    <div class="user-panel">
-<!--                                                <div class="pull-left image">
-                                                    <img src="<?= RESOURCES ?>dist/img/user1-128x128.jpg<?php // echo $_SESSION["userPicture"];    ?>" class="img-circle" alt="User Image" />
-                                                </div>
-                                                <div class="pull-left info">
-                                                    <p><?php // echo $_SESSION["userName"];    ?></p>
-                        
-                                                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                                                </div>-->
-                    </div>
-                    <!-- search form -->
+                    <div class="user-panel"></div>
                     <form action="#" method="get" class="sidebar-form">
                         <div class="input-group">
 <!--                            <input type="text" name="q" class="form-control" placeholder="Search..."/>
@@ -198,6 +100,19 @@ and open the template in the editor.
                             </span>-->
                         </div>
                     </form>
+                    <!-- Sidebar user panel -->
+                    
+                    <div class="user-panel" >
+                        <div class="pull-left image" id="sideprofIm">
+                            
+                        </div>
+                        <div class="pull-left info">
+                            <div id="sideprofTe"></div>
+                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                        </div>
+                    </div>
+                    <!-- search form -->
+                    
                     <!-- /.search form -->
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
@@ -207,25 +122,28 @@ and open the template in the editor.
                                 <i class="fa fa-users"></i>
                                 <span>Users</span>
                             </a>
-                            <ul class="treeview-menu">
-                                <li><a href="../user/userReg"><i class="fa fa-circle-o"></i>New User</a></li>
-                                <li><a href="../user/userDetails"><i class="fa fa-circle-o"></i>User Details</a></li>
+                            <ul class="treeview-menu" id="user">
+                                <li id="nuserh"><a href="../user/userReg"><i class="fa fa-circle-o"></i>New User</a></li>
+                                <li><a href="../user/ChangePassword"><i class="fa fa-circle-o"></i>Change Password</a></li>
+                                <li><a href="../user/UserList"><i class="fa fa-circle-o"></i>User List</a></li>
+<!--                                <li id="roleh"><a href="../user/Roles"><i class="fa fa-circle-o"></i>New Role</a></li>
+                                <li id="userroleh"><a href="../user/UserRoles"><i class="fa fa-circle-o"></i>User Roles</a></li>-->
                             </ul>
                         </li>
-                        <li class="treeview">
+                        <li class="treeview" id="item">
                             <a href="#">
                                 <i class="fa fa-book"></i>
                                 <span>Items</span>
                                 <span class="label label-primary pull-right"></span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="../Item/itemList"><i class="fa fa-circle-o"></i>Item List</a></li>
                                 <li><a href="../Item/newItem"><i class="fa fa-circle-o"></i>New Item</a></li>
-                                <li><a href="../RawMaterial/rawMaterialList"><i class="fa fa-circle-o"></i>Raw Material List</a></li>
+                                <li><a href="../Item/itemList"><i class="fa fa-circle-o"></i>Item List</a></li>
                                 <li><a href="../RawMaterial/newRawMaterial"><i class="fa fa-circle-o"></i>New Raw Material</a></li>
+                                <li><a href="../RawMaterial/rawMaterialList"><i class="fa fa-circle-o"></i>Raw Material List</a></li>
                             </ul>
                         </li>
-                        <li class="treeview">
+                        <li class="treeview" id="procurement">
                             <a href="#">
                                 <i class="fa fa-gift"></i>
                                 <span>Procurement</span>
@@ -243,18 +161,30 @@ and open the template in the editor.
                                 <li><a href="../Supplier/supplierDuePaymentList"><i class="fa fa-circle-o"></i>Supplier Due Payment List</a></li>
                             </ul>
                         </li>
-                        <li class="treeview">
+                        <li class="treeview" id="manufacture">
+                            <a href="#">
+                                <i class="fa fa-wrench"></i>
+                                <span>Manufacture</span>
+                                <span class="label label-primary pull-right"></span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="../Manufacture/ManufacturingItems"><i class="fa fa-circle-o"></i>Manufacturing Items</a></li>
+                                <li><a href="../Manufacture/ManufactureItemList"><i class="fa fa-circle-o"></i>Manufacture Item Details</a></li>
+                                <li><a href="../Manufacture/Manufacture"><i class="fa fa-circle-o"></i>Manufacture</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview" id="invent">
                             <a href="#">
                                 <i class="fa fa-building-o"></i>
                                 <span>Inventory</span>
                                 <span class="label label-primary pull-right"></span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="SaveShop.php"><i class="fa fa-circle-o"></i>Item Stock</a></li>
-                                <li><a href="ShopList.php"><i class="fa fa-circle-o"></i>Raw Material Stock</a></li>
+                                <li><a href="../Item/itemStock"><i class="fa fa-circle-o"></i>Item Stock</a></li>
+                                <li><a href="../RawMaterial/rawMaterialStock"><i class="fa fa-circle-o"></i>Raw Material Stock</a></li>
                             </ul>
                         </li>
-                        <li class="treeview">
+                        <li class="treeview" id="salesSli" >
                             <a href="#">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Sales</span>
@@ -263,6 +193,8 @@ and open the template in the editor.
                             <ul class="treeview-menu">
                                 <li><a href="../Customer/customerList"><i class="fa fa-circle-o"></i>Customer List</a></li>
                                 <li><a href="../Customer/newCustomer"><i class="fa fa-circle-o"></i>New Customer</a></li>
+                                <li><a href="../Customer/returnEmpty"><i class="fa fa-circle-o"></i>Return Empty Bottles</a></li>
+                                <li><a href="../Customer/ReturnEmptyList"><i class="fa fa-circle-o"></i>Return Empty List</a></li>
                                 <li><a href="../Invoice/invoiceList"><i class="fa fa-circle-o"></i>Invoice List</a></li>
                                 <li><a href="../Invoice/newInvoice"><i class="fa fa-circle-o"></i>New Invoice</a></li>
                                 <li><a href="../Customer/customerPaymentList"><i class="fa fa-circle-o"></i>Customer Payments</a></li>
@@ -270,11 +202,55 @@ and open the template in the editor.
                                 <li><a href="../Customer/customerDuePaymentList"><i class="fa fa-circle-o"></i>Customer Due Payment List</a></li>
                             </ul>
                         </li>
-                        <li><a href="Accounts.php"><i class="fa fa-book"></i>Reports</a></li>
-                        <li class="header">LABELS</li>
-                        <li><a href="#"><i class="fa fa-circle-o text-danger"></i>Important</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o text-warning"></i>Warning</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o text-info"></i>Information</a></li>
+                        <li class="header">REPORTS</li>
+                        <li class="treeview" id="rstock">
+                            <a href="#">
+                                <i class="fa fa-book"></i>
+                                <span>Inventory</span>
+                                <span class="label label-primary pull-right"></span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="../Report/rawMaterialStock"><i class="fa fa-circle-o"></i>Raw Material Stock</a></li>
+                                <li><a href="../Report/itemStock"><i class="fa fa-circle-o"></i>Item Stock</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview" id="rProcurement">
+                            <a href="#">
+                                <i class="fa fa-book"></i>
+                                <span>Procurement</span>
+                                <span class="label label-primary pull-right"></span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="../Report/SupplierRegister"><i class="fa fa-circle-o"></i>Supplier Register</a></li>
+                                <li><a href="../Report/GRNSummeryDateRange"><i class="fa fa-circle-o"></i>GRN Summery - Date Range</a></li>
+                                <li><a href="../Report/SupplierWisePayment"><i class="fa fa-circle-o"></i>Supplier Payment - Supplier</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview" id="rManufacture">
+                            <a href="#">
+                                <i class="fa fa-book"></i>
+                                <span>Manufacture</span>
+                                <span class="label label-primary pull-right"></span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="../Report/ManufactureDateRange"><i class="fa fa-circle-o"></i>Manufacture Summery</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview" id="rSales">
+                            <a href="#">
+                                <i class="fa fa-book"></i>
+                                <span>Sales</span>
+                                <span class="label label-primary pull-right"></span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="../Report/CustomerRegister"><i class="fa fa-circle-o"></i>Customer Register</a></li>
+                                <li><a href="../Report/InvoiceSummeryDateRange"><i class="fa fa-circle-o"></i>Invoice Summery - Date Range</a></li>
+                                <li><a href="../Report/CustomerWiseInvoiceSummery"><i class="fa fa-circle-o"></i>Invoice Summery - Customer</a></li>
+                                <li><a href="../Report/ItemWiseSalesSummery"><i class="fa fa-circle-o"></i>Invoice Summery - Item</a></li>
+                                <li><a href="../Report/CustomerWisePayment"><i class="fa fa-circle-o"></i>Customer Payment - Customer</a></li>
+                                <li><a href="../Report/CusDuePayament"><i class="fa fa-circle-o"></i>Customer Due Payment</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </section>
                 <!-- /.sidebar -->

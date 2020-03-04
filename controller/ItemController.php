@@ -21,10 +21,29 @@ class ItemController extends BaseController {
     public function itemList() {
         $this->loadView();
     }
+    
+    public function itemStock(){
+        $this->loadView();
+    }
 
     public function loadItems() {
         $item = new Item();
         $item->findList();
+    }
+
+    public function loadDescription(){
+        $item=new Item();
+        $item->loadDescription();
+    }
+    
+    public function getPrice(){
+        $item=new Item();
+        $item->getPrice();
+    }
+
+    public function totalStock(){
+        $item=new Item();
+        $item->totalStock();
     }
 
     public function addItem() {
@@ -46,6 +65,7 @@ class ItemController extends BaseController {
         $item->description = $itemData['description'];
         $item->price = $itemData['price'];
         $item->curStock = $itemData['stock'];
+        $item->reOrderLevel=$itemData['reOrder'];
         $item->status = $status;
 
         $res = $item->save();
@@ -74,6 +94,7 @@ class ItemController extends BaseController {
         $item->description = $itemData['description'];
         $item->price = $itemData['price'];
         $item->curStock = $itemData['stock'];
+        $item->reOrderLevel=$itemData['reOrder'];
         $item->status = $status;
 
         $res = $item->update();
@@ -81,6 +102,16 @@ class ItemController extends BaseController {
         if (!$res) {
             header("HTTP/1.1 500 Internal Server Error");
         }
+    }
+    
+    public function exists() {
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+            header("HTTP/1.1 405 NOT ALLOWED");
+        }
+
+        $rId = $_POST["itemid"];
+        $item = new Item();
+        $item->checkId($rId);
     }
 
 }

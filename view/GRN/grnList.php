@@ -136,13 +136,13 @@
         document.getElementById("data").innerHTML += html;
     }
     
-    //view po
+    //view grn
     $('table tbody').on("click", "#btnView", function () {
         var currow = $(this).closest('tr');
         $("#grnno").val(currow.find('td:eq(0)').text());
     });
     
-    //delete po
+    //delete grn
     $('table tbody').on("click", "#btnDel", function () {
         if (confirm("Are you sure you want to delete this record?")) {
             var currow = $(this).closest('tr');

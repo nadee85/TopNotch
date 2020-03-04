@@ -2,7 +2,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Create New Raw Material Form
+            Create New Raw Materials Form
             <small>Creating New Raw Materials</small>
         </h1>
         <ol class="breadcrumb">
@@ -26,24 +26,23 @@
                     </div><!-- /.box-header -->
                     <div id="err"></div>
                     <!-- form start -->
-                    <form id="frmRawMaterial">
+                    <form id="frmRawItem">
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="inputID">Raw Material ID</label>
-                                <input type="text" class="form-control" id="rawmatid" placeholder="Enter Item ID" name="txtRawMatId">
+                                <input type="text" class="form-control" id="ritemid" placeholder="Enter Item ID" name="ritemid" required="">
                             </div>
                             <div class="form-group">
                                 <label for="inputDescription">Description</label>
                                 <input type="text" class="form-control" id="description" placeholder="Enter Description" name="txtDescription">
                             </div>
-                            
                             <div class="form-group">
                                 <label for="inputCurStock">Current Stock</label>
                                 <input type="text" class="form-control" id="stock" placeholder="Enter Current Stock" name="txtStock">
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="mandatory" checked id="mandatory"> Mandatory
+                                    <input type="checkbox" name="status" id="status" checked > Active
                                 </label>
                             </div>
                         </div><!-- /.box-body -->
@@ -61,22 +60,44 @@
 </div><!-- /.content-wrapper -->
 <script>
     $(document).ready(function () {
+        $("#frmRawItem").validate({
+            rules: {
+                ritemid: {
+                    required: true,
+                    remote: {
+                        url: "/TopNotch/rawMaterial/exists",
+                        type: "POST",
+                        data: {
+                            ritemid: function () {
+                                return $("#ritemid").val();
+                            }
+                        }
+                    }
+                }
+            },
+            messages: {
+                ritemid: {
+                    remote: "ID is already taken!"
+                }
+            }
+        });
+
         $(document).on("click", "#btnSave", function () {
-            $("#frmRawMaterial").validate();
-            if ($("#frmRawMaterial").valid()) {
-                var rawMaterial = {
-                    id: $("#rawmatid").val(),
+            $("#frmRawItem").validate();
+            if ($("#frmRawItem").valid()) {
+                var ritem = {
+                    id: $("#ritemid").val(),
                     description: $("#description").val(),
                     stock: $("#stock").val(),
-                    mandatory: $("#mandatory").is(":checked")
+                    status: $("#status").is(":checked")
                 };
 
                 $.ajax({
-                    url: "/TopNotch/rawmaterial/addRawMaterial",
+                    url: "/TopNotch/rawMaterial/addRawMaterial",
                     type: "POST",
                     dataType: "JSON",
                     data: {
-                        rawData: rawMaterial
+                        rawData: ritem
                     },
                     success: function (data) {
                         $("#err").html('<div class="box box-solid box-success">\n\
@@ -84,7 +105,8 @@
 <div class = "box-body">Raw Material Successfully Added.</div></div>');
 //                        alert("Successfully registered!");
                         console.log(data);
-                        $(frmRawMaterial).closest('form').find("input[type=text],input[type=tel],input[type=email],textarea").val("");
+                        $(frmRawItem).closest('form').find("input[type=text],input[type=tel],input[type=email],textarea").val("");
+                        $("#ritemid").focus();
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         $("#err").html('<div class="box box-solid box-danger">\n\

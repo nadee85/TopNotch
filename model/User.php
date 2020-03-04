@@ -25,4 +25,26 @@ class User extends IdentifiedBaseModel{
         }
         echo json_encode($data);
     }
+    
+    public function checkPassword() {
+        $username=$_SESSION['user']['name']['username'];
+        $pass=$_POST['cpassword'];
+        $passEn=  md5($pass);
+        $result = mysqli_query($this->con, "SELECT id FROM user WHERE password='$passEn' AND id='$username'");
+        if (mysqli_num_rows($result) == 0) {
+            echo 'false';
+        } else {
+            echo 'true';
+        }
+    }
+    
+    public function changePass($pass) {
+        $username=$_SESSION['user']['name']['username'];
+        $query = "UPDATE user SET password='$pass' WHERE id='$username'";
+        $res = $this->con->query($query);
+        if (!$res) {
+            $err = $this->con->error_list;
+        }
+        return $res;
+    }
 }

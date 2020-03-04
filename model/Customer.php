@@ -32,4 +32,21 @@ class Customer extends IdentifiedBaseModel {
 //        echo json_encode($data);
 //    }
 
+    public function loadName(){
+        $result = mysqli_query($this->con, "SELECT id,fname,lname FROM customer WHERE status=1");
+        $data = array();
+        while ($row = mysqli_fetch_object($result)) {
+            array_push($data, $row);
+        }
+        echo json_encode($data);
+    }
+    
+    public function totalCus(){
+        $result = mysqli_query($this->con, "SELECT count(id) AS totCus FROM customer");
+        $data = array();
+        while ($row = mysqli_fetch_object($result)) {
+            array_push($data, $row);
+        }
+        echo json_encode($data);
+    }
 }

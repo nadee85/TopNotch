@@ -62,4 +62,18 @@ class POHeader extends IdentifiedBaseModel{
         }
         echo json_encode($data);
     }
+    
+    public function loadPoData($poNo){
+        $result = mysqli_query($this->con, "SELECT poheader.id, supplier.fname,supplier.lname, supplier.address,supplier.tp,"
+                . " supplier.email, poheader.podate, poheader.supid,"
+                . " rawmaterials.description,poitem.* " 
+                . " FROM `poheader` INNER JOIN supplier on poheader.supid=supplier.id INNER JOIN poitem ON "
+                . " poheader.id=poitem.pono INNER JOIN rawmaterials ON poitem.ritemid=rawmaterials.id "
+                . " WHERE poheader.delstatus=0 AND poheader.id='" .$poNo. "' ORDER BY poheader.id");
+        $data = array();
+        while ($row = mysqli_fetch_object($result)) {
+            array_push($data, $row);
+        }
+        echo json_encode($data);
+    }
 }

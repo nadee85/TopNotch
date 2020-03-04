@@ -13,7 +13,10 @@ $config["ANONYMOUS_ALLOWED"] = array(
     "/user/authenticate",
     "/user/userreg",
     "/user/doRegistration[.]*",
-    "/user/exists"
+    "/user/exists",
+    "/user/UserActivate",
+    "/user/checkCode",
+    "/user/activate"
 );
 
 $config["SMS_CONFIG"] = array(

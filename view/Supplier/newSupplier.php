@@ -17,7 +17,7 @@
         <div class="row">
             <!-- left column -->
 
-            <div class="col-md-6">
+            <div class="col-xs-12">
 
                 <!-- general form elements -->
                 <div class="box box-primary">
@@ -26,76 +26,47 @@
                     </div><!-- /.box-header -->
                     <div id="err"></div>
 
-
-                    <?php
-//                    if ($errMsg != null) {
-                    ?>
-                    <!--                    <div class="box box-solid box-danger">
-                                            <div class="box-header">
-                                                <h3 class="box-title">Error!</h3>
-                                            </div> /.box-header 
-                                            <div class="box-body">
-                    <?php // echo $errMsg; ?>
-                                            </div> /.box-body 
-                                        </div> /.box -->
-                    <?php
-//                    }
-                    ?>
-                    <?php
-//                    if ($successMsg != null) {
-                    ?>
-                    <!--                    <div class="box box-solid box-success">
-                                            <div class="box-header">
-                                                <h3 class="box-title">Success!</h3>
-                                            </div> /.box-header 
-                                            <div class="box-body">
-                    <?php // echo $successMsg; ?>
-                                            </div> /.box-body 
-                                        </div> /.box -->
-                    <?php
-//                    }
-                    ?>
-
-
-
                     <!-- form start -->
                     <form id="frmSupplier">
-                        <div class="box-body">
-<!--                            <div class="form-group">
-                                <label for="inputCusId">Supplier ID</label>
-                                <input type="text" class="form-control" id="supplierid" placeholder="Enter Supplier ID" name="txtSupId">
-                            </div>-->
-                            <div class="form-group">
-                                <label for="inputFname">First Name</label>
-                                <input type="text" class="form-control" id="fname" placeholder="Enter First Name" name="txtFName">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="box-body">
+                                    <div class="form-group">
+                                        <label for="inputFname">First Name</label>
+                                        <input type="text" class="form-control" id="fname" placeholder="Enter First Name" name="txtFName" required="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputLname">Last Name</label>
+                                        <input type="text" class="form-control" id="lname" placeholder="Enter Last Name" name="txtLName" required="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Address</label>
+                                        <textarea class="form-control" rows="3" id="address" placeholder="Enter ..." name="txtAddress" required=""></textarea>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="inputLname">Last Name</label>
-                                <input type="text" class="form-control" id="lname" placeholder="Enter Last Name" name="txtLName">
+                            <div class="col-md-6">
+                                <div class="box-body">
+                                    <div class="form-group">
+                                        <label for="inputTelephone">Telephone</label>
+                                        <input type="tel" class="form-control" id="telephone" placeholder="Enter Telephone" name="txtTel" required="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputMobile">Mobile</label>
+                                        <input type="tel" class="form-control" id="mobile" placeholder="Enter Mobile" name="txtMobile" required="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputEmail">Email</label>
+                                        <input type="email" class="form-control" id="email" placeholder="Enter Email" name="txtEmail" required="">
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="status" id="status" checked >Active
+                                        </label>
+                                    </div>
+                                </div><!-- /.box-body -->
                             </div>
-                            <div class="form-group">
-                                <label>Address</label>
-                                <textarea class="form-control" rows="3" id="address" placeholder="Enter ..." name="txtAddress"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputTelephone">Telephone</label>
-                                <input type="tel" class="form-control" id="telephone" placeholder="Enter Telephone" name="txtTel">
-                            </div>
-                            <div class="form-group">
-                                <label for="inputMobile">Mobile</label>
-                                <input type="tel" class="form-control" id="mobile" placeholder="Enter Mobile" name="txtMobile">
-                            </div>
-                            <div class="form-group">
-                                <label for="inputEmail">Email</label>
-                                <input type="email" class="form-control" id="email" placeholder="Enter Email" name="txtEmail">
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="status" id="status" checked >Active
-                                </label>
-                            </div>
-                        </div><!-- /.box-body -->
-
+                        </div>
                         <div class="box-footer">
                             <input type="button" name="submit" id="btnSave" class="btn btn-primary" value="Submit">
                             <!--<button type="submit" name="submit" id="btnSave" class="btn btn-primary">Submit</button>-->

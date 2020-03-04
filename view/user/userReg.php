@@ -1,6 +1,6 @@
 <body class="skin-blue">
     <header class="main-header">
-        <a href="../home/index" class="navbar-brand"><img src="<?= RESOURCES ?>dist/logo1.png" width="150" height="75"></a>
+        <a  class="navbar-brand"><img src="<?= RESOURCES ?>dist/logo1.png" width="150" height="75"></a>
     </header>
     <aside class="main-sidebar">
     </aside>
@@ -29,13 +29,13 @@
                         </div>
 
                         <!-- form start -->
-                        <form role="form" id="frmURegister" action="login">
+                        <form role="form" id="frmURegister" action="UserActivate" method="POST">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="box-body">
                                         <div class="form-group">
-                                            <label for="inputNIC">User Name</label>
-                                            <input type="text" class="form-control" id="username" placeholder="Enter Username" name="username" required="">
+                                            <label for="inputFname">User Name</label>
+                                            <input type="text" class="form-control" id="username" placeholder="Enter First Name" name="username" required="">
                                         </div>
                                         <div class="form-group">
                                             <label for="inputFname">First Name</label>
@@ -47,10 +47,10 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="inputContact">Mobile</label>
-                                            <input type="tel" class="form-control" id="mobile" placeholder="Enter Email" name="mobile" required="" >
+                                            <input type="tel" class="form-control" id="mobile" placeholder="Enter Email" name="mobile" required="" pattern="/^[0-9]{1,5}$/">
                                         </div>
                                     </div><!-- /.box-body -->
-                                </div>
+                                </div> 
                                 <div class="col-md-6">
                                     <div class="box-body">
                                         <div class="form-group">
@@ -78,11 +78,8 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <!--<button type="submit" name="submitsave" id="btnRegister" class="btn btn-primary">Register</button>-->
-                                        <input type="button" class="btn btn-primary" id="btnRegister" value="Register"/>
+                                        <input type="submit" class="btn btn-primary" id="btnRegister" value="Register"/>
                                     </div>
-                                    <!--                                    <div class="col-md-6">
-                                                                            <button type="button" name="cancel" id="btnCancel" class="btn btn-primary pull-right">Cancel</button>
-                                                                        </div>-->
                                 </div>
                             </div>
                         </form>
@@ -120,6 +117,9 @@
                     confirm: {
                         required: true,
                         equalTo: "#password"
+                    },
+                    mobile: {
+                        pattern:/^[0-9]{1,5}$/
                     }
                 },
                 messages: {
@@ -155,7 +155,7 @@
                             $("#err").html('<div class="box box-solid box-success">\n\
                 <div class = "box-header"><h3 class = "box-title"> Success! </h3></div>\n\
 <div class = "box-body">User Successfully Registered.</div></div>');
-                            window.location = "login";
+//                            window.location="/TopNotch/user/UserActivate";
 //                        alert("Successfully registered!");
                             console.log(data);
                         },
